@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = NotLoginException.class)
     public Result handler(NotLoginException e) throws IOException{
-        log.error("运行时异常:-------------->",e);
+        log.error("运行时异常-未登录:-------------->",e);
         return Result.failure(ResultCode.USER_NOT_LOGGED_IN);
     }
 

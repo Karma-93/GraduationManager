@@ -117,10 +117,11 @@ export default {
                         console.log("RequestSucces",response.data)
                         if (response.data.code==1){
                             const userInfo=response.data.data
-                            localStorage.setItem("userInfo",JSON.stringify(userInfo))   //把登录成功后返回的用户信息存入LocalStorage
+                            console.log("userInfo",userInfo.satoken);
+                            this.$store.commit("setToken" ,userInfo.satoken)
                             this.$store.commit("changeUserInfo",JSON.stringify(userInfo))   //通过commit调用mutaions中的方法 传递值
                             this.$message.success("登录成功")
-                            if (userInfo.userRoles==1){
+                            if (userInfo.userRoles==1){//判断用户角色来跳转不同的主页
                                 this.$router.push("/tindex")
                             }else if(userInfo.userRoles==2){
                                 this.$router.push("/sindex")

@@ -18,11 +18,12 @@ axios.interceptors.request.use(
         //在请求之前做些什么
         //判断是否存在token,如果存在则将每个页面的header中添加token,
         if (store.state.token) {
-            config.headers.common["token"] = store.state.token
+            config.headers.common["satoken"] = store.state.token
         }
         return config;
     },
     function (error) {
+        console.log("interceptorsError",error)
         router.push("/login");
         return Promise.reject(error);
     }
@@ -49,7 +50,7 @@ axios.interceptors.response.use(
         if (error.response) {
             switch (error.response.status) {
                 case 401:
-                    store.commit("del_token");
+                    store.commit("delToken");
                     router.push("/login");
             }
         }
@@ -57,7 +58,7 @@ axios.interceptors.response.use(
     }
 );
 
-
+Vue.prototype.$store=store
 Vue.prototype.$axios = axios      //全局注册，使用方法为  this.$axios
 Vue.prototype.$qs = qs     //同全局注册,qs为一个url参数转化的js库
 Vue.config.productionTip = false

@@ -125,7 +125,6 @@ const router= new Router({
 //设置全局前置守卫路由，并判断是否取出token    即路由拦截，
 //to即将进入的目标路由对象，form正要离开的路由，进行管道中的下一个钩子，要确保调用next方法
 router.beforeEach((to, from, next) => {
-    console.log("beforeEach")
     const nextRouter=['Login'];  //不需要登录即可访问的页面
 
     if (nextRouter.indexOf(to.name)<0){ //当需要登录才能访问
@@ -139,15 +138,17 @@ router.beforeEach((to, from, next) => {
         if (store.state.login) {
             const userRoles=store.state.userInfo.userRoles;
             if (userRoles==1){
-                this.$router.push("/tindex")
+                next("Tindex")
             }else if(userRoles==2){
-                this.$router.push("/sindex")
+                next("Sindex")
             }else if(userRoles==3){
-                this.$router.push("/aindex")
+                next("Aindex")
             }
         }
     }
+    next()
 
+    /*
 
     if (to.matched.some(res => res.meta.requireAuth)) {
         console.log("requireAuth"+res.meta.requireAuth)
@@ -160,6 +161,9 @@ router.beforeEach((to, from, next) => {
             })
         }
     }
+
+
+     */
 })
 
 
