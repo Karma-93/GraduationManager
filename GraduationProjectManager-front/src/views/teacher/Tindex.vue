@@ -2,7 +2,7 @@
     <a-layout>
         <TMenu/>
         <a-layout :style="{marginLeft:'300px'}">
-            <a-layout-header :style="{ background: '#fff', padding: 0 }">用户</a-layout-header>
+            <Header/>
             <a-layout-content :style="{ margin: '24px 20px 0', overflow: 'initial' }">
                 <router-view/>
             </a-layout-content>
@@ -16,10 +16,11 @@
 </template>
 
 <script>
+import Header from "../common/Header"
 import TMenu from "./TMenu"
 export default {
     name: "Tindex",
-    components:{TMenu}
+    components:{TMenu,Header}
 }
 </script>
 

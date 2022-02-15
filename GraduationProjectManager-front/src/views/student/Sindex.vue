@@ -2,7 +2,7 @@
     <a-layout>
         <SMenu/>
         <a-layout :style="{marginLeft:'300px'}">
-            <a-layout-header :style="{ background: '#fff', padding: 0 }">用户</a-layout-header>
+            <Header/>
             <a-layout-content :style="{ margin: '24px 20px 0', overflow: 'initial' }">
                 <router-view/>
             </a-layout-content>
@@ -17,9 +17,10 @@
 
 <script>
 import SMenu from "./SMenu";
+import Header from "../common/Header"
 export default {
     name: "Sindex",
-    components:{SMenu}
+    components:{SMenu,Header}
 }
 </script>
 
