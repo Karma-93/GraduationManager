@@ -4,7 +4,7 @@
             style="border: 1px solid rgb(235, 237, 240)"
             title="Title"
             sub-title="This is a subtitle"
-            :avatar="{}"
+            avatar="{}"
         >
             <template slot="extra">
 
@@ -13,7 +13,6 @@
                 </a-button>
                 <a-button key="1" title="注销" shape="circle" icon="logout" type="danger" @click="quit">
                 </a-button>
-                <a-avater key="3" size="large" icon="user"/>
             </template>
 
         </a-page-header>

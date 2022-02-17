@@ -3,9 +3,9 @@ server:
 spring:
   datasource: # 数据库参数配置
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/graduationManager?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://60.205.187.211:3306/graduationManager?useUnicode=true&characterEncoding=utf8
     username: root
-    password:
+    password: 123456
 
 
 sa-token:
@@ -23,3 +23,6 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: false
+logging:
+  file:
+    path: /home/developer/app/logs

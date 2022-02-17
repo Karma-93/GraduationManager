@@ -1,2 +1,4 @@
 /.idea/
 /GraduationProjectManager-front/node_modules/
+/GraduationProjectManager-api/src/main/resources/application.yml
+/GraduationProjectManager-api/target/
