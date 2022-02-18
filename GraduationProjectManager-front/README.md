@@ -1,21 +1,3 @@
-# first_vue_cli
-
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 登录功能
+所有角色（学生或者教师或管理员）使用同一个页面登录，自动跳转不同主页。
+默认账号为 学生1、教师1    密码为123456

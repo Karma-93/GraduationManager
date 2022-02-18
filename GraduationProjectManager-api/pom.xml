@@ -79,7 +79,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <copy todir="src/main/docker" file="target/${project.artifactId}-${project.version}.${project.packaging}"></copy>
+                                <copy todir="src/main/docker"
+                                      file="target/${project.artifactId}-${project.version}.${project.packaging}"/>
                             </tasks>
                         </configuration>
                         <goals>

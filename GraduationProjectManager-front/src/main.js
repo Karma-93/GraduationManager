@@ -9,7 +9,7 @@ import "ant-design-vue/dist/antd.css"
 import axios from 'axios'
 import qs from 'qs'
 
-axios.defaults.baseURL = "http://localhost:8082/"
+axios.defaults.baseURL = "http://60.205.187.211:8082/"
 axios.defaults.headers['Content-Type'] = "application/json"
 axios.defaults.headers.common["token"] = store.state.token;  //在header中添加token
 //添加请求拦截器
