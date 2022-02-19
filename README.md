@@ -1,6 +1,6 @@
 刚刚开始构建
 
-### 前端部分
+> ### 前端部分
     
 前端部分为三个不同的角色设置三个不同的板块（页面）  
 使用同一个登录页面，更具登陆后返回的用户角色信息切换到对应的页面
@@ -11,8 +11,17 @@
 - 2、使用Vuex记录登录状态，定义一些mutations处理登陆有关的状态数据
 - 3、设置守卫路由，并判断是否取出token
 
-### 后端部分
+>### 后端部分
 
-使用到的技术：SpringBoot\Fluent-Mybatis\SpringMVC\Mysql\SaToken\Swagger-ui\
+使用到的技术：
+技术 | 说明  
+-|-  
+SpringBoot | SSM整合  
+Fluent-Mybatis | ORM框架
+MySql | 数据库
+SaToken | 权限认证框架
+
+
 
 #### 数据库
+使用MySql作为数据库
