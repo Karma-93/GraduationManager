@@ -8,6 +8,7 @@ import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -56,6 +57,18 @@ public class GlobalExceptionHandler {
         return Result.failure(ResultCode.PARAM_IS_INVALID,objectError.getDefaultMessage());
     }
 
+    /**
+     * 当请求未使用json格式或请求参数为空
+     * @param e
+     * @return
+     * @throws IOException
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public Result handler(HttpMessageNotReadableException e) throws IOException {
+        return Result.failure(ResultCode.PARAM_IS_INVALID,"请将请求数据使用json序列换"+'\n'+e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e) throws IOException {
@@ -88,6 +101,8 @@ public class GlobalExceptionHandler {
         log.error("运行时异常-角色权限错误:-------------->",e);
         return Result.failure(ResultCode.NOT_ROLE_ERROR);
     }
+
+
 
 
 }
