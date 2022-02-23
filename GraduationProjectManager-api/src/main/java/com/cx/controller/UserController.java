@@ -1,5 +1,7 @@
 package com.cx.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
@@ -44,6 +46,16 @@ public class UserController {
                 .put(StpUtil.getTokenName(), StpUtil.getTokenValue())
                 .map()
         );
+    }
+
+
+    @CrossOrigin
+    @GetMapping("/logout")
+    @ApiOperation("注销登陆，会根据请求头的satoken注销登录")
+    @SaCheckLogin()
+    public Result logout(){
+        StpUtil.logout();
+        return Result.success();
     }
 
 

@@ -66,6 +66,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public Result handler(HttpMessageNotReadableException e) throws IOException {
+        log.error("运行时异常：-------------------->",e);
         return Result.failure(ResultCode.PARAM_IS_INVALID,"请将请求数据使用json序列换"+'\n'+e.getMessage());
     }
 

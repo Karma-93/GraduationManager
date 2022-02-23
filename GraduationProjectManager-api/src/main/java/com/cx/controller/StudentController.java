@@ -23,9 +23,6 @@ import javax.validation.constraints.NotNull;
 public class StudentController {
     @Autowired
     StudentService studentService;
-
-
-
     @SaCheckRole("student")
     @ApiOperation(value = "通过UserId获取学生信息")
     @GetMapping("/getStudentByUserId")
