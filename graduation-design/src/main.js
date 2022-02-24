@@ -3,6 +3,7 @@ import App from "@/App.vue";
 import 'less'
 
 // 引入初始化样式
+import  '@/assets/style/base.css'
 // 引入elementUI组件库
 // import '@/config/ele.config.js'
 import ElementUI from "element-ui";

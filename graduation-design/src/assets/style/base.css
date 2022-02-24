@@ -1,0 +1,637 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-decoration: none;
+}
+
+img {
+  border: 0;
+  vertical-align: bottom;
+}
+
+input,
+textarea {
+  outline: 0;
+  resize: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+}
+
+
+/**
+************************************************************************
+头部样式
+************************************************************************
+*/
+
+.hover {
+  border-bottom: 1px solid #000;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.06);
+  z-index: 900;
+}
+
+.logo img {
+  width: 160px;
+}
+
+.header-box>div:first-child {
+  margin-bottom: 70px;
+}
+
+.nav ul {
+  width: 515px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav ul li {
+  width: 64px;
+  padding: 8px 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav ul li:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav ul li a {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+}
+
+.language {
+  width: 8.3vw;
+  display: flex;
+  justify-content: end;
+  position: relative;
+}
+
+.language img {
+  cursor: pointer;
+}
+
+.language-box {
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  margin-right: 15px;
+  transform: translateX(50%);
+  width: 120px;
+  height: 80px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  background-color: #fff;
+  color: #000;
+}
+
+.language-box a {
+  color: #000;
+}
+
+.language-box li {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.language-box li img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.menu {
+  position: relative;
+  display: none;
+}
+
+.menu-nav-box {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+}
+
+.menu-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 58.6vw;
+  height: 100vh;
+  padding: 20px;
+  background-color: #000;
+}
+
+.menu-nav img {
+  float: right;
+  width: 20px;
+  height: 20px;
+}
+
+.menu-nav ul {
+  margin-top: 14vw;
+}
+
+.menu-nav ul li {
+  padding: 14.75px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 4vw;
+  font-weight: 500;
+}
+
+.menu-nav ul li:first-child {
+  border-top: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+      height: 56px;
+      padding: 0 30px;
+      box-sizing: border-box;
+      justify-content: space-between;
+  }
+  .nav {
+      display: none;
+  }
+  .language {
+      display: none;
+  }
+  .menu {
+      display: block;
+  }
+  .header-box>div:first-child {
+      margin-bottom: 56px;
+  }
+  .logo img {
+      width: 89.55px;
+  }
+  .menu img {
+      width: 20px;
+      height: 18px;
+  }
+}
+
+body {
+  font-family: PingFangSC-Semibold，serif, sans-serif;
+}
+
+
+/**
+************************************************************************
+尾部样式
+************************************************************************
+*/
+
+.foot a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.foot-banner {
+  position: relative;
+}
+
+.foot-banner img {
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.foot-banner .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.foot-title {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.foot-text {
+  margin-top: 26px;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.foot-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000;
+}
+
+.foot-logo {
+  margin-top: 48px;
+}
+
+.foot-nav {
+  margin-top: 40px;
+}
+
+.foot-nav ul {
+  width: 1174px;
+  /* width: 61vw; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.foot-nav ul li {
+  margin: 20px;
+  white-space: nowrap;
+}
+
+.foot-btn {
+  width: 200px;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  margin-top: 48px;
+  margin-bottom: 47.5px;
+  border: 1px solid #fff;
+}
+
+.foot-btn a {
+  text-decoration: none;
+}
+
+.copyright {
+  height: 40.5px;
+  line-height: 40.5px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: #000;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1174px) {
+  .foot-nav {
+      width: 100%;
+  }
+  .foot-nav ul {
+      width: 100%;
+      justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .foot-banner img {
+      height: 74.6vw;
+      object-fit: cover;
+  }
+  .foot-title {
+      font-size: 4.4vw;
+  }
+  .foot-text {
+      font-size: 2.66vw;
+  }
+  .foot-btn {
+      background-color: #fff;
+  }
+  .foot-btn a {
+      color: #000;
+  }
+  .foot-logo img {
+      width: 26.6vw;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .foot-nav ul {
+      justify-content: flex-start;
+  }
+  .foot-nav ul li {
+      width: 25%;
+      margin-left: 0;
+      margin-right: 0;
+      text-align: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .foot-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+}
+
+
+/**
+************************************************************************
+*item模块样式
+************************************************************************
+*/
+
+.item {
+  width: 25%;
+  padding: 0 1.56vw 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item .item-img {
+  width: 100%;
+  padding: 2.1vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+}
+
+.item .item-img img {
+  width: 100%;
+  cursor: pointer;
+}
+
+.item .item-img:hover {
+  padding: 0;
+  transition: 0.7s;
+}
+
+.item-content span {
+  font-size: 14px;
+}
+
+.item-content .item-title {
+  margin-top: 8px;
+}
+
+.item .item-title {
+  margin-top: 1.5vw;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.item .item-title a {
+  color: #000;
+}
+
+.item .item-label {
+  margin-top: 1vw;
+  font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.item .item-btn {
+  margin-top: 1.5vw;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
+
+.item .item-btn a {
+  color: #000;
+  font-size: 14px;
+}
+
+.item .item-btn:hover {
+  background-color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.item .item-btn:hover a {
+  color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .item {
+      width: 33.33%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .item {
+      width: 48vw;
+  }
+  .item .item-img {
+      padding: 4.2vw;
+  }
+}
+
+
+/**
+************************************************************************
+*big-item模块样式
+************************************************************************
+*/
+
+.big-item {
+  padding-top: 80px;
+  padding-bottom: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.big-item .item-img {
+  width: 595px;
+  height: 445px;
+  display: flex;
+  align-items: center;
+}
+
+.big-item .item-img img {
+  width: 100%;
+}
+
+.big-item .item-content {
+  margin-left: 6.25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.big-item .item-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.big-item .item-text {
+  width: 495px;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 900px) {
+  .big-item {
+      padding-top: 0;
+      padding-bottom: 54px;
+      flex-direction: column;
+  }
+  .big-item .item-img {
+      width: 100%;
+      height: 100%;
+  }
+  .big-item .item-content {
+      margin-left: 0;
+      padding: 24px 18px 0;
+  }
+  .big-item .item-text {
+      width: 100%;
+      margin-top: 12px;
+  }
+}
+
+
+/**
+************************************************************************
+*产品模块样式
+************************************************************************
+*/
+
+.product-item {
+  width: 1310px;
+  padding: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-item .item-img {
+  display: flex;
+  align-items: center;
+}
+
+.product-item .item-img img {
+  width: 592px;
+}
+
+.product-item .item-content {
+  width: 100%;
+  margin: 0 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-item .item-title {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.product-item .item-text {
+  width: 450px;
+  margin-top: 24px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.product-item .item-btn {
+  margin-top: 112px;
+  width: 200px;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1310px) {
+  .product-item {
+      width: 100%;
+  }
+  .product-item .item-img img {
+      width: 45.19vw;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .product-item .item-text {
+      width: 100%;
+  }
+  .product-item .item-btn {
+      margin-top: 10vw;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .product-item {
+      padding-left: 0;
+      padding-right: 0;
+      flex-direction: column;
+  }
+  .product-item .item-img {
+      width: 100%;
+  }
+  .product-item .item-img img {
+      width: 100%;
+  }
+  .product-item .item-content {
+      margin: 0;
+      padding: 24px 18px 0;
+  }
+  .product-item .item-text {
+      width: 100%;
+      margin-top: 12px;
+  }
+}
