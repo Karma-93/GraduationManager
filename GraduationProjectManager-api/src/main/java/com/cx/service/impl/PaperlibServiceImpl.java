@@ -25,6 +25,7 @@ public class PaperlibServiceImpl implements PaperlibService {
 
     @Override
     public int insert(PaperlibEntity paperlibEntity) {
+
         return paperlibMapper.insert(paperlibEntity);
     }
 }

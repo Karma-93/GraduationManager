@@ -7,7 +7,9 @@ import com.cx.fluentmybatis.wrapper.TeacherQuery;
 import com.cx.model.PageReq;
 import com.cx.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;

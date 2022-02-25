@@ -4,9 +4,11 @@ package com.cx;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.DownEntity;
 import com.cx.fluentmybatis.entity.InformEntity;
+import com.cx.fluentmybatis.entity.PaperlibEntity;
 import com.cx.model.PageReq;
 import com.cx.service.DownService;
 import com.cx.service.InformService;
+import com.cx.service.PaperlibService;
 import com.cx.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class ServiceTest {
     public DownService downService;
     @Autowired
     public InformService informService;
+    @Autowired
+    public PaperlibService paperlibService;
     @Test
     public void userServiceTest(){
         System.out.println(userService.getUserByAccount("学生1"));
@@ -53,4 +57,14 @@ public class ServiceTest {
             System.out.println(i.getInformTitle());
         }
     }
+
+    @Test
+    public void paperlibServiceTest(){
+        PaperlibEntity temp=new PaperlibEntity();
+        temp.setInfo("论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-");
+        temp.setName("论文名称");
+        paperlibService.insert(temp);
+
+    }
 }
+
