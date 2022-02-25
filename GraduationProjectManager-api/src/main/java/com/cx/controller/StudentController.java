@@ -5,6 +5,7 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.StudentEntity;
+import com.cx.model.PageReq;
 import com.cx.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +24,7 @@ import javax.validation.constraints.NotNull;
 public class StudentController {
     @Autowired
     StudentService studentService;
-    @SaCheckRole("student")
+    @SaCheckLogin
     @ApiOperation(value = "通过UserId获取学生信息")
     @GetMapping("/getStudentByUserId")
     public Result getStudentByUserId(@Validated @NotBlank(message = "UserId不能为空") @RequestParam("userid") String userId){
@@ -32,5 +33,13 @@ public class StudentController {
             return Result.failure(ResultCode.DATA_NOT_EXIST);
         }
         return Result.success(student);
+    }
+
+
+    @SaCheckLogin
+    @ApiOperation("通过教师id查询学生")
+    @PostMapping("/getStudentListByTeacherId")
+    public Result getStudentListByTeacherId(@Validated @RequestBody PageReq pageReq,@RequestBody int teacherId){
+        return Result.success(studentService.getStudentListByTeacherId(pageReq,teacherId));
     }
 }

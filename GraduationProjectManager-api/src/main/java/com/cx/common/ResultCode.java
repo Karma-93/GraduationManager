@@ -21,6 +21,7 @@ public enum ResultCode {
     //服务器错错误
     SERVER_ERROR(3001,"服务器错误"),
     DATA_NOT_EXIST(3002,"查询失败或不存在"),
+    INSERT_ERROR(3003,"插入或更新失败"),
     //权限角色错误
     NOT_ROLE_ERROR(4001,"用户角色权限错误");
 
