@@ -2,6 +2,7 @@ package com.cx.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.PaperlibEntity;
@@ -28,7 +29,7 @@ public class PaperlibController {
     @SaCheckLogin
     @ApiOperation(value = "分页查询获取文库列表")
     @PostMapping("/getpaperliblist")
-    public Result getPaperlibList(@RequestBody @Validated PageReq pageReq){
+    public Result<StdPagedList<PaperlibEntity>> getPaperlibList(@RequestBody @Validated PageReq pageReq){
         return Result.success(paperlibService.getPaperlibList(pageReq));
     }
 

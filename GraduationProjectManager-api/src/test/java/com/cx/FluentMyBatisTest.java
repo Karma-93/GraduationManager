@@ -17,17 +17,19 @@ public class FluentMyBatisTest {
 
     @Test
     public void fluentInsertTest() {
-        //当自定义主键时 使用insertWithPK
-        UserEntity user = new UserEntity();
-        user.setUserId("30001");
-        user.setUserAccount("管理员");
-        user.setUserName("管理员");
-        user.setUserPassword("123456");
-        user.setUserTel("11111111111");
-        user.setUserRoles(3);
-        user.setUserPassword(SaSecureUtil.md5(user.getUserPassword()));
-        //当自定义主键时 使用insertWithPK
-        userMapper.insertWithPk(user);
+        for(int i=2;i<=5;i++) {
+            //当自定义主键时 使用insertWithPK
+            UserEntity user = new UserEntity();
+            user.setUserId("1000"+i);
+            user.setUserAccount("教师"+i);
+            user.setUserName("教师"+i);
+            user.setUserPassword("123456");
+            user.setUserTel("11111111111");
+            user.setUserRoles(1);
+            user.setUserPassword(SaSecureUtil.md5(user.getUserPassword()));
+            //当自定义主键时 使用insertWithPK
+            userMapper.insertWithPk(user);
+        }
     }
 
     @Test

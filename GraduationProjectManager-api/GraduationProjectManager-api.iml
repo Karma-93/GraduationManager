@@ -136,5 +136,9 @@
     <orderEntry type="library" name="Maven: cn.dev33:sa-token-servlet:1.27.0" level="project" />
     <orderEntry type="library" name="Maven: cn.dev33:sa-token-core:1.27.0" level="project" />
     <orderEntry type="library" name="Maven: cn.hutool:hutool-all:5.3.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-websocket:2.5.5" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-websocket:5.3.10" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.66" level="project" />
   </component>
 </module>

@@ -27,7 +27,7 @@ public class DownController {
 
     @ApiOperation(value = "分页查询数据列表")
     @PostMapping("/selectAllPage")
-    public Result selectAllPage(@Validated @RequestBody PageReq pageReq){
+    public Result<StdPagedList<DownEntity>> selectAllPage(@Validated @RequestBody PageReq pageReq){
         return Result.success(downService.get(pageReq));
     }
 }

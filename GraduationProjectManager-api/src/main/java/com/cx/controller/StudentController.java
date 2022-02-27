@@ -2,6 +2,7 @@ package com.cx.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.StudentEntity;
@@ -27,7 +28,7 @@ public class StudentController {
     @SaCheckLogin
     @ApiOperation(value = "通过UserId获取学生信息")
     @GetMapping("/getStudentByUserId")
-    public Result getStudentByUserId(@Validated @NotBlank(message = "UserId不能为空") @RequestParam("userid") String userId){
+    public Result<StudentEntity> getStudentByUserId(@Validated @NotBlank(message = "UserId不能为空") @RequestParam("userid") String userId){
         StudentEntity student= studentService.getStudentByUserId(userId);
         if (student==null){
             return Result.failure(ResultCode.DATA_NOT_EXIST);
@@ -39,7 +40,7 @@ public class StudentController {
     @SaCheckLogin
     @ApiOperation("通过教师id查询学生")
     @PostMapping("/getStudentListByTeacherId")
-    public Result getStudentListByTeacherId(@Validated @RequestBody PageReq pageReq,@RequestBody int teacherId){
+    public Result<StdPagedList<StudentEntity>> getStudentListByTeacherId(@Validated @RequestBody PageReq pageReq, @RequestBody int teacherId){
         return Result.success(studentService.getStudentListByTeacherId(pageReq,teacherId));
     }
 }

@@ -34,7 +34,7 @@ public class EntityGeneratorTests {
             // 设置dao接口和实现的src目录, 相对于 user.dir
             daoDir = "src/main/java",
             // 设置哪些表要生成Entity文件
-            tables = {@Table(value = {"teacher"})}
+            tables = {@Table(value = {"message"})}
     )
     static class Empty { //类名随便取, 只是配置定义的一个载体
     }

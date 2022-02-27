@@ -2,6 +2,7 @@ package com.cx.controller;
 
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.TeacherEntity;
@@ -27,14 +28,14 @@ public class TeacherController {
     @PostMapping("/getteacherlist")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师列表")
-    public Result getTeacherList(PageReq pageReq){
+    public Result<StdPagedList<TeacherEntity>> getTeacherList(PageReq pageReq){
         return Result.success(teacherService.getTeacherList(pageReq));
     }
 
     @PostMapping("/getteacherbyid")
     @ApiOperation(value = "通过teacherId获取教师信息")
     @SaCheckLogin()
-    public Result getTeahcer(int teacherId){
+    public Result<TeacherEntity> getTeahcer(int teacherId){
         TeacherEntity teacherEntity=teacherService.getTeacherById(teacherId);
         if (teacherEntity!=null){
             return Result.success(teacherEntity);

@@ -1,6 +1,8 @@
 package com.cx.controller;
 
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
+import com.cx.fluentmybatis.entity.InformEntity;
 import com.cx.model.PageReq;
 import com.cx.service.InformService;
 import io.swagger.annotations.Api;
@@ -23,7 +25,7 @@ public class InformController {
 
     @ApiOperation(value = "分页查询所有")
     @PostMapping("/selectAllPage")
-    public Result selectAllPage(@Validated @RequestBody PageReq pageReq){
+    public Result<StdPagedList<InformEntity>> selectAllPage(@Validated @RequestBody PageReq pageReq){
         return Result.success(informService.get(pageReq));
     }
 }

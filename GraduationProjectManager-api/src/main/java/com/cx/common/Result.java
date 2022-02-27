@@ -6,12 +6,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class Result implements Serializable {
+public class Result<T> implements Serializable {
     private int code;
     private String message;
-    private Object data;
+    private T data;
+
     public Result(){}
-    public Result(ResultCode resultCode,Object data){
+    public Result(ResultCode resultCode,T data){
         this.code=resultCode.code();
         this.message=resultCode.message();
         this.data=data;
@@ -20,7 +21,7 @@ public class Result implements Serializable {
         this.code=resultCode.code();
         this.message=resultCode.message();
     }
-    public static Result success(Object data){
+    public static <T> Result<T> success(T data){
         Result result=new Result();
         result.setResultCode(ResultCode.SUCCESS);
         result.setData(data);
@@ -37,7 +38,7 @@ public class Result implements Serializable {
         return result;
     }
 
-    public static Result failure(ResultCode resultCode,Object data){
+    public static <T> Result<T> failure(ResultCode resultCode,T data){
         Result result=new Result();
         result.setResultCode(resultCode);
         result.setData(data);
