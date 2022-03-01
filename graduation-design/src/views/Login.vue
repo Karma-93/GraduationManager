@@ -36,15 +36,14 @@ export default {
         if(res.status == 200 && res.data.code == 1){
           this.$message.success("登陆成功！");
           if(res.data.data.userRoles == 1){
-            this.$router.replace({path: "/teacher"})
+            this.$router.push({path: "/teacher"})
           }else if(res.data.data.userRoles == 2){
-            this.$router.replace({path: "/student"})
+            this.$router.push({path: "/student"})
           }
         }else{
           this.$message.error(res.data.message);
         }
       })
-      
     },
   },
 };
