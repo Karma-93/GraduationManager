@@ -28,7 +28,7 @@ const router= new Router({
     routes: [
         {
             path: '/',
-            redirect: "/hometest"
+            redirect: "/login"
         },
         {
             path: '/hometest',
@@ -117,7 +117,8 @@ const router= new Router({
             name: "LayoutTest",
             component: LayoutTest
         }
-    ]
+    ],
+    mode: "history",
 })
 
 
