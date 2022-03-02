@@ -6,7 +6,7 @@
             <a-layout-content
                 :style="{ margin: '24px 20px 0', overflow: 'initial' }"
             >
-                <router-view />
+                <router-view v-if="$route.matched[1]" />
             </a-layout-content>
             <a-layout-footer :style="{ textAlign: 'center' }">
                 <p>

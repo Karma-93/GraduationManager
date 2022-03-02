@@ -22,15 +22,11 @@
             </template>
         </a-page-header> -->
 
+        <!-- 面包屑 -->
         <a-breadcrumb>
-            <a-breadcrumb-item>面包屑</a-breadcrumb-item>
-            <!-- <a-breadcrumb-item
-                ><a href="">Application Center</a></a-breadcrumb-item
-            >
-            <a-breadcrumb-item
-                ><a href="">Application List</a></a-breadcrumb-item
-            >
-            <a-breadcrumb-item>An Application</a-breadcrumb-item> -->
+            <a-breadcrumb-item>a</a-breadcrumb-item>
+            <a-breadcrumb-item>b</a-breadcrumb-item>
+            <a-breadcrumb-item>c</a-breadcrumb-item>
         </a-breadcrumb>
 
         <!-- 消息 -->
@@ -60,7 +56,9 @@
             <a-menu slot="overlay">
                 <a-menu-item> <a-icon type="user" /> 个人中心 </a-menu-item>
                 <a-menu-item> <a-icon type="setting" />设置 </a-menu-item>
-                <a-menu-item> <a-icon type="logout" />退出登录 </a-menu-item>
+                <a-menu-item @click="quit()">
+                    <a-icon type="logout" />退出登录
+                </a-menu-item>
             </a-menu>
         </a-dropdown>
     </a-layout-header>
@@ -74,18 +72,15 @@ export default {
             userData: []
         };
     },
-
-    // created: {
-    //     if() {
-    //         //判断角色
-    //     }
-    // },
-
     methods: {
+        ccc() {
+            console.log(this);
+        },
+        // 退出登陆
         quit() {
-            localStorage.clear(); //清空LocalStorage
-            this.$store.commit("delToken");
-            this.$router.push("login");
+            this.$store.commit("remove_user_info");
+            this.$router.replace({ path: "/login" });
+            this.$message.success("注销成功！");
         },
         //如果是学生
         getStudentData() {},

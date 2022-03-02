@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import App from "@/App"
-import HomeTest from "@/views/HomeTest"
+import Vue from "vue";
+import Router from "vue-router";
+import App from "@/App";
+import HomeTest from "@/views/HomeTest";
 import Sindex from "../views/student/Sindex";
 import LayoutTest from "../views/LayoutTest";
 import SHome from "../views/student/SHome";
@@ -18,136 +18,141 @@ import Tindex from "../views/teacher/Tindex";
 import Aindex from "../views/admin/Aindex";
 import THome from "../views/teacher/THome";
 import AHome from "../views/admin/AHome";
-import store from "../store/store"
+import store from "../store/store";
 
-Vue.use(Router)
+Vue.use(Router);
 
-
-
-const router= new Router({
+const router = new Router({
     routes: [
         {
-            path: '/',
+            path: "/",
             redirect: "/login"
         },
         {
-            path: '/hometest',
-            name: 'HomeTest',
+            path: "/hometest",
+            name: "HomeTest",
             component: HomeTest
         },
         {
-            path: '/login',
+            path: "/login",
             name: "Login",
             component: Login
         },
         {
-            path: '/sindex',
-            name: 'Sindex',
+            path: "/sindex",
+            name: "Sindex",
             component: Sindex,
-            meta:{
-                requireAuth:true    //true为这个页面需要登录
+            meta: {
+                requireAuth: true //true为这个页面需要登录
             },
             children: [
                 {
-                    path: '/',
-                    name: 'SHome',
+                    path: "shome",
+                    name: "SHome",
                     component: SHome
-                }, {
-                    path: 'schoose',
-                    name: 'SChoose',
+                },
+                {
+                    path: "schoose",
+                    name: "SChoose",
                     component: SChoose
-                }, {
-                    path: 'sdownlaod',
-                    name: 'SDownload',
+                },
+                {
+                    path: "sdownlaod",
+                    name: "SDownload",
                     component: SDownload
-                }, {
-                    path: 'sktbg',
-                    name: 'SKtbg',
+                },
+                {
+                    path: "sktbg",
+                    name: "SKtbg",
                     component: SKtbg
-                }, {
-                    path: 'slibrary',
-                    name: 'SLibrary',
+                },
+                {
+                    path: "slibrary",
+                    name: "SLibrary",
                     component: SLibrary
-                }, {
-                    path: 'spaperdemo',
-                    name: 'SPaperdemo',
+                },
+                {
+                    path: "spaperdemo",
+                    name: "SPaperdemo",
                     component: SPaperdemo
-                }, {
-                    path: 'sqzxj',
+                },
+                {
+                    path: "sqzxj",
                     name: "SQzxj",
                     component: SQzxj
-                }, {
-                    path: 'sreplyinfo',
-                    name: 'SReplyInfo',
+                },
+                {
+                    path: "sreplyinfo",
+                    name: "SReplyInfo",
                     component: SReplyInfo
-                }, {
-                    path: 'sreplyscore',
-                    name: 'SReplyScore',
+                },
+                {
+                    path: "sreplyscore",
+                    name: "SReplyScore",
                     component: SReplyScore
                 }
             ]
         },
         {
-            path: '/tindex',
-            name: 'Tindex',
+            path: "/tindex",
+            name: "Tindex",
             component: Tindex,
             children: [
                 {
-                    path: '/',
-                    name: 'THome',
+                    path: "thome",
+                    name: "THome",
                     component: THome
-                },
+                }
             ]
         },
 
         {
-            path: '/aindex',
-            name: 'Aindex',
+            path: "/aindex",
+            name: "Aindex",
             component: Aindex,
             children: [
                 {
-                    path: '/',
-                    name: 'AHome',
+                    path: "ahome",
+                    name: "AHome",
                     component: AHome
-                },
+                }
             ]
         },
         {
-            path: '/layouttest',
+            path: "/layouttest",
             name: "LayoutTest",
             component: LayoutTest
         }
     ],
-    mode: "history",
-})
-
-
+    mode: "history"
+});
 
 //设置全局前置守卫路由，并判断是否取出token    即路由拦截，
 //to即将进入的目标路由对象，form正要离开的路由，进行管道中的下一个钩子，要确保调用next方法
 router.beforeEach((to, from, next) => {
-    const nextRouter=['Login'];  //不需要登录即可访问的页面
-
-    if (nextRouter.indexOf(to.name)<0){ //当需要登录才能访问
-        if(!store.state.login){//当没有登录
+    const nextRouter = ["Login"]; //不需要登录即可访问的页面
+    if (nextRouter.indexOf(to.name) < 0) {
+        //当需要登录才能访问
+        if (!store.state.login) {
+            //当没有登录
             console.log("未登录");
-            next("Login");
+            next("login");
         }
     }
     //已经登录状态
-    if (to.name === 'Login') {
-        if (store.state.login) {
-            const userRoles=store.state.userInfo.userRoles;
-            if (userRoles==1){
-                next("Tindex")
-            }else if(userRoles==2){
-                next("Sindex")
-            }else if(userRoles==3){
-                next("Aindex")
-            }
-        }
-    }
-    next()
+    // if (to.name === "Login") {
+    //     if (store.state.login) {
+    //         const userRoles = store.state.userInfo.userRoles;
+    //         if (userRoles == 1) {
+    //             next("Tindex");
+    //         } else if (userRoles == 2) {
+    //             next("Sindex");
+    //         } else if (userRoles == 3) {
+    //             next("Aindex");
+    //         }
+    //     }
+    // }
+    next();
 
     /*
 
@@ -165,9 +170,6 @@ router.beforeEach((to, from, next) => {
 
 
      */
-})
+});
 
-
-
-
-export default router
+export default router;

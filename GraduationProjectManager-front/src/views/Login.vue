@@ -147,13 +147,18 @@
                     >CX</a
                 >提供技术支持
             </p>
-            <p>copyright &copy; 2018-2028, All Rights Reserved.</p>
+            <p>版权所有 &copy; 2022/3/1.陈旭</p>
         </a-layout-footer>
     </a-layout>
 </template>
 
 <script>
-import { login } from "@/api/login.js";
+import {
+    login,
+    requestDownList,
+    requestAnnouncementList
+} from "@/api/login.js";
+
 export default {
     name: "Login",
     data() {
@@ -172,43 +177,32 @@ export default {
         this.getInformList();
     },
     methods: {
-        /**
-         * @description 处理登陆函数
-         * @author cuiruichen
-         * @date DATE_TIME
-         * @export
-         * @param
-         * @returns
-         */
+        // 处理登陆函数
         handleSubmit(e) {
             e.preventDefault();
             this.form.validateFields((err, values) => {
+                //当输入值不为空
                 if (!err) {
-                    //当输入值不为空
-                    console.log("Received values of form: ", values);
-                    //发起请求
+                    //发起登陆请求
                     login({
                         account: values["account"],
                         password: values["password"]
                     }).then(res => {
                         // 请求成功
-                        console.log(res);
                         if (res.data.code == 1) {
                             const userInfo = res.data.data;
-                            console.log("userInfo", userInfo.satoken);
-                            this.$store.commit("setToken", userInfo.satoken);
-                            this.$store.commit(
-                                "changeUserInfo",
-                                JSON.stringify(userInfo)
-                            ); //通过commit调用mutaions中的方法 传递值
+                            //通过commit调用mutaions中的方法将satoken存入vuex
+                            // console.log("satoken", userInfo.satoken);
+                            // this.$store.commit("set_token", userInfo.satoken);
+                            this.$store.commit("change_user_info", userInfo);
                             this.$message.success("登录成功");
                             if (userInfo.userRoles == 1) {
                                 //判断用户角色来跳转不同的主页
-                                this.$router.push("/tindex");
+                                this.$router.push({ path: "/tindex" });
                             } else if (userInfo.userRoles == 2) {
-                                this.$router.push("/sindex");
+                                this.$router.push({ path: "/sindex" });
                             } else if (userInfo.userRoles == 3) {
-                                this.$router.push("/aindex");
+                                this.$router.push({ path: "/aindex" });
                             }
                         } else {
                             this.$message.error("登陆失败:" + res.data.message);
@@ -218,17 +212,21 @@ export default {
             });
         },
 
-        /**
-         * @description
-         * @author cuiruichen
-         * @date DATE_TIME
-         * @export
-         * @param
-         * @returns
-         */
-        getDownList() {},
-        getInformList() {},
-        quit() {}
+        // 获取文件下载列表
+        getDownList() {
+            requestDownList({ pageNum: 0, pageSize: 5 }).then(response => {
+                this.downData = response.data.data.data;
+            });
+        },
+
+        // 获取通知公告列表
+        getInformList() {
+            requestAnnouncementList({ pageNum: 0, pageSize: 5 }).then(
+                response => {
+                    this.informData = response.data.data.data;
+                }
+            );
+        }
     }
 };
 </script>

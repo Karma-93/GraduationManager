@@ -6,27 +6,23 @@
 
 <script>
 export default {
-    name: 'App',
+    name: "App",
     data() {
-        return {}
+        return {};
     }
-    /*
-    created() {
-        //将vuex的store数据存储在sessionStorage中
-        //在页面加载时读取sessionStorage里的状态信息
-        if (sessionStorage.getItem("store")) {
-            this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
-        }
-
-//在页面刷新时将vuex里的信息保存到sessionStorage里
-        window.addEventListener("beforeunload", () => {
-            sessionStorage.setItem("store", JSON.stringify(this.$store.state))
-        })
-    }
-
-     */
-
-}
+    // App组件创建时
+    // created() {
+    //     // 页面刷新时将vuex里的信息保存到localStorage里
+    //     window.addEventListener("beforeunload", () => {
+    //         localStorage.setItem("store", JSON.stringify(this.$store.state));
+    //     });
+    //     // 页面刷新后将localStorage的数据取出来存入vuex
+    //     window.addEventListener("load", () => {
+    //         this.$store.commit("set_state", localStorage.getItem("store"));
+    //         localStorage.removeItem("store");
+    //     });
+    // }
+};
 </script>
 
 <style scoped>
