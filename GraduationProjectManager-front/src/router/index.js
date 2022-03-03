@@ -39,6 +39,11 @@ const router = new Router({
             component: Login
         },
         {
+            path: "/message",
+            name:"message",
+            component: () => import("@/views/message/Message")
+        },
+        {
             path: "/sindex",
             name: "Sindex",
             component: Sindex,
