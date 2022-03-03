@@ -12,7 +12,10 @@ import com.cx.fluentmybatis.wrapper.UserUpdate;
 import com.cx.model.Login;
 import com.cx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,5 +67,12 @@ public class UserServiceImpl implements UserService {
         RolesQuery query=new RolesQuery();
         query.where().rolesId().eq(rolesId);
         return rolesMapper.findOne(query).getRolesName();
+    }
+
+    @Override
+    public List<UserEntity> getExcludeList(List<String> list) {
+        UserQuery query=new UserQuery();
+        query.where.userId().notIn(list).end();
+        return userMapper.listEntity(query);
     }
 }

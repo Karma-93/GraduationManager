@@ -3,7 +3,10 @@ package com.cx.service.impl;
 import com.cx.fluentmybatis.entity.MessageEntity;
 import com.cx.fluentmybatis.helper.MessageMapping;
 import com.cx.fluentmybatis.mapper.MessageMapper;
+import com.cx.fluentmybatis.wrapper.MessageQuery;
+import com.cx.fluentmybatis.wrapper.MessageUpdate;
 import com.cx.service.MessageService;
+import com.cx.service.SessionListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,22 +15,42 @@ import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
-
     @Autowired
-    MessageMapper messageMapper;
-
+    private MessageMapper messageMapper;
     @Override
     public int updateMessageState() {
-        return 0;
+        return -1;
     }
 
     @Override
     public int insertMessage(MessageEntity messageEntity) {
-        return 0;
+        messageEntity.setMessageId(null);
+        return messageMapper.insert(messageEntity);
     }
 
     @Override
     public int saveBatch(List<MessageEntity> messageEntityList) {
-        return 0;
+        return messageMapper.insertBatch(messageEntityList);
+    }
+
+    @Override
+    public List<MessageEntity> getMessageList(String toUserId, String userId) {
+        MessageQuery query=new MessageQuery();
+        query.where.userId().eq(userId).and.toUserId().eq(toUserId).end();
+        return messageMapper.listEntity(query);
+    }
+
+    /**
+     * 修改聊天记录为已读状态
+     * @param toUserId
+     * @param userId
+     */
+    @Override
+    public void messageRead(String toUserId, String userId) {
+        MessageUpdate update=new MessageUpdate();
+        update.update.state().is(1).end()
+                .where.toUserId().eq(toUserId).and.userId().eq(userId).end();
+        messageMapper.updateBy(update);
+        return;
     }
 }

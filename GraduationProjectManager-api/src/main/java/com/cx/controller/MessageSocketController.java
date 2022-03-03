@@ -1,0 +1,131 @@
+package com.cx.controller;
+
+
+import com.cx.common.utils.CurPool;
+import com.cx.common.utils.JsonUtils;
+import com.cx.fluentmybatis.entity.MessageEntity;
+import com.cx.fluentmybatis.entity.SessionListEntity;
+import com.cx.fluentmybatis.entity.UserEntity;
+import com.cx.service.MessageService;
+import com.cx.service.SessionListService;
+import com.cx.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.websocket.*;
+import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Slf4j
+@ServerEndpoint("/websocket/{userId}/{sessionId}")   //socket链接地址，通过此url建立链接
+@Component
+public class MessageSocketController {
+
+    @Autowired
+    private SessionListService sessionListService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private MessageService messageService;
+    //会话
+    private Session session;
+
+    @OnOpen
+    public void onOpen(Session session,@PathParam(value = "userId")String userId,@PathParam(value="sessionId")String sessionId){
+        this.session=session;
+        CurPool.messageSockets.put(userId,this);
+        List<Object> list = new ArrayList<>();
+        list.add(sessionId);//sessionId
+        list.add(session);
+        CurPool.sessionPool.put(userId , list);
+        System.out.println("【websocket消息】有新的连接，总数为:"+CurPool.messageSockets.size());
+    }
+
+    @OnClose
+    public void onClose(){
+        //断开链接删除用户删除Session
+        String userId = this.session.getRequestParameterMap().get("userId").get(0);
+        CurPool.sessionPool.remove(userId);
+        CurPool.messageSockets.remove(userId);
+        UserEntity user = userService.getUserById(userId);
+        CurPool.curUserPool.remove(user.getUserName());
+        System.out.println("【websocket消息】连接断开，总数为:"+CurPool.messageSockets.size());
+    }
+
+    @OnMessage
+    public void onMessage(String message){
+        String sessionId=this.session.getRequestParameterMap().get("sessionId").get(0);
+        if (sessionId==null){
+            log.error("sessionId 错误");
+        }
+        SessionListEntity sessionListEntity=sessionListService.getSessionListById(Integer.parseInt(sessionId));
+        UserEntity user=userService.getUserById(sessionListEntity.getUserId());
+        MessageEntity messageEntity=new MessageEntity();
+        messageEntity.setMessageBody(message);
+        messageEntity.setCreateDate(new Date());
+        messageEntity.setUserId(sessionListEntity.getUserId());
+        messageEntity.setToUserId(sessionListEntity.getToUserId());
+        messageEntity.setState(0);
+        // 消息持久化
+        messageService.insertMessage(messageEntity);
+
+
+        // 判断用户是否存在，不存在就结束
+        List<Object> list = CurPool.sessionPool.get(sessionListEntity.getToUserId());
+        if (list == null || list.isEmpty()){
+            // 用户不存在，更新未读数
+            sessionListService.addUnReadCount(sessionListEntity.getToUserId(),sessionListEntity.getUserId());
+            //seesionListMapper.addUnReadCount(sessionList.getToUserId(),sessionList.getUserId());
+        }else{
+            // 用户存在，判断会话是否存在
+            String id = sessionListService.getIdByUser(sessionListEntity.getToUserId(), sessionListEntity.getUserId())+"";
+            String o = list.get(0) + "";
+            if (id.equals(o)){
+                // 会话存在直接发送消息
+                sendTextMessage(sessionListEntity.getToUserId(), JsonUtils.objectToJson(messageEntity));
+            }else {
+                // 判断会话列表是否存在
+                if (id == null || "".equals(id) || "null".equals(id)){
+                    // 新增会话列表
+                    SessionListEntity tmpSessionList = new SessionListEntity();
+                    tmpSessionList.setUserId(sessionListEntity.getToUserId());
+                    tmpSessionList.setToUserId(sessionListEntity.getUserId());
+                    tmpSessionList.setListName(user.getUserName());
+                    tmpSessionList.setUnReadCount(1);
+                    sessionListService.insert(tmpSessionList);
+                }else {
+                    // 更新未读消息数量
+                    sessionListService.addUnReadCount(sessionListEntity.getToUserId(),sessionListEntity.getUserId());
+                }
+                // 会话不存在发送列表消息
+                List<SessionListEntity> sessionLists = sessionListService.getSessionListByUserId(sessionListEntity.getToUserId());
+                sendTextMessage(sessionListEntity.getToUserId() ,JsonUtils.objectToJson(sessionLists));
+            }
+        }
+        System.out.println("【websocket消息】收到客户端消息:"+message);
+    }
+
+    // 此为单点消息 (发送文本)
+    public void sendTextMessage(String userId, String message) {
+        Session session = (Session)CurPool.sessionPool.get(userId).get(1);
+        if (session != null) {
+            try {
+                session.getBasicRemote().sendText(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+}

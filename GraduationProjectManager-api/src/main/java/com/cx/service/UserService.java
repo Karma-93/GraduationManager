@@ -3,6 +3,8 @@ package com.cx.service;
 import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.model.Login;
 
+import java.util.List;
+
 public interface UserService {
 
     /**
@@ -39,5 +41,8 @@ public interface UserService {
      * @return
      */
     String getUserRolesByRolesId(Integer rolesId);
+
+    List<UserEntity> getExcludeList(List<String> list);
+
 
 }

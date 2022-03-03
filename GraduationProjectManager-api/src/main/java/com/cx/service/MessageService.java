@@ -10,5 +10,6 @@ public interface MessageService{
     //2、发送消息
     public int insertMessage(MessageEntity messageEntity);
     public int saveBatch(List<MessageEntity> messageEntityList);
-
+    public List<MessageEntity> getMessageList(String toUserId,String userId);
+    public void messageRead(String toUserId,String userId);
 }
