@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: "http://localhost:8082/",
+    // baseURL: "http://localhost:8082/",
+    baseURL: "http://60.205.187.211/",
     headers: { "Content-Type": "application/json" },
     timeout: 6000
-        // headers.common["token"] = store.state.token;
+    // headers.common["token"] = store.state.token;
 });
 
 //添加请求拦截器

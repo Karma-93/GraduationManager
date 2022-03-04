@@ -5,8 +5,7 @@ const messageApi = {
     DelSessionList: "/session/delSessionList",
     SessionListsAlready: "/sessionListsAlready",
     SessionListsNot: "/session/sessionListsNot"
-}
-
+};
 
 export function newWebSocket() {
     return new WebSocket(
@@ -14,39 +13,37 @@ export function newWebSocket() {
     );
 }
 
-
-export function messageList(sessionListId) {
+export function messageList(params) {
     return request({
         url: messageApi.MessageList,
         method: "get",
-        params: sessionListId
-    })
+        params
+    });
 }
-
 
 export function createSession(data) {
     return request({
         url: messageApi.CreateSessionList,
         method: "post",
-        params: data
-    })
+        data
+    });
 }
-export function delSession(sessionListId) {
+export function delSession(params) {
     return request({
         url: messageApi.DelSessionList,
         method: "get",
-        params: sessionListId
-    })
+        params
+    });
 }
 export function sessionListsAlready() {
     return request({
         url: messageApi.SessionListsAlready,
         method: "get"
-    })
+    });
 }
 export function sessionListsNot() {
     return request({
         url: messageApi.SessionListsNot,
         method: "get"
-    })
+    });
 }
