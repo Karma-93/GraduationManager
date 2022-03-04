@@ -1,6 +1,7 @@
 package com.cx.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.StpUtil;
 import com.cx.common.Result;
 import com.cx.fluentmybatis.entity.SessionListEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
@@ -10,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.Session;
 import java.util.List;
@@ -31,8 +29,9 @@ public class MessageSessionListController {
 
     @SaCheckLogin
     @ApiOperation(value = "根据用户ID查询已经建立会话的列表")
-    @GetMapping("/sessionListAlready")
-    public Result sessionListAlready(@RequestParam String userId){
+    @GetMapping("/sessionListsAlready")
+    public Result sessionListAlready(){
+        String userId=(String)StpUtil.getLoginId();
         List<SessionListEntity> sessionListEntityList=sessionListService.getSessionListByUserId(userId);
         return Result.success(sessionListEntityList);
     }
@@ -40,9 +39,9 @@ public class MessageSessionListController {
 
     @SaCheckLogin
     @ApiOperation(value = "根据用户ID查询未建立(可以建立)会话的列表")
-    @GetMapping("/sessionListNot")
-    public Result sessionListNot(@RequestParam String userId){
-
+    @GetMapping("/sessionListsNot")
+    public Result sessionListNot(){
+        String userId=(String)StpUtil.getLoginId();
         List<String> list=sessionListService.getUserIdByUserId(userId);
         list.add(userId);
         List<UserEntity> excludeList=userService.getExcludeList(list);
@@ -52,9 +51,10 @@ public class MessageSessionListController {
     @ApiOperation(value = "创建一个会话记录列表")
     // 创建会话
     @SaCheckLogin
-    @GetMapping("/createSession")
-    public Result createSession(@RequestParam String userId,@RequestParam String toUserId,@RequestParam String toUserName){
+    @PostMapping("/createSessionList")
+    public Result createSession(@RequestParam String toUserId,@RequestParam String toUserName){
         SessionListEntity sessionListEntity=new SessionListEntity();
+        String userId=(String)StpUtil.getLoginId();
         sessionListEntity.setUserId(userId);
         sessionListEntity.setToUserId(toUserId);
         sessionListEntity.setUnReadCount(0);
@@ -76,9 +76,9 @@ public class MessageSessionListController {
     @ApiOperation(value = "删除一个聊天会话记录")
     @SaCheckLogin
     // 删除会话
-    @GetMapping("/delSession")
-    public Result delSession(@RequestParam Integer sessionId){
-        sessionListService.deleteById(sessionId);
+    @GetMapping("/delSessionList")
+    public Result delSession(@RequestParam Integer sessionListId){
+        sessionListService.deleteById(sessionListId);
         return Result.success();
     }
 

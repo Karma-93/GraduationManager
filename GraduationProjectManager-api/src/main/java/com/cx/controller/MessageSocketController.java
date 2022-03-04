@@ -34,6 +34,12 @@ public class MessageSocketController {
     //会话
     private Session session;
 
+    /**
+     * 当前端调用链接时，就会调用这个方法，可以拿到链接的参数和传递的参数
+     * @param session
+     * @param userId
+     * @param sessionId
+     */
     @OnOpen
     public void onOpen(Session session,@PathParam(value = "userId")String userId,@PathParam(value="sessionId")String sessionId){
         this.session=session;
@@ -45,6 +51,9 @@ public class MessageSocketController {
         System.out.println("【websocket消息】有新的连接，总数为:"+CurPool.messageSockets.size());
     }
 
+    /**
+     * 链接中断时调用的方法
+     */
     @OnClose
     public void onClose(){
         //断开链接删除用户删除Session
@@ -56,8 +65,13 @@ public class MessageSocketController {
         System.out.println("【websocket消息】连接断开，总数为:"+CurPool.messageSockets.size());
     }
 
+    /**
+     * 当前端向后端发送消息(this.websock.send(content))时
+     * @param message
+     */
     @OnMessage
     public void onMessage(String message){
+
         String sessionId=this.session.getRequestParameterMap().get("sessionId").get(0);
         if (sessionId==null){
             log.error("sessionId 错误");
@@ -77,7 +91,7 @@ public class MessageSocketController {
         // 判断用户是否存在，不存在就结束
         List<Object> list = CurPool.sessionPool.get(sessionListEntity.getToUserId());
         if (list == null || list.isEmpty()){
-            // 用户不存在，更新未读数
+            // 用户不存在
             sessionListService.addUnReadCount(sessionListEntity.getToUserId(),sessionListEntity.getUserId());
             //seesionListMapper.addUnReadCount(sessionList.getToUserId(),sessionList.getUserId());
         }else{
@@ -109,12 +123,19 @@ public class MessageSocketController {
         System.out.println("【websocket消息】收到客户端消息:"+message);
     }
 
+
     // 此为单点消息 (发送文本)
+
+    /**
+     * 向前端发送消息
+     * @param userId
+     * @param message
+     */
     public void sendTextMessage(String userId, String message) {
         Session session = (Session)CurPool.sessionPool.get(userId).get(1);
         if (session != null) {
             try {
-                session.getBasicRemote().sendText(message);
+                session.getBasicRemote().sendText(message);//向前端发送消息
             } catch (Exception e) {
                 e.printStackTrace();
             }
