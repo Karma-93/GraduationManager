@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 const loginApi = {
     Login: "/user/login",
-    Logout: "",
+    Logout: "/user/logout",
     DownList: "/down/selectAllPage",
     AnnouncementList: "/inform/selectAllPage"
 };

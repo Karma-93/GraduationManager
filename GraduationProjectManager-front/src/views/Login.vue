@@ -192,7 +192,7 @@ export default {
                         if (res.data.code == 1) {
                             const userInfo = res.data.data;
                             //通过commit调用mutaions中的方法将satoken存入vuex
-                            // console.log("satoken", userInfo.satoken);
+                            console.log("satoken", userInfo.satoken);
                             // this.$store.commit("set_token", userInfo.satoken);
                             this.$store.commit("change_user_info", userInfo);
                             this.$message.success("登录成功");
