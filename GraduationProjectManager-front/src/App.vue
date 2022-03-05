@@ -41,12 +41,24 @@ export default {
                 )
             );
         }
-        console.log(this.$store.state)
+        console.log(this.$store.state);
         //在页面刷新时将vuex里的信息保存到sessionStorage里
         window.addEventListener("beforeunload", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
     },
+    beforeRouteLeave(to, from, next) {
+        const nextRouter = ["Login"]; //不需要登录即可访问的页面
+        if (nextRouter.indexOf(to.name) < 0) {
+            //当需要登录才能访问
+            if (!store.state.login) {
+                //当没有登录
+                console.log("未登录");
+                next("login");
+            }
+        }
+        next();
+    }
 };
 </script>
 

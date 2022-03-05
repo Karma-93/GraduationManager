@@ -40,7 +40,7 @@ const router = new Router({
         },
         {
             path: "/message",
-            name:"message",
+            name: "message",
             component: () => import("@/views/message/Message")
         },
         {
@@ -132,49 +132,49 @@ const router = new Router({
     mode: "history"
 });
 
-//设置全局前置守卫路由，并判断是否取出token    即路由拦截，
-//to即将进入的目标路由对象，form正要离开的路由，进行管道中的下一个钩子，要确保调用next方法
-router.beforeEach((to, from, next) => {
-    const nextRouter = ["Login"]; //不需要登录即可访问的页面
-    if (nextRouter.indexOf(to.name) < 0) {
-        //当需要登录才能访问
-        if (!store.state.login) {
-            //当没有登录
-            console.log("未登录");
-            next("login");
-        }
-    }
-    //已经登录状态
-    // if (to.name === "Login") {
-    //     if (store.state.login) {
-    //         const userRoles = store.state.userInfo.userRoles;
-    //         if (userRoles == 1) {
-    //             next("Tindex");
-    //         } else if (userRoles == 2) {
-    //             next("Sindex");
-    //         } else if (userRoles == 3) {
-    //             next("Aindex");
-    //         }
-    //     }
-    // }
-    next();
+// //设置全局前置守卫路由，并判断是否取出token    即路由拦截，
+// //to即将进入的目标路由对象，form正要离开的路由，进行管道中的下一个钩子，要确保调用next方法
+// router.beforeEach((to, from, next) => {
+//     // router.afterEach((to, from, next) => {
+//     const nextRouter = ["Login"]; //不需要登录即可访问的页面
+//     if (nextRouter.indexOf(to.name) < 0) {
+//         //当需要登录才能访问
+//         if (!store.state.login) {
+//             //当没有登录
+//             console.log("未登录");
+//             next("login");
+//         }
+//     }
+//     //已经登录状态
+//     // if (to.name === "Login") {
+//     //     if (store.state.login) {
+//     //         const userRoles = store.state.userInfo.userRoles;
+//     //         if (userRoles == 1) {
+//     //             next("Tindex");
+//     //         } else if (userRoles == 2) {
+//     //             next("Sindex");
+//     //         } else if (userRoles == 3) {
+//     //             next("Aindex");
+//     //         }
+//     //     }
+//     // }
+//     next();
 
-    /*
+//     /*
 
-    if (to.matched.some(res => res.meta.requireAuth)) {
-        console.log("requireAuth"+res.meta.requireAuth)
-        //验证是否需要登录
-        if (localStorage.getItem("userInfo")) {     //查询本地信息是否已经登录
-            next();
-        } else {
-            next({
-                path:"/login"   //为登录则跳转至登录页面
-            })
-        }
-    }
+//     if (to.matched.some(res => res.meta.requireAuth)) {
+//         console.log("requireAuth"+res.meta.requireAuth)
+//         //验证是否需要登录
+//         if (localStorage.getItem("userInfo")) {     //查询本地信息是否已经登录
+//             next();
+//         } else {
+//             next({
+//                 path:"/login"   //为登录则跳转至登录页面
+//             })
+//         }
+//     }
 
-
-     */
-});
+//      */
+// });
 
 export default router;
