@@ -13,12 +13,14 @@ const CHANGE_USER_INFO = "change_user_info";
 const REMOVE_USER_INFO = "remove_user_info";
 
 export default new Vuex.Store({
-    state: {},
+    state: {
+        userInfo: {}
+    },
     mutations: {
         [SET_STORE](state, payload) {
-            state = payload;
+            state.userInfo = payload.userInfo;
+            state.login = payload.login;
         },
-
 
         [SET_TOKEN](state, payload) {
             state.token = payload;
