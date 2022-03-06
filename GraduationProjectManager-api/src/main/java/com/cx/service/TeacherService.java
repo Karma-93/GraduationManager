@@ -6,5 +6,6 @@ import com.cx.model.PageReq;
 
 public interface TeacherService {
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq);
-    public TeacherEntity getTeacherById(int teacherid);
+    public TeacherEntity getTeacherById(int teacherId);
+    public TeacherEntity getTeacherByUserId(String userId);
 }

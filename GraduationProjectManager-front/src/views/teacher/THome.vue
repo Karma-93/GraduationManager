@@ -3,8 +3,22 @@
 </template>
 
 <script>
+import {getStudentByUserId} from "@/api/student.js";
+
 export default {
-    name: "THome"
+    name: "THome",
+    data(){
+        studentInfo:[]
+    }
+    ,
+    created(){
+
+    }
+    ,
+    function () {
+        
+    }
+
 }
 </script>
 

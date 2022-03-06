@@ -1,14 +1,15 @@
 <template>
     <div class="main">
-        <div class="main-up">{{ this.UserName }}</div>
+        <div class="main-up">{{ this.curUserName }}</div>
+        <a-button @click="log()">log</a-button>
         <div class="main-down">
             <div class="left">
                 <div class="left_up">
                     <div class="label_title">已建立会话</div>
                     <!--遍历已经发起过会话的列表-->
                     <div
-                        :class="curSessionId == item.id ? 'box_select' : 'box'"
                         v-for="item in sessionList_already"
+                        :class="curSessionId == item.id ? 'box_select' : 'box'"
                         :key="item.id"
                     >
                         <!--显示接受者的用户名-->
@@ -26,11 +27,11 @@
                     <div class="label_title">可建立会话</div>
                     <div
                         v-for="item in sessionList_not"
-                        :key="item.id"
+                        :key="item.userId"
                         class="box"
-                        @click="createSession(item.id, item.name)"
+                        @click="createSession(item.userId, item.userName)"
                     >
-                        <div class="box_left">{{item.name}}</div>
+                        <div class="box_left">{{item.userName}}</div>
                     </div>
                 </div>
             </div>
@@ -41,13 +42,22 @@
                         :key="i"
                         :class="item.userId===curUserId ? 'msg_right':'msg_lefg'"
                     >
-                        <div class="msg_right_up">{{item.userName}}</div>
+                        <div
+                            class="msg_right_up"
+                        >{{item.userId===curUserId ? curUserName:sessionList_already.find(element => element.id==curSessionId).listName}}</div>
                         <div
                             :class="item.userId === curUserId ? 'msg_right_down' : 'msg_left_down'"
-                        >{{item.content}}</div>
+                        >{{item.messageBody}}</div>
                     </div>
                 </div>
                 <div class="down">
+                    <a-textarea
+                        v-model="textarea"
+                        placeholder="请输入内容，回车发送"
+                        @pressEnter="sendMsg"
+                        :auto-size="{ minRows: 3, maxRows: 5 }"
+                    />
+                    <!--
                     <el-input
                         type="textarea"
                         :rows="9"
@@ -55,6 +65,7 @@
                         @keyup.enter.native="sendMsg"
                         v-model="textarea"
                     ></el-input>
+                    -->
                 </div>
             </div>
         </div>
@@ -62,7 +73,6 @@
 </template>
 
 <script>
-import store from "@/store/store.js";
 import {
     messageList,
     sessionListsAlready,
@@ -82,12 +92,14 @@ export default {
             sessionList_already: [], //已经发起过会话的列表?
             sessionList_not: [],
             list: [], //存放消息数据
+            textarea: "",
         };
     },
     created() {
-        this.curUserId = store.state.userInfo.userId;
-        this.curUserName = store.state.userInfo.userName;
+        this.curUserId = this.$store.state.userInfo.userId;
+        this.curUserName = this.$store.state.userInfo.userName;
         this.getSessionListAlready();
+        this.getSessionListNot();
         this.startSession(99999999);
     },
     updated() {},
@@ -98,10 +110,15 @@ export default {
     components: {},
 
     methods: {
+        log() {
+            console.log("sessionListAlready", this.sessionList_already);
+            console.log("sessionListNot", this.sessionList_not);
+            console.log("list", this.list);
+        },
         //和后端建立链接，
         initWebSocket: function (userId, sessionId) {
             // WebSocket与普通的请求所用协议有所不同，ws等同于http，wss等同于https
-            this.websock = newWebSocket();
+            this.websock = newWebSocket(userId, sessionId);
             this.websock.onopen = this.websocketonopen;
             this.websock.onerror = this.websocketonerror;
             this.websock.onmessage = this.websocketonmessage;
@@ -146,9 +163,9 @@ export default {
                 return this.$message.error("请选择左边的对话框开始聊天!");
             }
             let data = {
-                UserId: this.curUserId,
-                UserName: this.curUserName,
-                content: this.textarea, //content
+                userId: this.curUserId,
+                userName: this.curUserName,
+                messageBody: this.textarea, //content
             };
             this.list.push(data);
             //主动发送消息
@@ -159,15 +176,16 @@ export default {
         //获取可以建立会话的列表,即还没有发起过聊天的用户
         getSessionListNot() {
             sessionListsNot(this.curUserId)
-                .then(function (response) {
+                .then((res) => {
                     //当请求成功
-                    if (response.data.code == 1) {
-                        this.sessionList_not = response.data.data;
+                    if (res.data.code == 1) {
+                        this.sessionList_not = res.data.data;
+                    } else {
+                        //如果请求失败
+                        return this.$message.error(
+                            "message Error" + res.data.message
+                        );
                     }
-                    //如果请求失败
-                    return this.$message.error(
-                        "message Error" + response.data.message
-                    );
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -176,30 +194,29 @@ export default {
         //获取已经存在的会话列表
         getSessionListAlready() {
             sessionListsAlready(this.curUserId)
-                .then(function (response) {
-                    if (response.data.code == 1) {
-                        this.sessionList_already = response.data.data;
+                .then((res) => {
+                    if (res.data.code == 1) {
+                        this.sessionList_already = res.data.data;
+                    } else {
+                        return this.$message.error(
+                            "message Error" + res.data.message
+                        );
                     }
-                    return this.$message.error(
-                        "message Error" + response.data.message
-                    );
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
 
-        createdSession(toUserId, toUserName) {
+        createSession(toUserId, toUserName) {
             createSession({
-                toUserId: toUserId,
-                toUserName: toUserName,
+                toUserId,
+                toUserName,
             })
                 .then((res) => {
                     //请求错误
                     if (res.data.code != 1) {
-                        return thus.$message.error(
-                            "错误" + response.data.message
-                        );
+                        return this.$message.error("错误" + res.data.message);
                     }
                     this.getSessionListNot();
                     this.getSessionListAlready();
@@ -222,10 +239,8 @@ export default {
         delSession(sessionId) {
             delSession(sessionId)
                 .then((res) => {
-                    if (res.data.code != -1) {
-                        return this.$message.error(
-                            "错误:" + response.data.message
-                        );
+                    if (res.data.code != 1) {
+                        return this.$message.error("错误:" + res.data.message);
                     }
                     this.getSessionListNot();
                     this.sessionListAlready();
@@ -238,12 +253,16 @@ export default {
         msgList(sessionId) {
             messageList(sessionId)
                 .then((res) => {
-                    if (response.data.code == 1) {
+                    if (res.data.code == 1) {
                         this.list = res.data.data;
                         //从新获取列表
-                        this.getSessionListAlready;
+                        this.getSessionListAlready();
+                    } else {
+                        return this.$message.error(
+                            "获取消息列表失败",
+                            res.data.errDesc
+                        );
                     }
-                    return thus.$message.error(response.data.errDesc);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -254,8 +273,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .main {
     width: 980px;
     /* border: 1px #1890ff solid; */

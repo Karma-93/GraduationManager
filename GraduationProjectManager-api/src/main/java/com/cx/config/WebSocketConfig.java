@@ -14,7 +14,7 @@ public class WebSocketConfig {
      * 如果使用独立的Servlet容器，而不是直接使用springboot的内置容器，就不要注入ServerEndpointExporter，因为它将由容器自己提供和管理
      * @return
      */
-   //@Bean
+    @Bean
     public ServerEndpointExporter serverEndpointExporter(){
         return new ServerEndpointExporter();
     }

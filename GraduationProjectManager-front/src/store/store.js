@@ -20,6 +20,7 @@ export default new Vuex.Store({
         [SET_STORE](state, payload) {
             state.userInfo = payload.userInfo;
             state.login = payload.login;
+            state.token = payload.token;
         },
 
         [SET_TOKEN](state, payload) {
@@ -28,6 +29,7 @@ export default new Vuex.Store({
         [CHANGE_USER_INFO](state, payload) {
             state.userInfo = payload;
             state.login = true;
+
         },
         [REMOVE_USER_INFO](state) {
             state.userInfo = {};
@@ -38,5 +40,9 @@ export default new Vuex.Store({
         set_store(context) {
             context.commit(SET_STORE);
         }
+    },
+    getters: {
+        userInfo: state => state.userInfo,
+        login: state => state.login
     }
 });

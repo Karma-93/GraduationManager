@@ -3,29 +3,29 @@ const messageApi = {
     MessageList: "/message/messageList",
     CreateSessionList: "/session/createSessionList",
     DelSessionList: "/session/delSessionList",
-    SessionListsAlready: "/sessionListsAlready",
+    SessionListsAlready: "/session/sessionListsAlready",
     SessionListsNot: "/session/sessionListsNot"
 };
 
-export function newWebSocket() {
+export function newWebSocket(userId, sessionId) {
     return new WebSocket(
         "ws://localhost:8082/websocket/" + userId + "/" + sessionId
     );
 }
 
-export function messageList(params) {
+export function messageList(param) {
     return request({
         url: messageApi.MessageList,
         method: "get",
-        params
+        params: { sessionListId: param }
     });
 }
 
-export function createSession(data) {
+export function createSession(parameter) {
     return request({
         url: messageApi.CreateSessionList,
-        method: "post",
-        data
+        method: "get",
+        params: parameter
     });
 }
 export function delSession(params) {

@@ -20,7 +20,7 @@
                 >
                 </a-button>
             </template>
-        </a-page-header> -->
+        </a-page-header>-->
 
         <!-- 面包屑 -->
         <a-breadcrumb>
@@ -30,7 +30,7 @@
         </a-breadcrumb>
 
         <!-- 消息 -->
-        <a-popover placement="bottomRight" class="bell">
+        <a-popover placement="bottomRight" class="bell" @click="test1">
             <template slot="content">
                 <p>Content1</p>
                 <p>Content2</p>
@@ -48,14 +48,15 @@
         <!-- 右侧用户 -->
         <a-dropdown placement="bottomCenter">
             <div>
-                <a-avatar
-                    style="backgroundColor:#87d068;marginRight:10px"
-                    icon="user"
-                />用户名
+                <a-avatar style="backgroundColor:#87d068;marginRight:10px" icon="user" />用户名
             </div>
             <a-menu slot="overlay">
-                <a-menu-item> <a-icon type="user" /> 个人中心 </a-menu-item>
-                <a-menu-item> <a-icon type="setting" />设置 </a-menu-item>
+                <a-menu-item>
+                    <a-icon type="user" />个人中心
+                </a-menu-item>
+                <a-menu-item>
+                    <a-icon type="setting" />设置
+                </a-menu-item>
                 <a-menu-item @click="quit()">
                     <a-icon type="logout" />退出登录
                 </a-menu-item>
@@ -65,19 +66,35 @@
 </template>
 
 <script>
+import { logout } from "@/api/login.js";
+import { getStudentByUserId } from "@/api/student.js";
+import { getTeacherByUserId } from "@/api/teacher.js";
+
 export default {
     name: "Header",
     data() {
         return {
-            userData: []
+            userData: [],
         };
     },
+    created() {
+        //初始化用户信息s
+        if (this.$store.state.userInfo.userRoles == 1) {
+            this.getTeacherData();
+        } else if (this.$store.state.userInfo.userRoles == 2) {
+            this.getStudentData();
+        }
+    },
     methods: {
+        test1() {
+            this.$router.push({ path: "/message" });
+        },
         ccc() {
             console.log(this);
         },
         // 退出登陆
         quit() {
+            logout();
             this.$store.commit("remove_user_info");
             this.$router.replace({ path: "/login" });
             this.$message.success("注销成功！");
@@ -85,8 +102,8 @@ export default {
         //如果是学生
         getStudentData() {},
         //如果是教师
-        getTeacherData() {}
-    }
+        getTeacherData() {},
+    },
 };
 </script>
 

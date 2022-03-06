@@ -33,7 +33,7 @@ public class ServiceTest {
 
     @Test
     public void userServiceTest(){
-        System.out.println(userService.getUserByAccount("学生1"));
+        System.out.println(userService.getUserById("10001"));
     }
 
     @Test

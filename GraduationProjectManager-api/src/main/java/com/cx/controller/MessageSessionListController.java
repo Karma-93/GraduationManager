@@ -51,8 +51,9 @@ public class MessageSessionListController {
     @ApiOperation(value = "创建一个会话记录列表")
     // 创建会话
     @SaCheckLogin
-    @PostMapping("/createSessionList")
+    @GetMapping("/createSessionList")
     public Result createSession(@RequestParam String toUserId,@RequestParam String toUserName){
+        log.error("aaaaaaaaaaaaaa"+toUserId+toUserName);
         SessionListEntity sessionListEntity=new SessionListEntity();
         String userId=(String)StpUtil.getLoginId();
         sessionListEntity.setUserId(userId);

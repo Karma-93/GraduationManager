@@ -10,10 +10,11 @@ import com.cx.service.SessionListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-@Service
+@Service("messageService")
 public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageMapper messageMapper;
@@ -35,9 +36,14 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageEntity> getMessageList(String toUserId, String userId) {
+        List<MessageEntity> res=new ArrayList<>();
         MessageQuery query=new MessageQuery();
         query.where.userId().eq(userId).and.toUserId().eq(toUserId).end();
-        return messageMapper.listEntity(query);
+        res.addAll(messageMapper.listEntity(query));
+        query=new MessageQuery();
+        query.where.userId().eq(toUserId).and.toUserId().eq(userId).end();
+        res.addAll(messageMapper.listEntity(query));
+        return res;
     }
 
     /**
