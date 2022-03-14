@@ -22,7 +22,7 @@ public class SessionListServiceImpl implements SessionListService {
     }
 
     @Override
-    public void addUnReadCount(String toUserId, String userId) {
+    public void addUnReadCount(String userId, String toUserId) {
         SessionListUpdate update=new SessionListUpdate();
         update.set.unReadCount().applyFunc("un_read_count+1").end()
                 .where().toUserId().eq(toUserId).and.userId().eq(userId).end();
@@ -39,7 +39,7 @@ public class SessionListServiceImpl implements SessionListService {
     }
 
     @Override
-    public Integer getIdByUser(String toUserId, String userId) {
+    public Integer getIdByUser(String userId, String toUserId) {
         SessionListQuery query=new SessionListQuery();
         query.where.toUserId().eq(toUserId).and.userId().eq(userId).end();
         return sessionListMapper.listEntity(query).get(0).getId();
@@ -54,7 +54,7 @@ public class SessionListServiceImpl implements SessionListService {
     @Override
     public List<SessionListEntity> getSessionListByUserId(String userId) {
         SessionListQuery query=new SessionListQuery();
-        query.where().userId().eq(userId);
+        query.where().userId().eq(userId).end();
         return sessionListMapper.listEntity(query);
     }
 

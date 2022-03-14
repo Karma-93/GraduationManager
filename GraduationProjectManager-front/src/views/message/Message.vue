@@ -3,6 +3,8 @@
         <div class="main-up">{{ this.curUserName }}</div>
         <a-button @click="log()">log</a-button>
         <div class="main-down">
+            <a-row type="flex">
+                <a-col :flex="2">
             <div class="left">
                 <div class="left_up">
                     <div class="label_title">已建立会话</div>
@@ -35,6 +37,8 @@
                     </div>
                 </div>
             </div>
+                </a-col>
+                <a-col :flex="3">
             <div class="right">
                 <div class="up" ref="element" id="msg_end">
                     <div
@@ -68,6 +72,8 @@
                     -->
                 </div>
             </div>
+                </a-col>
+            </a-row>
         </div>
     </div>
 </template>
@@ -207,7 +213,6 @@ export default {
                     console.log(error);
                 });
         },
-
         createSession(toUserId, toUserName) {
             createSession({
                 toUserId,
@@ -316,7 +321,7 @@ export default {
     /* border: 1px green solid; */
 }
 .right {
-    width: 680px;
+    width: 600px;
     height: 750px;
     /* border-right: 1px #1890ff solid; */
 }

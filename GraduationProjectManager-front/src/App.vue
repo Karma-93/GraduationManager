@@ -16,7 +16,7 @@ export default {
         console.log("APPstore", this.$store.state);
         // 页面刷新时将vuex里的信息保存到localStorage里
         window.addEventListener("beforeunload", () => {
-            localStorage.setItem("store", JSON.stringify(this.$store.state));
+            sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
         // 页面刷新后将localStorage的数据取出来存入vuex
         window.addEventListener("load", () => {
@@ -24,7 +24,7 @@ export default {
                 "set_store",
                 JSON.parse(localStorage.getItem("store"))
             );
-            localStorage.removeItem("store");
+            sessionStorage.removeItem("store");
         });
     }
 

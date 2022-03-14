@@ -81,8 +81,9 @@ public class MessageSocketController {
      */
     @OnMessage
     public void onMessage(String message) {
-
+        //获取sessionId
         String sessionId = this.session.getRequestParameterMap().get("sessionId").get(0);
+        log.error("sessionId"+sessionId);
         if (sessionId == null) {
             log.error("sessionId 错误");
         }
@@ -105,22 +106,24 @@ public class MessageSocketController {
         messageEntity.setState(0);
         // 消息持久化
         messageService.insertMessage(messageEntity);
-        // 判断用户是否存在，不存在就结束
+        // 判断用户是否存在，不存在就结束,      判断用户是否登录  所返回的list存储SessionListId以及session对象
         List<Object> list = CurPool.sessionPool.get(sessionListEntity.getToUserId());
-        if (list == null || list.isEmpty()) {
-            // 用户不存在
+        log.error("当前登录用户："+list);
+        if (list == null || list.isEmpty()) {//若当前用户未登录
+            // 用户不存在，即未登录，标记未读状态
+            //  未登录也应该判断会话是否存在？
             sessionListService.addUnReadCount(sessionListEntity.getToUserId(), sessionListEntity.getUserId());
             //seesionListMapper.addUnReadCount(sessionList.getToUserId(),sessionList.getUserId());
         } else {
-            // 用户存在，判断会话是否存在
+            // 用户存在(即用户已登录)，判断会话是否存在  判断接收者的会话是否存在？
             String id = sessionListService.getIdByUser(sessionListEntity.getToUserId(), sessionListEntity.getUserId()) + "";
-            String o = list.get(0) + "";
+            String o = list.get(0) + "";   //sessionId
             if (id.equals(o)) {
                 // 会话存在直接发送消息
                 sendTextMessage(sessionListEntity.getToUserId(), JsonUtils.objectToJson(messageEntity));
             } else {
                 // 判断会话列表是否存在
-                if (id == null || "".equals(id) || "null".equals(id)) {
+                if (id == null || "".equals(id) || "null".equals(id)) {//当会话不存在
                     // 新增会话列表
                     SessionListEntity tmpSessionList = new SessionListEntity();
                     tmpSessionList.setUserId(sessionListEntity.getToUserId());

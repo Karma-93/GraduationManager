@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 19/02/2022 16:48:59
+ Date: 10/03/2022 15:37:29
 */
 
 SET NAMES utf8mb4;
@@ -63,13 +63,15 @@ CREATE TABLE `dept`  (
   `dept_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,部门id',
   `dept_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '部门科室名',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dept
 -- ----------------------------
-INSERT INTO `dept` VALUES (1, '计算机工程学院');
-INSERT INTO `dept` VALUES (2, '大数据学院');
+INSERT INTO `dept` VALUES (1, '计算机科学教研室');
+INSERT INTO `dept` VALUES (2, '大数据教研室');
+INSERT INTO `dept` VALUES (3, '数字媒体技术教研室');
+INSERT INTO `dept` VALUES (4, '广播电视工程教研室');
 
 -- ----------------------------
 -- Table structure for down
@@ -128,6 +130,29 @@ INSERT INTO `inform` VALUES (7, '关于开展2018届毕业设计(论文)工作�
 INSERT INTO `inform` VALUES (8, '关于发布《2018届本科生毕业设计（论文）工作规定》的通知', '<p><span class=\"STYLE1\"></span></p><p class=\"MsoNormal\" style=\"margin-left:-7.05pt;text-indent:8.0pt;\">	各学院：</p><p style=\"text-indent:32.0pt;\">	为了进一步加强毕业设计（论文）工作的管理，更加规范有序地开展<span>2018</span>届本科毕业设计（论文）工作，教务处综合各方面意见，对《<span>2017</span>届本科生毕业设计（论文）工作规定》进行了修订，修订后更名为《<span>2018</span>届本科生毕业设计（论文）工作规定》。本规定已由教学例会讨论通过，现予发布，请遵照执行，原《<span>2017</span>届本科生毕业设计（论文）工作规定（教发〔<span>2016</span>〕<span>42</span>号）》同时废止。<span></span></p><p class=\"MsoNormal\" style=\"margin-left:-8.0pt;text-indent:216.0pt;\">	2017年<span>12</span>月<span>1</span>日</p>', 0, NULL, '2017-12-01 15:50:16', '1');
 
 -- ----------------------------
+-- Table structure for inform_message
+-- ----------------------------
+DROP TABLE IF EXISTS `inform_message`;
+CREATE TABLE `inform_message`  (
+  `message_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,消息id',
+  `message_body` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '消息内容',
+  `message_type` int NOT NULL COMMENT '消息类型(0留言1通知)',
+  `teacher_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,导师id',
+  `student_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,学生id',
+  `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `response_date` datetime NULL DEFAULT NULL COMMENT '回复时间',
+  PRIMARY KEY (`message_id`) USING BTREE,
+  INDEX `teacher_id`(`teacher_id`) USING BTREE,
+  INDEX `student_id`(`student_id`) USING BTREE,
+  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of inform_message
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for ktbg
 -- ----------------------------
 DROP TABLE IF EXISTS `ktbg`;
@@ -173,21 +198,80 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message`  (
   `message_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,消息id',
   `message_body` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '消息内容',
-  `message_type` int NOT NULL COMMENT '消息类型(0留言1通知)',
-  `teacher_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,导师id',
-  `student_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,学生id',
+  `message_type` int(2) UNSIGNED ZEROFILL NULL DEFAULT 00 COMMENT '消息类型(0留言1通知)',
+  `user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,发送者的用户ID\r\n',
+  `to_user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,接收者的用户ID',
   `create_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `response_date` datetime NULL DEFAULT NULL COMMENT '回复时间',
+  `state` int(2) UNSIGNED ZEROFILL NULL DEFAULT 00 COMMENT '是否已读，0未读   1已读',
   PRIMARY KEY (`message_id`) USING BTREE,
-  INDEX `teacher_id`(`teacher_id`) USING BTREE,
-  INDEX `student_id`(`student_id`) USING BTREE,
-  CONSTRAINT `message_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `message_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+  INDEX `wj_1`(`user_id`) USING BTREE,
+  INDEX `wj_2`(`to_user_id`) USING BTREE,
+  CONSTRAINT `wj_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `wj_2` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
 -- ----------------------------
+INSERT INTO `message` VALUES (1, 'hello', NULL, '10001', '20001', '2022-03-02 20:46:04', 01);
+INSERT INTO `message` VALUES (2, 'hello', NULL, '10001', '20001', '2022-03-02 20:47:07', 01);
+INSERT INTO `message` VALUES (3, 'hello', NULL, '10001', '20001', '2022-03-02 20:47:07', 01);
+INSERT INTO `message` VALUES (4, 'hello', NULL, '10001', '20001', '2022-03-02 20:47:07', 01);
+INSERT INTO `message` VALUES (5, 'hello1', 00, '10001', '20002', '2022-03-02 21:11:04', 01);
+INSERT INTO `message` VALUES (6, 'hello1', 00, '10001', '20002', '2022-03-02 21:11:04', 01);
+INSERT INTO `message` VALUES (7, 'hello1', 00, '10001', '20002', '2022-03-02 21:11:04', 01);
+INSERT INTO `message` VALUES (8, 'hello3', 00, '10001', '20003', '2022-03-06 16:07:20', 01);
+INSERT INTO `message` VALUES (9, '\nhello3', 00, '10001', '20003', '2022-03-06 16:07:22', 01);
+INSERT INTO `message` VALUES (10, '\n', 00, '10001', '20003', '2022-03-06 16:07:22', 01);
+INSERT INTO `message` VALUES (11, 'hello3', 00, '10001', '20003', '2022-03-06 16:13:33', 01);
+INSERT INTO `message` VALUES (12, '\nhello3', 00, '10001', '20003', '2022-03-06 16:13:35', 01);
+INSERT INTO `message` VALUES (13, 'dsfdsfds\n\n\n', 00, '10001', '20001', '2022-03-06 17:11:49', 01);
+INSERT INTO `message` VALUES (14, '\ndfdsf', 00, '10001', '10002', '2022-03-06 17:12:06', 01);
+INSERT INTO `message` VALUES (15, '\ndsfdsf', 00, '10001', '10003', '2022-03-06 17:12:21', 01);
+INSERT INTO `message` VALUES (16, '\ndfdsf', 00, '10001', '10003', '2022-03-06 17:12:26', 01);
+INSERT INTO `message` VALUES (17, '\ndsfdsf', 00, '10001', '10004', '2022-03-06 17:12:32', 01);
+INSERT INTO `message` VALUES (18, '11', 00, '10002', '10001', '2022-03-06 17:34:36', 01);
+INSERT INTO `message` VALUES (19, '\n1', 00, '10002', '10001', '2022-03-06 17:34:37', 01);
+INSERT INTO `message` VALUES (20, '\n1', 00, '10002', '10001', '2022-03-06 17:34:37', 01);
+INSERT INTO `message` VALUES (21, '\n1', 00, '10002', '10001', '2022-03-06 17:34:37', 01);
+INSERT INTO `message` VALUES (22, '34234324', 00, '10002', '10001', '2022-03-06 17:50:02', 01);
+INSERT INTO `message` VALUES (23, '\nsdfasf', 00, '10002', '10001', '2022-03-06 17:50:03', 01);
+INSERT INTO `message` VALUES (24, '神鼎飞丹砂、\\s\\', 00, '10001', '10002', '2022-03-06 17:52:53', 01);
+INSERT INTO `message` VALUES (25, '\nsdfsd', 00, '10001', '10002', '2022-03-06 17:52:54', 01);
+INSERT INTO `message` VALUES (26, '11', 00, '10001', '10002', '2022-03-08 21:30:35', 01);
+INSERT INTO `message` VALUES (27, '\n11111', 00, '10001', '10002', '2022-03-08 21:30:59', 01);
+INSERT INTO `message` VALUES (28, '1111', 00, '10002', '10001', '2022-03-08 21:31:29', 01);
+INSERT INTO `message` VALUES (29, '111', 00, '10001', '20001', '2022-03-09 20:03:16', 01);
+INSERT INTO `message` VALUES (30, '\n11', 00, '10001', '20001', '2022-03-09 20:03:17', 01);
+INSERT INTO `message` VALUES (31, '\n111', 00, '10001', '10002', '2022-03-09 20:03:32', 01);
+INSERT INTO `message` VALUES (32, '\n11', 00, '10001', '10002', '2022-03-09 20:03:33', 01);
+INSERT INTO `message` VALUES (33, '\nhello', 00, '10001', '10002', '2022-03-09 20:04:07', 01);
+INSERT INTO `message` VALUES (34, '111', 00, '10001', '10002', '2022-03-09 20:45:49', 00);
+INSERT INTO `message` VALUES (35, '\nhello', 00, '10001', '10002', '2022-03-09 20:45:55', 00);
+INSERT INTO `message` VALUES (36, 'hello222', 00, '10002', '10001', '2022-03-09 20:46:05', 00);
+INSERT INTO `message` VALUES (37, '\nhello123456', 00, '10001', '10002', '2022-03-09 20:46:15', 00);
+INSERT INTO `message` VALUES (38, '111', 00, '10001', '20002', '2022-03-09 21:01:43', 00);
+
+-- ----------------------------
+-- Table structure for paperlib
+-- ----------------------------
+DROP TABLE IF EXISTS `paperlib`;
+CREATE TABLE `paperlib`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '课题名称',
+  `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '摘要',
+  `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件链接',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of paperlib
+-- ----------------------------
+INSERT INTO `paperlib` VALUES (1, '论文名称', '论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-', NULL);
+INSERT INTO `paperlib` VALUES (2, '论文名称', '论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-', NULL);
+INSERT INTO `paperlib` VALUES (3, '论文名称', '论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-', NULL);
+INSERT INTO `paperlib` VALUES (4, '论文名称', '论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-', NULL);
+INSERT INTO `paperlib` VALUES (5, '论文名称', '论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-论文摘要-', NULL);
 
 -- ----------------------------
 -- Table structure for project
@@ -200,7 +284,7 @@ CREATE TABLE `project`  (
   `project_from_id` int NULL DEFAULT NULL COMMENT '外键,课题来源',
   `teacher_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,导师id',
   `student_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,学生id',
-  `project_state` int(255) UNSIGNED ZEROFILL NULL DEFAULT 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 COMMENT '该选题的状态，为0时为默认状态，可选。 1时为等待教师审核、不可选。2时为学生选择成功，不可选。',
+  `project_state` int NULL DEFAULT NULL COMMENT '该选题的状态，默认状态为0,该课题可选；为1时，待审核，不可选；选题状态2，已被选择，不可选。',
   PRIMARY KEY (`project_id`) USING BTREE,
   INDEX `teacher_id`(`teacher_id`) USING BTREE,
   INDEX `student_id`(`student_id`) USING BTREE,
@@ -222,7 +306,7 @@ CREATE TABLE `project_from`  (
   `project_from_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,id',
   `project_from_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '课题来源(教师建议 学生拟定 企业和社会征集 科研单位提供)',
   PRIMARY KEY (`project_from_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project_from
@@ -238,7 +322,7 @@ CREATE TABLE `qzxj`  (
   PRIMARY KEY (`qzxj_id`) USING BTREE,
   INDEX `qzxj_ikbj_1`(`student_id`) USING BTREE,
   CONSTRAINT `qzxj_ikbj_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qzxj
@@ -252,7 +336,7 @@ CREATE TABLE `roles`  (
   `roles_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,角色id',
   `roles_name` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名（导师，学生，管理员，超级管理员）',
   PRIMARY KEY (`roles_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
@@ -260,6 +344,36 @@ CREATE TABLE `roles`  (
 INSERT INTO `roles` VALUES (1, 'teacher');
 INSERT INTO `roles` VALUES (2, 'student');
 INSERT INTO `roles` VALUES (3, 'admin');
+
+-- ----------------------------
+-- Table structure for sessionList
+-- ----------------------------
+DROP TABLE IF EXISTS `sessionList`;
+CREATE TABLE `sessionList`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发送者的id',
+  `to_user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接受者的ID',
+  `list_name` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `un_read_count` int(10) UNSIGNED ZEROFILL NULL DEFAULT NULL COMMENT '未读消息个数',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `wk_1`(`user_id`) USING BTREE,
+  INDEX `wk_2`(`to_user_id`) USING BTREE,
+  CONSTRAINT `wk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `wk_2` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sessionList
+-- ----------------------------
+INSERT INTO `sessionList` VALUES (1, '10001', '20001', '学生1', 0000000000);
+INSERT INTO `sessionList` VALUES (5, '10001', '20002', '学生2', 0000000000);
+INSERT INTO `sessionList` VALUES (10, '10001', '20003', '学生3', 0000000000);
+INSERT INTO `sessionList` VALUES (11, '10001', '10002', '教师2', 0000000000);
+INSERT INTO `sessionList` VALUES (12, '10001', '10003', '教师3', 0000000000);
+INSERT INTO `sessionList` VALUES (13, '10001', '10004', '教师4', 0000000000);
+INSERT INTO `sessionList` VALUES (14, '10002', '10001', '教师1', 0000000000);
+INSERT INTO `sessionList` VALUES (15, '10002', '20002', '学生2', 0000000000);
+INSERT INTO `sessionList` VALUES (16, '10002', '20002', '学生2', 0000000000);
 
 -- ----------------------------
 -- Table structure for student
@@ -297,7 +411,7 @@ CREATE TABLE `subject`  (
   `subject_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,id',
   `subject_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '专业名',
   PRIMARY KEY (`subject_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '专业名表\r\n' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '专业名表\r\n' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subject
@@ -328,6 +442,11 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
+INSERT INTO `teacher` VALUES ('11001', '计算机科学方向', NULL, '10001', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11002', '大数据方向', NULL, '10002', 2, '副教授');
+INSERT INTO `teacher` VALUES ('11003', 'Java方向', '', '10003', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11004', 'Java方向', NULL, '10004', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11005', '自然语言处理方向(NLP)', NULL, '10005', 3, '教授');
 
 -- ----------------------------
 -- Table structure for user
@@ -350,7 +469,15 @@ CREATE TABLE `user`  (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('10001', '教师1', '教师1', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 1);
+INSERT INTO `user` VALUES ('10002', '教师2', '教师2', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 1);
+INSERT INTO `user` VALUES ('10003', '教师3', '教师3', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 1);
+INSERT INTO `user` VALUES ('10004', '教师4', '教师4', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 1);
+INSERT INTO `user` VALUES ('10005', '教师5', '教师5', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 1);
 INSERT INTO `user` VALUES ('20001', '学生1', '学生1', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 2);
+INSERT INTO `user` VALUES ('20002', '学生2', '学生2', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 2);
+INSERT INTO `user` VALUES ('20003', '学生3', '学生3', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 2);
+INSERT INTO `user` VALUES ('20004', '学生4', '学生4', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 2);
+INSERT INTO `user` VALUES ('20005', '学生5', '学生5', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 2);
 INSERT INTO `user` VALUES ('30001', '管理员', '管理员', 'e10adc3949ba59abbe56e057f20f883e', '11111111111', NULL, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;
