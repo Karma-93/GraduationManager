@@ -20,6 +20,7 @@
                         <div class="right_left">
                             <div class="right_left_count">{{ item.unReadCount }}</div>
                             <div class="right_left_del">
+                                <a-button @click="delSession(item.id)">删除</a-button>
                                 <i class="el-icon-close" @click="delSession(item.id)"></i>
                             </div>
                         </div>
@@ -242,13 +243,13 @@ export default {
         },
         //删除会话
         delSession(sessionId) {
-            delSession(sessionId)
+            delSession({"sessionListId":sessionId})
                 .then((res) => {
                     if (res.data.code != 1) {
                         return this.$message.error("错误:" + res.data.message);
                     }
                     this.getSessionListNot();
-                    this.sessionListAlready();
+                    this.getSessionListAlready();
                 })
                 .catch(function (error) {
                     console.log(error);

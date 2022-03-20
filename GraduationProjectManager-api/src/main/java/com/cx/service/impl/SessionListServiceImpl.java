@@ -42,7 +42,10 @@ public class SessionListServiceImpl implements SessionListService {
     public Integer getIdByUser(String userId, String toUserId) {
         SessionListQuery query=new SessionListQuery();
         query.where.toUserId().eq(toUserId).and.userId().eq(userId).end();
-        return sessionListMapper.listEntity(query).get(0).getId();
+        SessionListEntity sessionListEntity= sessionListMapper.findOne(query);
+        if(sessionListEntity==null) return -1;
+        return sessionListEntity.getId();
+        //return sessionListMapper.listEntity(query).get(0).getId();
     }
 
     @Override

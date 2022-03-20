@@ -53,7 +53,6 @@ public class MessageSessionListController {
     @SaCheckLogin
     @GetMapping("/createSessionList")
     public Result createSession(@RequestParam String toUserId,@RequestParam String toUserName){
-        log.error("aaaaaaaaaaaaaa"+toUserId+toUserName);
         SessionListEntity sessionListEntity=new SessionListEntity();
         String userId=(String)StpUtil.getLoginId();
         sessionListEntity.setUserId(userId);

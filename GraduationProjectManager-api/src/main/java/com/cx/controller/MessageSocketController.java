@@ -83,7 +83,6 @@ public class MessageSocketController {
     public void onMessage(String message) {
         //获取sessionId
         String sessionId = this.session.getRequestParameterMap().get("sessionId").get(0);
-        log.error("sessionId"+sessionId);
         if (sessionId == null) {
             log.error("sessionId 错误");
         }
@@ -108,7 +107,6 @@ public class MessageSocketController {
         messageService.insertMessage(messageEntity);
         // 判断用户是否存在，不存在就结束,      判断用户是否登录  所返回的list存储SessionListId以及session对象
         List<Object> list = CurPool.sessionPool.get(sessionListEntity.getToUserId());
-        log.error("当前登录用户："+list);
         if (list == null || list.isEmpty()) {//若当前用户未登录
             // 用户不存在，即未登录，标记未读状态
             //  未登录也应该判断会话是否存在？
