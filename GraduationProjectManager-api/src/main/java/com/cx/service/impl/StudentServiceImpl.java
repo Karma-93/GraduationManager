@@ -27,6 +27,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public String getStudentIdByUserId(String userId) {
+        return this.getStudentByUserId(userId).getStudentId();
+    }
+
+    @Override
     public StdPagedList<StudentEntity> getStudentListByTeacherId(PageReq pageReq, int teacherId) {
         StudentQuery query=new StudentQuery().selectAll().where().teacherId().eq(teacherId).end().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
         return studentMapper.stdPagedEntity(query);

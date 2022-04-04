@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * TeacherEntity: 数据映射实体定义
+ * ProjectEntity: 数据映射实体定义
  *
  * @author Powered By Fluent Mybatis
  */
@@ -30,67 +30,70 @@ import lombok.experimental.Accessors;
     callSuper = false
 )
 @FluentMybatis(
-    table = "teacher"
+    table = "project"
 )
-public class TeacherEntity extends RichEntity {
+public class ProjectEntity extends RichEntity {
   private static final long serialVersionUID = 1L;
 
   /**
-   * 主键,导师id
+   * 主键,课题id
    */
-  @TableId(
-      value = "teacher_id",
-      auto = false
-  )
+  @TableId("project_id")
+  private Integer projectId;
+
+  /**
+   * 课题表述
+   */
+  @TableField("project_describe")
+  private String projectDescribe;
+
+  /**
+   * 外键,课题来源
+   */
+  @TableField("project_from_id")
+  private Integer projectFromId;
+
+  /**
+   * 课题名
+   */
+  @TableField("project_name")
+  private String projectName;
+
+  /**
+   * 该选题的状态，默认状态为0,该课题可选；为1时，待审核，不可选；选题状态2，已被选择，不可选。
+   */
+  @TableField("project_state")
+  private Integer projectState;
+
+  /**
+   * 外键,学生id
+   */
+  @TableField("student_id")
+  private String studentId;
+
+  /**
+   * 外键,导师id
+   */
+  @TableField("teacher_id")
   private String teacherId;
-
-  /**
-   * 外键,部门id
-   */
-  @TableField("dept_id")
-  private Integer deptId;
-
-  /**
-   * 导师描述
-   */
-  @TableField("teacher_describe")
-  private String teacherDescribe;
-
-  /**
-   * 导师出题数,限制在8个
-   */
-  @TableField("teacher_project_num")
-  private Integer teacherProjectNum;
-
-  /**
-   * 外键,用户id
-   */
-  @TableField("user_id")
-  private String userId;
-
-  /**
-   * 职称
-   */
-  @TableField("zhicheng")
-  private String zhicheng;
 
   @Override
   public Serializable findPk() {
-    return this.teacherId;
+    return this.projectId;
   }
 
   @Override
   public final Class<? extends IEntity> entityClass() {
-    return TeacherEntity.class;
+    return ProjectEntity.class;
   }
 
   @Override
-  public final TeacherEntity changeTableBelongTo(TableSupplier supplier) {
+  public final ProjectEntity changeTableBelongTo(TableSupplier supplier) {
     return super.changeTableBelongTo(supplier);
   }
 
   @Override
-  public final TeacherEntity changeTableBelongTo(String table) {
+  public final ProjectEntity changeTableBelongTo(String table) {
     return super.changeTableBelongTo(table);
   }
 }

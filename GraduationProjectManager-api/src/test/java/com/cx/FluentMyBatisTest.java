@@ -2,7 +2,10 @@ package com.cx;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
 import com.cx.fluentmybatis.entity.UserEntity;
+import com.cx.fluentmybatis.mapper.TeacherMapper;
 import com.cx.fluentmybatis.mapper.UserMapper;
+import com.cx.fluentmybatis.wrapper.TeacherQuery;
+import com.cx.fluentmybatis.wrapper.TeacherUpdate;
 import com.cx.fluentmybatis.wrapper.UserQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,8 @@ public class FluentMyBatisTest {
 
     @Autowired
     private UserMapper userMapper;
-
+    @Autowired
+    private TeacherMapper teacherMapper;
     @Test
     public void fluentInsertTest() {
         for(int i=2;i<=5;i++) {
@@ -37,5 +41,10 @@ public class FluentMyBatisTest {
         UserQuery query = new UserQuery().where.userId().eq("10001").end();
         UserEntity user = userMapper.findOne(query);
         System.out.println(user.getUserName());
+    }
+
+    @Test
+    public void test1(){
+        String teacherId="11001";
     }
 }
