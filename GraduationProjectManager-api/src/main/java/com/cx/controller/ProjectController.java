@@ -73,7 +73,7 @@ public class ProjectController {
 
     @ApiOperation("插入新的选题")
     @PostMapping("/insertSelective")
-    @SaCheckRole({"teacher","admin"})
+    @SaCheckRole("teacher")
     public Result insertSelective(@RequestBody ProjectEntity project){
         String teacherId=project.getTeacherId();
         if (projectService.insertSelective(project,teacherId)){
@@ -85,7 +85,7 @@ public class ProjectController {
 
     @ApiOperation("更新选题信息,只有教师用户、管理员用户可以访问")
     @PostMapping("/updatebyprimarykey")
-    @SaCheckRole({"teacher","admin"})
+    @SaCheckRole("teacher")
     public Result updateByPrimaryKey(@RequestBody ProjectEntity project){
         if (projectService.updateByPrimaryKeySelective(project)){
             return Result.success();
