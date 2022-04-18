@@ -8,6 +8,6 @@ public interface KtbgService {
     public int addKtbg(KtbgEntity ktbg);
     public int updateKtbg(KtbgEntity ktbg);
     public int removeKtbg(Integer id);
-    public int getKtbg(Integer id);
-    public int getKtbgByStudentId(String studentId);
+    public KtbgEntity getKtbg(Integer id);
+    public KtbgEntity getKtbgByStudentId(String studentId);
 }

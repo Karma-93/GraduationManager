@@ -8,6 +8,6 @@ public interface QzxjService {
     public int addQzxj(QzxjEntity qzxj);
     public int updateQzxj(QzxjEntity qzxj);
     public int removeQzxj(Integer id);
-    public int getQzxj(Integer id);
-    public int getQzxjByStudentId(String studentId);
+    public QzxjEntity getQzxj(Integer id);
+    public QzxjEntity getQzxjByStudentId(String studentId);
 }

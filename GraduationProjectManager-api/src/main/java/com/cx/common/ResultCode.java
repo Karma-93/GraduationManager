@@ -23,6 +23,7 @@ public enum ResultCode {
     DATA_NOT_EXIST(3002,"查询失败或不存在"),
     INSERT_ERROR(3003,"插入失败"),
     UPDATE_ERROR(3004,"更新失败"),
+    DELETE_ERROR(3005,"删除失败"),
     //权限角色错误
     NOT_ROLE_ERROR(4001,"用户角色权限错误");
 
