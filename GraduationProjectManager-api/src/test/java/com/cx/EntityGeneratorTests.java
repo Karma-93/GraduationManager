@@ -10,11 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class EntityGeneratorTests {
 
     // 数据源 url
-    static final String url = "jdbc:mysql://124.223.184.251:3306/graduationManager?useUnicode=true&characterEncoding=utf8";
+    static final String url = "jdbc:mysql://60.205.187.211:3306/graduationManager?useUnicode=true&characterEncoding=utf8";
     // 数据库用户名
     static final String username = "root";
     // 数据库密码
-    static final String password = "243698";
+    static final String password = "123456";
 
     @Test
     public void generate() throws Exception{
@@ -34,7 +34,7 @@ public class EntityGeneratorTests {
             // 设置dao接口和实现的src目录, 相对于 user.dir
             daoDir = "src/main/java",
             // 设置哪些表要生成Entity文件
-            tables = {@Table(value = {"teacher"})}
+            tables = {@Table(value = {"ktbg","qzxj","lunwen"})}
     )
     static class Empty { //类名随便取, 只是配置定义的一个载体
     }
