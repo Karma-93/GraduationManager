@@ -9,6 +9,8 @@ import com.cx.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
@@ -30,5 +32,12 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherQuery query=new TeacherQuery();
         query.where.userId().eq(userId);
         return teacherMapper.findOne(query);
+    }
+
+    @Override
+    public List<TeacherEntity> getAllTeacherList() {
+        TeacherQuery query=new TeacherQuery();
+        query.selectAll();
+        return teacherMapper.listEntity(query);
     }
 }

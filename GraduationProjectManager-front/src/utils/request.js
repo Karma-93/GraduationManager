@@ -16,7 +16,9 @@ request.interceptors.request.use(
         if (store.state.token) {
             config.headers.common["satoken"] = store.state.token;
         } else {
+
             console.log("request.js-拦截器:toekn不存在");
+            console.log(store.state.token);
         }
         return config;
     },

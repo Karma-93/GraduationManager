@@ -2,14 +2,11 @@ package com.cx.controller;
 
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
-import com.cx.fluentmybatis.entity.KtbgEntity;
 import com.cx.fluentmybatis.entity.LunwenEntity;
 import com.cx.service.LunwenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.ResultType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
