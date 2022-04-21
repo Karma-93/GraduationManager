@@ -29,8 +29,21 @@ public class StudentController {
     @SaCheckLogin
     @ApiOperation(value = "通过UserId获取学生信息")
     @GetMapping("/getStudentByUserId")
-    public Result<StudentEntity> getStudentByUserId(){
-        StudentEntity student= studentService.getStudentByUserId((String) StpUtil.getLoginId());
+    public Result<StudentEntity> getStudentByUserId(@RequestParam String userId){
+//        StudentEntity student= studentService.getStudentByUserId((String) StpUtil.getLoginId());
+        StudentEntity student= studentService.getStudentByUserId(userId);
+
+        if (student==null){
+            return Result.failure(ResultCode.DATA_NOT_EXIST);
+        }
+        return Result.success(student);
+    }
+
+    @SaCheckLogin
+    @ApiOperation(value = "通过当前登录学生信息")
+    @GetMapping("/getCurrentStudentData")
+    public Result<StudentEntity> getCurrentStudentData(){
+        StudentEntity student= studentService.getStudentByUserId((String) StpUtil.getLoginId());    
         if (student==null){
             return Result.failure(ResultCode.DATA_NOT_EXIST);
         }

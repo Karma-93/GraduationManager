@@ -1,57 +1,63 @@
 <template>
     <div>
         <h1>教师列表</h1>
-        <a-table :dataSource="allTeacherList" :columns="columns"></a-table>
+        <a-table :dataSource="allTeacherData" :columns="columns">
+            
+             
+        </a-table>
     </div>
 </template>
 
 <script>
-import {requestAllTeacherList} from "@/api/teacher.js";
+import { requestAllTeacherData} from "@/api/teacher.js";
+import {requestUserById} from "@/api/user.js"
 
 export default {
     name: "SChoose",
     data() {
         return {
-            allTeacherList: [],
+            allTeacherData: [],
             columns: [
                 {
                     //name
-                    dataIndex: 'teacherId',
-                    key: 'teacherId'
-                },
-                {
-                    //科室
-                    dataIndex: 'deptId',
-                    key: 'deptId'
+                    dataIndex: "userName",
+                    key: "userName",
                 },
                 {
                     //研究方向
-                    dataIndex: 'teacherDescribe',
-                    key: 'teacherDescribe'
-                }, {
+                    dataIndex: "describe",
+                    key: "describe",
+                },
+                {
+                    //可选课题数
+                    dataIndex: "project_num",
+                    key: "project_num",
+                },
+                {
                     //职称
-                    dataIndex: 'zhicheng',
-                    key: 'zhicheng'
-                }, {
+                    dataIndex: "zhicheng",
+                    key: "zhicheng",
+                },
+                {
                     //操作
-                    key:'action'
-                }
+                    key: "teacherId",
+                    dataIndex:"teacherId"
+                },
             ],
-        }
+        };
     },
     created() {
-        this.getAllTeacherList();
+        this.getAllTeacherData();
     },
     methods: {
-        getAllTeacherList() {
-            requestAllTeacherList().then(response => {
-                this.allTeacherList = response.data.data;
+        getAllTeacherData() {
+            requestAllTeacherData().then((response) => {
+                this.allTeacherData = response.data.data;
             });
-        }
-    }
-}
+        }, 
+    },
+};
 </script>
 
 <style scoped>
-
 </style>

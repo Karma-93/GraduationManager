@@ -2,19 +2,28 @@ package com.cx.service.impl;
 
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.TeacherEntity;
+import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.fluentmybatis.mapper.TeacherMapper;
+import com.cx.fluentmybatis.mapper.UserMapper;
 import com.cx.fluentmybatis.wrapper.TeacherQuery;
 import com.cx.model.PageReq;
+import com.cx.model.TeacherData;
 import com.cx.service.TeacherService;
+import com.cx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
     TeacherMapper teacherMapper;
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    UserService userService;
     @Override
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq) {
         TeacherQuery query=new TeacherQuery().selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
@@ -39,5 +48,22 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherQuery query=new TeacherQuery();
         query.selectAll();
         return teacherMapper.listEntity(query);
+    }
+
+    @Override
+    public List<TeacherData> getAllTeacherData() {
+        List<TeacherData> res=new ArrayList<>();
+        List<TeacherEntity> entities=getAllTeacherList();
+        for (TeacherEntity entity:entities){
+            TeacherData temp = new TeacherData();
+            UserEntity user=userService.getUserById(entity.getUserId());
+            temp.setTeacherId(entity.getTeacherId());
+            temp.setUserName(user.getUserName());
+            temp.setZhicheng(entity.getZhicheng());
+            temp.setProject_num(entity.getTeacherProjectNum());
+            temp.setDescribe(entity.getTeacherDescribe());
+            res.add(temp);
+        }
+        return res;
     }
 }

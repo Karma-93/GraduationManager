@@ -61,4 +61,13 @@ public class UserController {
     }
 
 
+    @ApiOperation("通过userId获取用户信息")
+    @SaCheckLogin
+    @GetMapping("/getUserById")
+    public Result<UserEntity> getUserById(@RequestParam String userId){
+        return Result.success(userService.getUserById(userId));
+    }
+
+
+
 }

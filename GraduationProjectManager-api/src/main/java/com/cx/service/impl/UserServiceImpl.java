@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserById(String id) {
         UserQuery query=new UserQuery();
-        query.where().userId().eq(id);
+        query.where().userId().eq(id).end();
         UserEntity res= userMapper.findOne(query);
         return res;
     }
