@@ -13,10 +13,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api(tags = "PaperlibController",description = "文库模块")
@@ -44,6 +43,15 @@ public class PaperlibController {
             return Result.failure(ResultCode.INSERT_ERROR);
         }
     }
+
+
+    @SaCheckLogin
+    @ApiOperation(value = "查询获取所有文库列表")
+    @GetMapping("/getallpaperliblist")
+    public Result<List<PaperlibEntity>> getAll(){
+        return Result.success(paperlibService.getAllPaperlibList());
+    }
+
 }
 
 

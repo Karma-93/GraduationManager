@@ -34,6 +34,6 @@ export function requestGetKtbgByStudentId(param) {
     return request({
         url: ktbgApi.GetByStudentId,
         method: "get",
-        data: { studentId: param }
+        params: { studentId: param }
     })
 }

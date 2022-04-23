@@ -23,3 +23,27 @@ export function reqeustUpdateLunwen(parameter) {
         data: parameter
     });
 }
+
+export function requestLunwenById(param) {
+    return request({
+        url: lunwenApi.GetById,
+        method: "get",
+        params: { id: param }
+    });
+}
+
+export function requestLunwenByStudetnId(param) {
+    return request({
+        url: lunwenApi.GetByStudentId,
+        method: "get",
+        params: { studentId: param }
+    });
+}
+
+export function requestLunwenRemove(param) {
+    return request({
+        url: lunwenApi.Remove,
+        method: "get",
+        params: { id: param }
+    });
+}

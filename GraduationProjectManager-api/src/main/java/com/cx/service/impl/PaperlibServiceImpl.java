@@ -9,6 +9,8 @@ import com.cx.service.PaperlibService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PaperlibServiceImpl implements PaperlibService {
 
@@ -25,5 +27,12 @@ public class PaperlibServiceImpl implements PaperlibService {
     public int insert(PaperlibEntity paperlibEntity) {
 
         return paperlibMapper.insert(paperlibEntity);
+    }
+
+    @Override
+    public List<PaperlibEntity> getAllPaperlibList() {
+        PaperlibQuery query = new PaperlibQuery();
+        query.selectAll();
+        return paperlibMapper.listEntity(query);
     }
 }
