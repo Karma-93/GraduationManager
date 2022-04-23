@@ -15,16 +15,20 @@ import SReplyInfo from "../views/student/SReplyInfo";
 import SReplyScore from "../views/student/SReplyScore";
 import Login from "../views/Login";
 import Tindex from "../views/teacher/Tindex";
-import Aindex from "../views/admin/Aindex";
 import THome from "../views/teacher/THome";
+import Aindex from "../views/admin/Aindex";
 import AHome from "../views/admin/AHome";
+import AUser from "../views/admin/AUser";
+import ATeacher from "../views/admin/ATeacher";
+import AStudent from "../views/admin/AStudent";
+import AScore from "../views/admin/AScore";
+import AProject from "../views/admin/AProject"
 import store from "../store/store";
 
 Vue.use(Router);
 
 const router = new Router({
-    routes: [
-        {
+    routes: [{
             path: "/",
             redirect: "/login"
         },
@@ -41,7 +45,8 @@ const router = new Router({
         {
             path: "/message",
             name: "message",
-            component: () => import("@/views/message/Message")
+            component: () =>
+                import ("@/views/message/Message")
         },
         {
             path: "/sindex",
@@ -51,8 +56,7 @@ const router = new Router({
                 requireAuth: true //true为这个页面需要登录
             },
 
-            children: [
-                {
+            children: [{
                     path: "shome",
                     name: "SHome",
                     component: SHome
@@ -103,24 +107,47 @@ const router = new Router({
             path: "/tindex",
             name: "Tindex",
             component: Tindex,
-            children: [
-                {
-                    path: "thome",
-                    name: "THome",
-                    component: THome
-                }
-            ]
+            children: [{
+                path: "thome",
+                name: "THome",
+                component: THome
+            }]
         },
 
         {
             path: "/aindex",
             name: "Aindex",
             component: Aindex,
-            children: [
-                {
-                    path: "ahome",
+            children: [{
+                    path: "",
                     name: "AHome",
                     component: AHome
+                },
+                {
+                    path: "ausermanager",
+                    name: "AUser",
+                    component: AUser
+                },
+                {
+
+                    path: "ateachermanager",
+                    name: "ATeacher",
+                    component: ATeacher
+                },
+                {
+                    path: "astudentmanager",
+                    name: "AStudent",
+                    component: AStudent
+                },
+                {
+                    path: "ascoremanager",
+                    name: "AScore",
+                    component: AScore
+                },
+                {
+                    path: "aprojectmanager",
+                    name: "AProject",
+                    component: AProject
                 }
             ]
         },
