@@ -2,13 +2,16 @@ import request from "@/utils/request";
 const studentApi = {
     GetCurrentStudentData: "/student/getCurrentStudentData",
     GetStudentByUserId: "/student/getStudentByUserId",
-    GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
-    GetProjectList: "/project/getAll",
-    GetCountProject: "/project/getcountproject",
-    ChooseProject: "/project/updatestudentidbyproject",
-    GetProjectByStudentId: "/project/getprojectbystudentid",
+    GetStudentListByTeacherId: "/student/getStudentListByTeacherId"
 
 };
+export function reqeustStudentListByTeacherId(param) {
+    return request({
+        url: studentApi.GetStudentListByTeacherId,
+        method: "get",
+        params: { teacherId: param }
+    });
+}
 
 export function requestStudentByUserId(param) {
     return request({

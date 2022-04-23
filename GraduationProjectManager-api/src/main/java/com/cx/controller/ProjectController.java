@@ -54,21 +54,23 @@ public class ProjectController {
     @ApiOperation("更新项目的学生ID,即选择题目,只有学生用户可访问")
     @GetMapping("/updatestudentidbyproject")
     @SaCheckRole("student")
-    public Result updateStudentIdByProjectId(@RequestParam String projectId){
+    public Result updateStudentIdByProjectId(@RequestParam Integer projectId){
         String studentId=studentService.getStudentIdByUserId((String) StpUtil.getLoginId());
-        if (projectService.updateStudentIdByProjectId(studentId,projectId)){
-            return Result.success();
-        }else {
-            return Result.failure(ResultCode.UPDATE_ERROR);
-        }
+        projectService.updateStudentIdByProjectId(studentId,projectId);
+        studentService.setProjectId(studentId,projectId);
+        return Result.success();
     }
 
     @ApiOperation("更新项目未被学生选择")
     @GetMapping("/updatenostudent")
     @SaCheckLogin
-    public Result updateNoStudent(@RequestParam String projectId){
-        if (projectService.updateNoStudent(projectId)) return Result.success();
-        else return Result.failure(ResultCode.UPDATE_ERROR);
+    public Result updateNoStudent(@RequestParam Integer projectId){
+        String studentId=projectService.getProjectById(projectId).getStudentId();
+        //首先删除project的选择状态
+        projectService.updateNoStudent(projectId);
+        //删除学生的projectId信息
+        studentService.deleteProjectId(studentId);
+        return Result.success();
     }
 
     @ApiOperation("查询还可以选择的课题数量")

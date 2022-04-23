@@ -51,18 +51,18 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
-    public boolean updateStudentIdByProjectId(String studentId,String projectId) {
+    public boolean updateStudentIdByProjectId(String studentId,Integer projectId) {
         ProjectUpdate update=new ProjectUpdate();
-        update.where().projectId().eq(projectId).end().set.studentId().is(studentId).end();
+        update.where().projectId().eq(projectId).end().set.studentId().is(studentId).end().set.projectState().is(1).end();
         int res=projectMapper.updateBy(update);
         if (res>=1) return true;
         else return false;
     }
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
-    public boolean updateNoStudent(String projectId) {
+    public boolean updateNoStudent(Integer projectId) {
         ProjectUpdate update=new ProjectUpdate();
-        update.where().projectId().eq(projectId).end().set.studentId().is(null).end();
+        update.where().projectId().eq(projectId).end().set.studentId().is(null).end().set.projectState().is(0).end();
         int res=projectMapper.updateBy(update);
         if (res>=1) return true;
         else return false;

@@ -20,9 +20,9 @@ public interface ProjectService {
 
     public ProjectEntity getProjectByStudentId(String studentId);
 
-    public boolean updateStudentIdByProjectId(String studentId,String projectId) ;
+    public boolean updateStudentIdByProjectId(String studentId,Integer projectId) ;
 
-    public boolean updateNoStudent(String projectId);
+    public boolean updateNoStudent(Integer projectId);
 
     public int getCountProjectNum();
 

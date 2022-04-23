@@ -50,13 +50,17 @@ export function requestUpdateProject(parameter) {
     });
 }
 
-export function reqeustChangeNoSelect() {
+export function reqeustChangeNoSelect(projectId) {
     return request({
-
+        url: projectApi.ChangeNoSelect,
+        mothod: "get",
+        data: { projectId: projectId }
     });
 }
-export function requestChooseProject() {
+export function requestChooseProject(projectId) {
     return request({
-
+        url: projectApi.ChooseProject,
+        mothod: "get",
+        data: { projectId: projectId }
     });
 }

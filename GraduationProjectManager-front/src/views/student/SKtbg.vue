@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { requestCurrentStudentData } from "@/api/student.js"
+import { requestCurrentStudentData,requestStudentByUserId } from "@/api/student.js"
 import  { requestProjectById} from "@/api/project.js"
 export default {
     name: "SKtbg",
@@ -20,7 +20,8 @@ export default {
             studentData:[],
             studentName:this.$store.state.userInfo.userName,
             projectName:"",
-            class:""
+            class:"",
+            temp:""
         }
     },
     created(){
@@ -36,6 +37,7 @@ export default {
                     this.projectName="未选择选题";
                 }
             });
+
         },
         getStudentProject(projectId){
             requestProjectById(projectId).then((response)=>{

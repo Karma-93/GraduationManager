@@ -6,6 +6,7 @@ import com.cx.fluentmybatis.helper.StudentMapping;
 import com.cx.fluentmybatis.mapper.StudentMapper;
 import com.cx.fluentmybatis.wrapper.PaperlibQuery;
 import com.cx.fluentmybatis.wrapper.StudentQuery;
+import com.cx.fluentmybatis.wrapper.StudentUpdate;
 import com.cx.model.PageReq;
 import com.cx.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public int update(StudentEntity student) {
         return studentMapper.updateById(student);
+    }
+
+    @Override
+    public Boolean deleteProjectId(String studentId) {
+        StudentUpdate update = StudentUpdate.updater().where.studentId().eq(studentId).end().set.projectId().is(null).end().set.projectNum().is(0).end();
+        int tag=studentMapper.updateBy(update);
+        if (tag>0) return true;
+        else return false;
+    }
+
+    @Override
+    public Boolean setProjectId(String studentId, Integer projectId) {
+        StudentUpdate update=new StudentUpdate();
+        update.where.studentId().eq(studentId).end().set.projectId().is(projectId).end().set.projectNum().is(1).end();
+        if (studentMapper.updateBy(update)>0) return true;
+        else return false;
     }
 }

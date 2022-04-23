@@ -1,6 +1,7 @@
 package com.cx.controller;
 
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.KtbgEntity;
@@ -19,6 +20,8 @@ public class KtbgController {
     @Autowired
     KtbgService ktbgService;
 
+
+    @SaCheckLogin
     @ApiOperation(value = "添加开题报告")
     @PostMapping("/addktbg")
     public Result addKtbg(@RequestBody KtbgEntity ktbg){
@@ -29,6 +32,7 @@ public class KtbgController {
         }
     }
 
+    @SaCheckLogin
     @ApiOperation("根据id删除ktbg")
     @GetMapping("/remove")
     public Result removeKtbg(@RequestParam Integer id){
@@ -39,6 +43,7 @@ public class KtbgController {
         }
     }
 
+    @SaCheckLogin
     @ApiOperation("更新开题报告")
     @PostMapping("/update")
     public Result updateKtbg(@RequestBody KtbgEntity ktbg){
@@ -46,6 +51,7 @@ public class KtbgController {
         else return Result.failure(ResultCode.UPDATE_ERROR);
     }
 
+    @SaCheckLogin
     @ApiOperation("通过id获取开题报告")
     @GetMapping("/getById")
     public Result<KtbgEntity> getKtbgById(@RequestParam Integer id){
@@ -53,6 +59,7 @@ public class KtbgController {
     }
 
 
+    @SaCheckLogin
     @ApiOperation("通过studentId获取开题报告")
     @GetMapping("/getByStudentId")
     public Result<KtbgEntity> getKtbgById(@RequestParam String studentId){
