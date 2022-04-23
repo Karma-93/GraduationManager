@@ -14,6 +14,8 @@ import java.util.List;
 
 public interface ProjectService {
 
+    public ProjectEntity getProjectById(Integer projectId );
+
     public List<ProjectEntity> getProjectListByTeacherId(String teacherId);
 
     public ProjectEntity getProjectByStudentId(String studentId);

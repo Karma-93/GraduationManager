@@ -7,19 +7,19 @@ const teacherApi = {
     GetAllTeacherData: "/teacher/getAllTeacherData"
 };
 
-export function requestTeacherByTeacherId(params) {
+export function requestTeacherByTeacherId(param) {
 
     return request({
         url: teacherApi.GetTeacherByTeacherId,
         method: "get",
-        params
+        params: { teacherId: param }
     });
 }
-export function requestTeacherByUserId(params) {
+export function requestTeacherByUserId(param) {
     return request({
         url: teacherApi.GetTeacherByUserId,
         method: "get",
-        params
+        params: { userId: param }
     });
 }
 export function requestAllTeacherList() {

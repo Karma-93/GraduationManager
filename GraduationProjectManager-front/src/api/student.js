@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 const studentApi = {
-    getCurrentStudentData: "/student/getCurrentStudentData",
+    GetCurrentStudentData: "/student/getCurrentStudentData",
     GetStudentByUserId: "/student/getStudentByUserId",
     GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
     GetProjectList: "/project/getAll",
@@ -10,16 +10,16 @@ const studentApi = {
 
 };
 
-export function requestStudentByUserId(params) {
+export function requestStudentByUserId(param) {
     return request({
         url: studentApi.GetStudentByUserId,
         method: "get",
-        params
+        params: { userId: param }
     });
 }
 export function requestCurrentStudentData() {
     return request({
-        url: studentApi.getCurrentStudentData,
+        url: studentApi.GetCurrentStudentData,
         method: "get",
     });
 }

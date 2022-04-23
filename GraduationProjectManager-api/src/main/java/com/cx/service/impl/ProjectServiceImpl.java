@@ -28,6 +28,13 @@ public class ProjectServiceImpl implements ProjectService {
     private TeacherMapper teacherMapper;
 
     @Override
+    public ProjectEntity getProjectById(Integer projectId) {
+        ProjectQuery query=new ProjectQuery();
+        query.where.projectId().eq(projectId).end();
+        return projectMapper.findOne(query);
+    }
+
+    @Override
     @Transactional(propagation= Propagation.SUPPORTS)
     public List<ProjectEntity> getProjectListByTeacherId(String teacherId){
         ProjectQuery query=new ProjectQuery();

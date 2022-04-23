@@ -29,6 +29,13 @@ public class ProjectController {
     @Autowired
     StudentService studentService;
 
+    @ApiOperation("通过projectid获取选题")
+    @GetMapping("/getprojectbyid")
+    @SaCheckLogin
+    public Result<ProjectEntity> getProjectById(@RequestParam Integer projectId){
+        return Result.success(projectService.getProjectById(projectId));
+    }
+
 
     @ApiOperation("通过教师id获取选题列表")
     @GetMapping("/getprojectlistbyteacherid")
@@ -72,7 +79,7 @@ public class ProjectController {
     }
 
     @ApiOperation("插入新的选题")
-    @PostMapping("/insertSelective")
+    @PostMapping("/insert")
     @SaCheckRole("teacher")
     public Result insertSelective(@RequestBody ProjectEntity project){
         String teacherId=project.getTeacherId();

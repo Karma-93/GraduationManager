@@ -1,17 +1,17 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : ali
+ Source Server         : ten
  Source Server Type    : MySQL
  Source Server Version : 80028
- Source Host           : 60.205.187.211:3306
+ Source Host           : 124.223.184.251:3306
  Source Schema         : graduationManager
 
  Target Server Type    : MySQL
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 29/03/2022 12:16:10
+ Date: 23/04/2022 14:40:53
 */
 
 SET NAMES utf8mb4;
@@ -63,7 +63,7 @@ CREATE TABLE `dept`  (
   `dept_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,部门id',
   `dept_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '部门科室名',
   PRIMARY KEY (`dept_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dept
@@ -86,7 +86,7 @@ CREATE TABLE `down`  (
   PRIMARY KEY (`down_id`) USING BTREE,
   INDEX `admin_id`(`admin_id`) USING BTREE,
   CONSTRAINT `down_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文件下载' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文件下载' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of down
@@ -115,7 +115,7 @@ CREATE TABLE `inform`  (
   PRIMARY KEY (`inform_id`) USING BTREE,
   INDEX `admin_id`(`admin_id`) USING BTREE,
   CONSTRAINT `inform_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of inform
@@ -208,7 +208,7 @@ CREATE TABLE `message`  (
   INDEX `wj_2`(`to_user_id`) USING BTREE,
   CONSTRAINT `wj_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `wj_2` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -270,7 +270,7 @@ CREATE TABLE `paperlib`  (
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '摘要',
   `file` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件链接',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of paperlib
@@ -344,7 +344,7 @@ CREATE TABLE `roles`  (
   `roles_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,角色id',
   `roles_name` char(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名（导师，学生，管理员，超级管理员）',
   PRIMARY KEY (`roles_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
@@ -368,7 +368,7 @@ CREATE TABLE `sessionList`  (
   INDEX `wk_2`(`to_user_id`) USING BTREE,
   CONSTRAINT `wk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `wk_2` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sessionList
@@ -415,7 +415,7 @@ CREATE TABLE `subject`  (
   `subject_id` int NOT NULL AUTO_INCREMENT COMMENT '主键,id',
   `subject_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '专业名',
   PRIMARY KEY (`subject_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '专业名表\r\n' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '专业名表\r\n' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subject
@@ -432,7 +432,7 @@ DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher`  (
   `teacher_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键,导师id',
   `teacher_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '导师描述',
-  `teacher_project_num` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '导师出题数,限制在8个',
+  `teacher_project_num` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT '导师出题数,限制在8个',
   `user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,用户id',
   `dept_id` int NULL DEFAULT NULL COMMENT '外键,部门id',
   `zhicheng` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职称',
@@ -446,11 +446,11 @@ CREATE TABLE `teacher`  (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
-INSERT INTO `teacher` VALUES ('11001', '计算机科学方向', NULL, '10001', 1, '副教授');
-INSERT INTO `teacher` VALUES ('11002', '大数据方向', NULL, '10002', 2, '副教授');
-INSERT INTO `teacher` VALUES ('11003', 'Java方向', '', '10003', 1, '副教授');
-INSERT INTO `teacher` VALUES ('11004', 'Java方向', NULL, '10004', 1, '副教授');
-INSERT INTO `teacher` VALUES ('11005', '自然语言处理方向(NLP)', NULL, '10005', 3, '教授');
+INSERT INTO `teacher` VALUES ('11001', '计算机科学方向', 0000000000, '10001', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11002', '大数据方向', 0000000000, '10002', 2, '副教授');
+INSERT INTO `teacher` VALUES ('11003', 'Java方向', 0000000000, '10003', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11004', 'Java方向', 0000000000, '10004', 1, '副教授');
+INSERT INTO `teacher` VALUES ('11005', '自然语言处理方向(NLP)', 0000000000, '10005', 3, '教授');
 
 -- ----------------------------
 -- Table structure for user
