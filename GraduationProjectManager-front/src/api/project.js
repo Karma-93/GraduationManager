@@ -15,12 +15,47 @@ const projectApi = {
 
 export function requestProjectById(param) {
     return request({
-        url: messageApi.MessageList,
+        url: projectApi.GetProjectById,
         method: "get",
         params: { projectId: param }
     });
 }
-export function requestProejctListByTeacherId() {
+export function requestProejctListByTeacherId(param) {
+    return request({
+        url: projectApi.GetProjectListByTeacherId,
+        method: "get",
+        params: { teacherId: param }
+    });
+}
+
+export function requestCountProject() {
+    return request({
+        url: projectApi.GetCountProject,
+        method: "get",
+    });
+}
+export function requestInsert(parameter) {
+    return request({
+        url: projectApi.Insert,
+        method: "post",
+        data: parameter
+    });
+}
+
+export function requestUpdateProject(parameter) {
+    return request({
+        url: projectApi.UpdateProject,
+        method: "post",
+        data: parameter
+    });
+}
+
+export function reqeustChangeNoSelect() {
+    return request({
+
+    });
+}
+export function requestChooseProject() {
     return request({
 
     });
