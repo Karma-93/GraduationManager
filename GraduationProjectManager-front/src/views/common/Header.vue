@@ -74,16 +74,20 @@ export default {
     name: "Header",
     data() {
         return {
+            userName:"",
             userData: [],
+            sessionList:"",
         };
     },
     created() {
+        this.userName=this.$store.state.userInfo.userName;
         //初始化用户信息s
         if (this.$store.state.userInfo.userRoles == 1) {
             this.getTeacherData();
         } else if (this.$store.state.userInfo.userRoles == 2) {
             this.getStudentData();
         }
+        this.getSessionListAlready();
     },
     methods: {
         test1() {
@@ -103,6 +107,22 @@ export default {
         getStudentData() {},
         //如果是教师
         getTeacherData() {},
+        //获取已经存在的会话列表
+        getSessionListAlready() {
+            sessionListsAlready(this.curUserId)
+                .then((res) => {
+                    if (res.data.code == 1) {
+                        this.sessionList_already = res.data.data;
+                    } else {
+                        return this.$message.error(
+                            "message Error" + res.data.message
+                        );
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
     },
 };
 </script>

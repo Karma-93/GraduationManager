@@ -3,8 +3,10 @@ package com.cx.service.impl;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.TeacherEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
+import com.cx.fluentmybatis.mapper.DeptMapper;
 import com.cx.fluentmybatis.mapper.TeacherMapper;
 import com.cx.fluentmybatis.mapper.UserMapper;
+import com.cx.fluentmybatis.wrapper.DeptQuery;
 import com.cx.fluentmybatis.wrapper.TeacherQuery;
 import com.cx.model.PageReq;
 import com.cx.model.TeacherData;
@@ -24,6 +26,8 @@ public class TeacherServiceImpl implements TeacherService {
     UserMapper userMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    DeptMapper deptMapper;
     @Override
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq) {
         TeacherQuery query=new TeacherQuery().selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
@@ -55,6 +59,8 @@ public class TeacherServiceImpl implements TeacherService {
         List<TeacherData> res=new ArrayList<>();
         List<TeacherEntity> entities=getAllTeacherList();
         for (TeacherEntity entity:entities){
+            DeptQuery deptQuery = new DeptQuery().where.deptId().eq(entity.getDeptId()).end();
+            String dept=deptMapper.findOne(deptQuery).getDeptName();
             TeacherData temp = new TeacherData();
             UserEntity user=userService.getUserById(entity.getUserId());
             temp.setTeacherId(entity.getTeacherId());
@@ -62,6 +68,7 @@ public class TeacherServiceImpl implements TeacherService {
             temp.setZhicheng(entity.getZhicheng());
             temp.setProject_num(entity.getTeacherProjectNum());
             temp.setDescribe(entity.getTeacherDescribe());
+            temp.setDept(dept);
             res.add(temp);
         }
         return res;

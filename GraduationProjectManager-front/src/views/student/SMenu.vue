@@ -22,7 +22,7 @@
             <a-menu-item
                 key="sub_home"
                 @titleClick="titleClick"
-                @click="menuClick('/sindex/shome')"
+                @click="menuClick('/sindex/')"
             >
                 <a-icon type="home" />首页
             </a-menu-item>

@@ -8,11 +8,12 @@ import store from "./store/store";
 import "ant-design-vue/dist/antd.css";
 // import axios from 'axios'
 import qs from "qs";
-
+import Dialog from '@/components/Dialog'
 Vue.prototype.$store = store;
 Vue.prototype.$qs = qs; //同全局注册,qs为一个url参数转化的js库
 Vue.config.productionTip = false;
 Vue.use(Antd);
+Vue.use(Dialog);
 
 //全局注册组件
 //Vue.component('users',Users);

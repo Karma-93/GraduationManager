@@ -9,4 +9,5 @@ public class TeacherData {
     String describe;
     Integer project_num;
     String zhicheng;
+    String dept;
 }

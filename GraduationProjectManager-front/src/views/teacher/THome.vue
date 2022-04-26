@@ -8,7 +8,9 @@ import {getStudentByUserId} from "@/api/student.js";
 export default {
     name: "THome",
     data(){
+        return{
         studentInfo:[]
+        }
     }
     ,
     created(){
@@ -16,7 +18,7 @@ export default {
     }
     ,
     function () {
-        
+
     }
 
 }

@@ -24,14 +24,26 @@ import AStudent from "../views/admin/AStudent";
 import AScore from "../views/admin/AScore";
 import AProject from "../views/admin/AProject"
 import store from "../store/store";
+import TProject from "../views/teacher/TProject";
+import TScore from "../views/teacher/TScore";
+import TShowStudentList from "../views/teacher/TShowStudentList";
+import TVerifyProject from "../views/teacher/TVerifyProject";
+import TProcessManager from "../views/teacher/TProcessManager";
+import TDownload from "../views/teacher/TDownload";
+import TLibrary from "../views/teacher/TLibrary";
 
 Vue.use(Router);
-
+// 获取原型对象上的push函数
+const originalPush = Router.prototype.push
+// 修改原型对象中的push方法
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 const router = new Router({
     routes: [{
-            path: "/",
-            redirect: "/login"
-        },
+        path: "/",
+        redirect: "/login"
+    },
         {
             path: "/hometest",
             name: "HomeTest",
@@ -57,10 +69,10 @@ const router = new Router({
             },
 
             children: [{
-                    path: "shome",
-                    name: "SHome",
-                    component: SHome
-                },
+                path: "",
+                name: "SHome",
+                component: SHome
+            },
                 {
                     path: "schoose",
                     name: "SChoose",
@@ -108,10 +120,43 @@ const router = new Router({
             name: "Tindex",
             component: Tindex,
             children: [{
-                path: "thome",
+                path: "",
                 name: "THome",
                 component: THome
-            }]
+            },
+                {
+                    path: "tlibrary",
+                    name: "TLibrary",
+                    component: TLibrary
+                },
+                {
+                    path: "tproject",
+                    name: "TProject",
+                    component: TProject
+                },
+                {
+                    path: "tscore",
+                    name: "TScore",
+                    component: TScore
+                }, {
+                    path: "tshowstudentlist",
+                    name: "TShowStudentList",
+                    component: TShowStudentList
+                }, {
+                    path:"tverifyproject",
+                    name:"TVerifyProject",
+                    component: TVerifyProject
+                },{
+                    path: "tprocessmanager",
+                    name:"TProcessManager",
+                    component: TProcessManager
+                },
+                {
+                    path:"tdownload",
+                    name:"TDownload",
+                    component: TDownload
+                },
+            ]
         },
 
         {
@@ -119,10 +164,10 @@ const router = new Router({
             name: "Aindex",
             component: Aindex,
             children: [{
-                    path: "",
-                    name: "AHome",
-                    component: AHome
-                },
+                path: "",
+                name: "AHome",
+                component: AHome
+            },
                 {
                     path: "ausermanager",
                     name: "AUser",
