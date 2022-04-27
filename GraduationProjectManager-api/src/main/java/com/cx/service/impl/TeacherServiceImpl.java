@@ -34,6 +34,8 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.stdPagedEntity(query);
     }
 
+
+
     @Override
     public TeacherEntity getTeacherById(int teacherid) {
         TeacherQuery query=new TeacherQuery().where().teacherId().eq(teacherid).end();
@@ -72,5 +74,27 @@ public class TeacherServiceImpl implements TeacherService {
             res.add(temp);
         }
         return res;
+    }
+    @Override
+    public StdPagedList<TeacherData> getTeacherData(PageReq pageReq) {
+        StdPagedList<TeacherEntity> teacherEntityStdPagedList=getTeacherList(pageReq);
+        StdPagedList<TeacherData> teacherDataStdPagedList=new StdPagedList<>();
+        teacherDataStdPagedList.setTotal(teacherEntityStdPagedList.getTotal());
+        List<TeacherData> res=new ArrayList<>();
+        for (TeacherEntity entity:teacherEntityStdPagedList.getData()){
+            DeptQuery deptQuery = new DeptQuery().where.deptId().eq(entity.getDeptId()).end();
+            String dept=deptMapper.findOne(deptQuery).getDeptName();
+            TeacherData temp = new TeacherData();
+            UserEntity user=userService.getUserById(entity.getUserId());
+            temp.setTeacherId(entity.getTeacherId());
+            temp.setUserName(user.getUserName());
+            temp.setZhicheng(entity.getZhicheng());
+            temp.setProject_num(entity.getTeacherProjectNum());
+            temp.setDescribe(entity.getTeacherDescribe());
+            temp.setDept(dept);
+            res.add(temp);
+        }
+        teacherDataStdPagedList.setData(res);
+        return teacherDataStdPagedList;
     }
 }

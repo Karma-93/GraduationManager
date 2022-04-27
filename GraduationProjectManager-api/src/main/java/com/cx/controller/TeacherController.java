@@ -33,6 +33,14 @@ public class TeacherController {
         return Result.success(teacherService.getTeacherList(pageReq));
     }
 
+
+    @PostMapping("/getTeacherData")
+    @SaCheckLogin()
+    @ApiOperation(value = "分页获取教师数据列表")
+    public Result<StdPagedList<TeacherData>> getTeacherData(PageReq pageReq){
+        return Result.success(teacherService.getTeacherData(pageReq));
+    }
+
     @GetMapping("/getTeacherByTeacherId")
     @ApiOperation(value = "通过teacherId获取教师信息")
     @SaCheckLogin()
