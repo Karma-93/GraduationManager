@@ -61,6 +61,6 @@ export function requestChooseProject(projectId) {
     return request({
         url: projectApi.ChooseProject,
         mothod: "get",
-        data: { projectId: projectId }
+        params: { projectId: projectId }
     });
 }

@@ -45,6 +45,7 @@
                             <span>职称</span>
                             <p>{{ item.zhicheng }}</p>
                         </div>
+                        
                         <div class="list-content-item">
                             <span>部门</span>
                             <p>{{ item.dept }}</p>

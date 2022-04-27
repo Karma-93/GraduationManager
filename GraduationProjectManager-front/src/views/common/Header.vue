@@ -32,8 +32,27 @@
         <!-- 消息 -->
         <a-popover placement="bottomRight" class="bell" @click="test1">
             <template slot="content">
-                <p>Content1</p>
-                <p>Content2</p>
+                <a-list size="small">
+                    <a-list-item
+                        :key="index"
+                        v-for="(item, index) in sessionList_already"
+                        @click="messageInfo(item)"
+                    >
+                        <a-list-item-meta>
+                            <!-- :description="item.listName"-->
+                            <a-avatar
+                                slot="avatar"
+                                size="large"
+                                shape="square"
+                                src="https://joeschmoe.io/api/v1/random"
+                            />
+                            <a slot="title">{{ item.listName }}</a>
+                        </a-list-item-meta>
+                        <div class="list-content">
+                            <a-badge :count="item.unReadCount" />
+                        </div>
+                    </a-list-item>
+                </a-list>
             </template>
             <template slot="title">
                 <span>消息</span>
@@ -69,18 +88,19 @@
 import { logout } from "@/api/login.js";
 import { getStudentByUserId } from "@/api/student.js";
 import { getTeacherByUserId } from "@/api/teacher.js";
-
+import { sessionListsAlready } from "@/api/message.js";
+import NewMessage from "@/views/message/NewMessage";
 export default {
     name: "Header",
     data() {
         return {
-            userName:"",
+            userName: "",
             userData: [],
-            sessionList:"",
+            sessionList_already: [],
         };
     },
     created() {
-        this.userName=this.$store.state.userInfo.userName;
+        this.userName = this.$store.state.userInfo.userName;
         //初始化用户信息s
         if (this.$store.state.userInfo.userRoles == 1) {
             this.getTeacherData();
@@ -113,6 +133,7 @@ export default {
                 .then((res) => {
                     if (res.data.code == 1) {
                         this.sessionList_already = res.data.data;
+                        console.log("sessionlist", this.sessionList_already);
                     } else {
                         return this.$message.error(
                             "message Error" + res.data.message
@@ -122,6 +143,34 @@ export default {
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+
+        messageInfo(record) {
+            this.$dialog(
+                NewMessage,
+                // component props
+                {
+                    record,
+                    on: {
+                        ok() {
+                            console.log("ok 回调");
+                        },
+                        cancel() {
+                            console.log("cancel 回调");
+                        },
+                        close() {
+                            console.log("modal close 回调");
+                        },
+                    },
+                },
+                // modal props
+                {
+                    title: "聊天窗口",
+                    width: 600,
+                    centered: true,
+                    maskClosable: false,
+                }
+            );
         },
     },
 };
