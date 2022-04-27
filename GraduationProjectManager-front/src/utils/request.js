@@ -13,12 +13,7 @@ request.interceptors.request.use(
     function(config) {
         //在请求之前做些什么
         //判断是否存在token,如果存在则将每个页面的header中添加token,
-        if (store.state.token) {
-            config.headers.common["satoken"] = store.state.token;
-        } else {
-            console.log("request.js-拦截器:toekn不存在");
-            console.log(store.state.token);
-        }
+        config.headers.common["satoken"] = store.state.token;
         return config;
     },
     function(error) {

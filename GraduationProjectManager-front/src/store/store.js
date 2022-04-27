@@ -29,7 +29,6 @@ export default new Vuex.Store({
         [CHANGE_USER_INFO](state, payload) {
             state.userInfo = payload;
             state.login = true;
-
         },
         [REMOVE_USER_INFO](state) {
             state.userInfo = {};

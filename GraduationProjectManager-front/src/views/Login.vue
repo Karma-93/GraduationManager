@@ -180,34 +180,31 @@ export default {
         // 处理登陆函数
         handleSubmit(e) {
             e.preventDefault();
-            this.form.validateFields((err, values) => {
+            this.form.validateFields(async (err, values) => {
                 //当输入值不为空
                 if (!err) {
                     //发起登陆请求
-                    login({
+                    const result = await login({
                         account: values["account"],
                         password: values["password"]
-                    }).then(res => {
-                        // 请求成功
-                        if (res.data.code == 1) {
-                            const userInfo = res.data.data;
-                            //通过commit调用mutaions中的方法将satoken存入vuex
-                            //console.log("satoken", userInfo.satoken);
-                            this.$store.commit("set_token", userInfo.satoken);
-                            this.$store.commit("change_user_info", userInfo);
-                            this.$message.success("登录成功");
-                            if (userInfo.userRoles == 1) {
-                                //判断用户角色来跳转不同的主页
-                                this.$router.push({ path: "/tindex" });
-                            } else if (userInfo.userRoles == 2) {
-                                this.$router.push({ path: "/sindex" });
-                            } else if (userInfo.userRoles == 3) {
-                                this.$router.push({ path: "/aindex" });
-                            }
-                        } else {
-                            this.$message.error("登陆失败:" + res.data.message);
-                        }
                     });
+                    if (result.data.code == 1) {
+                        const userInfo = result.data.data;
+                        //通过commit调用mutaions中的方法将token存入vuex
+                        this.$store.commit("set_token", userInfo.satoken);
+                        this.$store.commit("change_user_info", userInfo);
+                        this.$message.success("登录成功");
+                        if (userInfo.userRoles == 1) {
+                            //判断用户角色来跳转不同的主页
+                            this.$router.push({ path: "/tindex" });
+                        } else if (userInfo.userRoles == 2) {
+                            this.$router.push({ path: "/sindex" });
+                        } else if (userInfo.userRoles == 3) {
+                            this.$router.push({ path: "/aindex" });
+                        }
+                    } else {
+                        this.$message.error("登陆失败:" + result.data.message);
+                    }
                 }
             });
         },
