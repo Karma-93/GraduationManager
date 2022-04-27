@@ -9,9 +9,8 @@ const messageApi = {
 
 export function newWebSocket(userId, sessionId) {
     return new WebSocket(
-        "ws://localhost:8082/websocket/" + userId + "/" + sessionId
-        //"ws://124.223.184.251:8082/websocket/" + userId + "/" + sessionId
-
+        // "ws://localhost:8082/websocket/" + userId + "/" + sessionId
+        "ws://124.223.184.251:8082/websocket/" + userId + "/" + sessionId
     );
 }
 

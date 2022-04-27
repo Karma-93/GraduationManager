@@ -1,11 +1,11 @@
 import axios from "axios";
 import store from "@/store/store";
 const request = axios.create({
-    baseURL: "http://localhost:8082/",
-    //baseURL: "http://124.223.184.251:8082/",
+    // baseURL: "http://localhost:8082/",
+    baseURL: "http://124.223.184.251:8082/",
     headers: { "Content-Type": "application/json" },
     timeout: 6000
-        // headers.common["token"] = store.state.token;
+    // headers.common["token"] = store.state.token;
 });
 
 //添加请求拦截器s
@@ -16,7 +16,6 @@ request.interceptors.request.use(
         if (store.state.token) {
             config.headers.common["satoken"] = store.state.token;
         } else {
-
             console.log("request.js-拦截器:toekn不存在");
             console.log(store.state.token);
         }
@@ -50,7 +49,7 @@ request.interceptors.response.use(
             switch (error.response.status) {
                 case 401:
                     store.commit("remove_user_info");
-                    //router.push("/login");
+                //router.push("/login");
             }
         }
         return Promise.reject(error);

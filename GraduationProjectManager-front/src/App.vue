@@ -14,15 +14,15 @@ export default {
     //App组件创建时
     created() {
         console.log("APPstore", this.$store.state);
-        // 页面刷新时将vuex里的信息保存到localStorage里
+        // 页面刷新时将vuex里的信息保存到sessionStorage里
         window.addEventListener("beforeunload", () => {
             sessionStorage.setItem("store", JSON.stringify(this.$store.state));
         });
-        // 页面刷新后将localStorage的数据取出来存入vuex
+        // 页面刷新后将sessionStorage的数据取出来存入vuex
         window.addEventListener("load", () => {
             this.$store.commit(
                 "set_store",
-                JSON.parse(localStorage.getItem("store"))
+                JSON.parse(sessionStorage.getItem("store"))
             );
             sessionStorage.removeItem("store");
         });

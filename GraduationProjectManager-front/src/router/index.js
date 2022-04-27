@@ -22,7 +22,7 @@ import AUser from "../views/admin/AUser";
 import ATeacher from "../views/admin/ATeacher";
 import AStudent from "../views/admin/AStudent";
 import AScore from "../views/admin/AScore";
-import AProject from "../views/admin/AProject"
+import AProject from "../views/admin/AProject";
 import store from "../store/store";
 import TProject from "../views/teacher/TProject";
 import TScore from "../views/teacher/TScore";
@@ -34,16 +34,17 @@ import TLibrary from "../views/teacher/TLibrary";
 
 Vue.use(Router);
 // 获取原型对象上的push函数
-const originalPush = Router.prototype.push
+const originalPush = Router.prototype.push;
 // 修改原型对象中的push方法
 Router.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
-}
+    return originalPush.call(this, location).catch(err => err);
+};
 const router = new Router({
-    routes: [{
-        path: "/",
-        redirect: "/login"
-    },
+    routes: [
+        {
+            path: "/",
+            redirect: "/login"
+        },
         {
             path: "/hometest",
             name: "HomeTest",
@@ -57,8 +58,7 @@ const router = new Router({
         {
             path: "/message",
             name: "message",
-            component: () =>
-                import ("@/views/message/Message")
+            component: () => import("@/views/message/Message")
         },
         {
             path: "/sindex",
@@ -68,11 +68,12 @@ const router = new Router({
                 requireAuth: true //true为这个页面需要登录
             },
 
-            children: [{
-                path: "",
-                name: "SHome",
-                component: SHome
-            },
+            children: [
+                {
+                    path: "",
+                    name: "SHome",
+                    component: SHome
+                },
                 {
                     path: "schoose",
                     name: "SChoose",
@@ -119,11 +120,12 @@ const router = new Router({
             path: "/tindex",
             name: "Tindex",
             component: Tindex,
-            children: [{
-                path: "",
-                name: "THome",
-                component: THome
-            },
+            children: [
+                {
+                    path: "",
+                    name: "THome",
+                    component: THome
+                },
                 {
                     path: "tlibrary",
                     name: "TLibrary",
@@ -138,24 +140,27 @@ const router = new Router({
                     path: "tscore",
                     name: "TScore",
                     component: TScore
-                }, {
+                },
+                {
                     path: "tshowstudentlist",
                     name: "TShowStudentList",
                     component: TShowStudentList
-                }, {
-                    path:"tverifyproject",
-                    name:"TVerifyProject",
+                },
+                {
+                    path: "tverifyproject",
+                    name: "TVerifyProject",
                     component: TVerifyProject
-                },{
+                },
+                {
                     path: "tprocessmanager",
-                    name:"TProcessManager",
+                    name: "TProcessManager",
                     component: TProcessManager
                 },
                 {
-                    path:"tdownload",
-                    name:"TDownload",
+                    path: "tdownload",
+                    name: "TDownload",
                     component: TDownload
-                },
+                }
             ]
         },
 
@@ -163,18 +168,18 @@ const router = new Router({
             path: "/aindex",
             name: "Aindex",
             component: Aindex,
-            children: [{
-                path: "",
-                name: "AHome",
-                component: AHome
-            },
+            children: [
+                {
+                    path: "",
+                    name: "AHome",
+                    component: AHome
+                },
                 {
                     path: "ausermanager",
                     name: "AUser",
                     component: AUser
                 },
                 {
-
                     path: "ateachermanager",
                     name: "ATeacher",
                     component: ATeacher
@@ -212,7 +217,7 @@ router.beforeEach((to, from, next) => {
     if (nextRouter.indexOf(to.name) < 0) {
         //当需要登录才能访问
         if (store.state.login != true) {
-            let loginStatus = JSON.parse(localStorage.getItem("store"));
+            let loginStatus = JSON.parse(sessionStorage.getItem("store"));
             if (loginStatus.login != true) {
                 next("login");
                 //当没有登录
@@ -240,7 +245,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(res => res.meta.requireAuth)) {
         console.log("requireAuth"+res.meta.requireAuth)
         //验证是否需要登录
-        if (localStorage.getItem("userInfo")) {     //查询本地信息是否已经登录
+        if (sessionStorage.getItem("userInfo")) {     //查询本地信息是否已经登录
             next();
         } else {
             next({
