@@ -19,12 +19,12 @@
                 :columns="columns"
                 :data-source="list"
                 :row-key="record => record.teacherId"
-                size="middle"
+                :pagination="false"
                 bordered
             >
                 <!-- 可选题数 -->
                 <div class="project_num" slot="project_num" slot-scope="record">
-                    <a-progress :steps="10" :percent="record" />
+                    <a-progress :steps="10" :percent="record" type="line" />
                 </div>
                 <!-- 操作 -->
                 <div class="action" slot="action" slot-scope="record">
@@ -33,6 +33,25 @@
                     >
                 </div>
             </a-table>
+
+            <!-- 分页 -->
+            <a-pagination
+                style="margin-top:20px"
+                align="center"
+                :current="queryForm.pageNumber"
+                :pageSize="queryForm.pageSize"
+                show-size-changer
+                :total="500"
+                @change="handleCurrentChange"
+                @showSizeChange="onShowSizeChange"
+            >
+                <template #buildOptionText="props">
+                    <span v-if="props.value !== '50'"
+                        >{{ props.value }}条/页</span
+                    >
+                    <span v-else>全部</span>
+                </template>
+            </a-pagination>
         </a-card>
     </div>
 </template>
@@ -48,6 +67,11 @@ export default {
             projectRef: null, //弹窗对象
             listLoading: true, //列表loading开关
             list: [], //表格列表渲染数据
+            // 查询表单
+            queryForm: {
+                pageNumber: 1, //当前页数
+                pageSize: 10 //每页显示数据量
+            },
             // 表格列配置项
             columns: [
                 {
@@ -94,10 +118,30 @@ export default {
          */
         async fetchData() {
             this.listLoading = true;
-            const result = await requestAllTeacherData();
+            const result = await requestAllTeacherData(this.queryForm);
             this.list = result.data.data;
+            // this.total = result.data.total;
             this.listLoading = false;
             console.log("===列表数据===", this.list);
+        },
+
+        /**
+         * @description 分页页码改变回调
+         * @author Cui Ruichen
+         * @date 2022-04-27
+         */
+        handleCurrentChange(val) {
+            this.queryForm.pageNumber = val;
+            this.fetchData();
+        },
+
+        /**
+         * @description 分页点击事件
+         * @author Cui Ruichen
+         * @date 2022-04-27
+         */
+        onShowSizeChange(current, pageSize) {
+            console.log(current, pageSize);
         },
 
         /**
