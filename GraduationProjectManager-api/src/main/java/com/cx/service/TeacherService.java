@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface TeacherService{
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq);
+    public StdPagedList<TeacherData> getTeacherData(PageReq pageReq);
     public TeacherEntity getTeacherById(int teacherId);
     public TeacherEntity getTeacherByUserId(String userId);
     public List<TeacherEntity> getAllTeacherList();
