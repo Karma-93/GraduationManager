@@ -3,9 +3,9 @@ server:
 spring:
   datasource: # 数据库参数配置
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://124.223.184.251:3306/graduationManager?useUnicode=true&characterEncoding=utf8
+    url:
     username: root
-    password: 243698
+    password:
 
 
 sa-token:
