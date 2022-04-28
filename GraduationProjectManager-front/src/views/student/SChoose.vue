@@ -38,10 +38,10 @@
             <a-pagination
                 style="margin-top:20px"
                 align="center"
-                :current="queryForm.pageNumber"
+                :current="queryForm.pageNum"
                 :pageSize="queryForm.pageSize"
                 show-size-changer
-                :total="500"
+                :total="total"
                 @change="handleCurrentChange"
                 @showSizeChange="onShowSizeChange"
             >
@@ -58,18 +58,20 @@
 
 <script>
 import ProjectList from "@/views/common/ProjectList";
-import { requestAllTeacherData } from "@/api/teacher.js";
+import { requestAllTeacherData,requestTeacherData } from "@/api/teacher.js";
+
 
 export default {
     components: { ProjectList },
     data() {
         return {
+            total:0,
             projectRef: null, //弹窗对象
             listLoading: true, //列表loading开关
             list: [], //表格列表渲染数据
             // 查询表单
             queryForm: {
-                pageNumber: 0, //当前页数
+                pageNum: 1, //当前页数
                 pageSize: 5 //每页显示数据量
             },
             // 表格列配置项
@@ -107,7 +109,7 @@ export default {
                     align: "center"
                 }
             ],
-            status: "all" //状态
+            status: "all" //状态,
         };
     },
     methods: {
@@ -118,11 +120,10 @@ export default {
          */
         async fetchData() {
             this.listLoading = true;
-            const result = await requestAllTeacherData(this.queryForm);
-            this.list = result.data.data;
-            // this.total = result.data.total;
+            const result = await requestTeacherData(this.queryForm);
+            this.list = result.data.data.data;
+            this.total = result.data.data.total;
             this.listLoading = false;
-            console.log("===列表数据===", this.list);
         },
 
         /**
@@ -131,7 +132,7 @@ export default {
          * @date 2022-04-27
          */
         handleCurrentChange(val) {
-            this.queryForm.pageNumber = val;
+            this.queryForm.pageNum = val;
             this.fetchData();
         },
 

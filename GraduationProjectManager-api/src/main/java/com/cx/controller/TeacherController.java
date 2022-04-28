@@ -29,7 +29,7 @@ public class TeacherController {
     @PostMapping("/getTeacherList")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师列表")
-    public Result<StdPagedList<TeacherEntity>> getTeacherList(PageReq pageReq) {
+    public Result<StdPagedList<TeacherEntity>> getTeacherList(@RequestBody PageReq pageReq) {
         return Result.success(teacherService.getTeacherList(pageReq));
     }
 
@@ -37,7 +37,7 @@ public class TeacherController {
     @PostMapping("/getTeacherData")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师数据列表")
-    public Result<StdPagedList<TeacherData>> getTeacherData(PageReq pageReq){
+    public Result<StdPagedList<TeacherData>> getTeacherData(@RequestBody PageReq pageReq){
         return Result.success(teacherService.getTeacherData(pageReq));
     }
 

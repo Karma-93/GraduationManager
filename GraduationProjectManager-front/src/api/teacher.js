@@ -4,8 +4,18 @@ const teacherApi = {
     GetTeacherByUserId: "/teacher/getTeacherByUserId",
     GetTeacherList: "/teacher/getTeacherList",
     GetAllTeacherList: "/teacher/getAllTeacherList",
-    GetAllTeacherData: "/teacher/getAllTeacherData"
+    GetAllTeacherData: "/teacher/getAllTeacherData",
+    GetTeacherData: "/teacher/getTeacherData"
 };
+
+export function requestTeacherData(paramter) {
+    paramter.pageNum = paramter.pageNum - 1;
+    return request({
+        url: teacherApi.GetTeacherData,
+        method: "post",
+        data: paramter
+    });
+}
 
 export function requestTeacherByTeacherId(param) {
 

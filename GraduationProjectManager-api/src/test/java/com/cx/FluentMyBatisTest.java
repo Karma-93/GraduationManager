@@ -21,7 +21,7 @@ public class FluentMyBatisTest {
     private TeacherMapper teacherMapper;
     @Test
     public void fluentInsertTest() {
-        for(int i=2;i<=5;i++) {
+        for(int i=6;i<=12;i++) {
             //当自定义主键时 使用insertWithPK
             UserEntity user = new UserEntity();
             user.setUserId("1000"+i);
