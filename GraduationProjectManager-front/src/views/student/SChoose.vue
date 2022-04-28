@@ -69,8 +69,8 @@ export default {
             list: [], //表格列表渲染数据
             // 查询表单
             queryForm: {
-                pageNumber: 1, //当前页数
-                pageSize: 10 //每页显示数据量
+                pageNumber: 0, //当前页数
+                pageSize: 5 //每页显示数据量
             },
             // 表格列配置项
             columns: [

@@ -166,7 +166,7 @@ export default {
                 // modal props
                 {
                     title: "聊天窗口",
-                    width: 600,
+                    width: 650,
                     centered: true,
                     maskClosable: false,
                 }

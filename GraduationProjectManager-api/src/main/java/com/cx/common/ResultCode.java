@@ -9,7 +9,6 @@ public enum ResultCode {
     PARAM_IS_BLANK(1002,"参数为空"),
     PARAM_TYPE_BIND_ERROR(1003,"参数类型错误"),
     PARAM_NOT_COMPLETE(1004,"参数缺失"),
-    PARAM_BLOG_NOT_DEFINE(1005,"博客不存在或已被删除"),
 
     //用户错误
     USER_NOT_LOGGED_IN(2001,"用户未登录，访问的路径需要验证，请登录"),
