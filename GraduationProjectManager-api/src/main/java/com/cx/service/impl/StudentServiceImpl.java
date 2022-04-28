@@ -2,16 +2,22 @@ package com.cx.service.impl;
 
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.StudentEntity;
+import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.fluentmybatis.helper.StudentMapping;
 import com.cx.fluentmybatis.mapper.StudentMapper;
+import com.cx.fluentmybatis.mapper.UserMapper;
 import com.cx.fluentmybatis.wrapper.PaperlibQuery;
 import com.cx.fluentmybatis.wrapper.StudentQuery;
 import com.cx.fluentmybatis.wrapper.StudentUpdate;
 import com.cx.model.PageReq;
+import com.cx.model.StudentData;
 import com.cx.service.StudentService;
+import com.cx.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +25,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    UserService userService;
 
     @Override
     public StudentEntity getStudentByUserId(String userId) {
@@ -33,9 +41,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StdPagedList<StudentEntity> getStudentListByTeacherId(PageReq pageReq, int teacherId) {
-        StudentQuery query=new StudentQuery().selectAll().where().teacherId().eq(teacherId).end().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
-        return studentMapper.stdPagedEntity(query);
+    public List<StudentEntity> getStudentListByTeacherId( String teacherId) {
+        StudentQuery query=new StudentQuery().where().teacherId().eq(teacherId).end();
+        return studentMapper.listEntity(query);
+    }
+
+    @Override
+    public List<StudentData> getStudentDataByTeacherId(String teacherId) {
+        StudentQuery query=new StudentQuery();
+        query.where.teacherId().eq(teacherId).end();
+        List<StudentEntity> entities=studentMapper.listEntity(query);
+        List<StudentData> res=new ArrayList<>();
+        for (StudentEntity entity:entities){
+            StudentData data=new StudentData();
+            BeanUtils.copyProperties(data,entity);
+            UserEntity userEntity=userService.getUserById(entity.getUserId());
+            data.setUserName(userEntity.getUserName());
+            data.setUserName(userEntity.getUserName());
+            res.add(data);
+        }
+        return res;
     }
 
 
@@ -44,6 +69,7 @@ public class StudentServiceImpl implements StudentService {
         StudentQuery query=new StudentQuery().selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
         return studentMapper.stdPagedEntity(query);
     }
+
 
     @Override
     public int update(StudentEntity student) {

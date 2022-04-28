@@ -2,6 +2,7 @@ package com.cx.service.impl;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.RolesEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.fluentmybatis.mapper.RolesMapper;
@@ -10,6 +11,7 @@ import com.cx.fluentmybatis.wrapper.RolesQuery;
 import com.cx.fluentmybatis.wrapper.UserQuery;
 import com.cx.fluentmybatis.wrapper.UserUpdate;
 import com.cx.model.Login;
+import com.cx.model.PageReq;
 import com.cx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +27,18 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RolesMapper rolesMapper;
 
+
+    @Override
+    public int insert(UserEntity userEntity) {
+        return userMapper.insert(userEntity);
+    }
+
+    @Override
+    public StdPagedList<UserEntity> getUserList(PageReq pageReq) {
+        UserQuery query = new UserQuery();
+        query.selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
+        return userMapper.stdPagedEntity(query);
+    }
 
     /**
      *

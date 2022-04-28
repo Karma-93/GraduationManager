@@ -13,6 +13,7 @@ import com.cx.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TeacherController {
     @PostMapping("/getTeacherList")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师列表")
-    public Result<StdPagedList<TeacherEntity>> getTeacherList(@RequestBody PageReq pageReq) {
+    public Result<StdPagedList<TeacherEntity>> getTeacherList(@Validated @RequestBody PageReq pageReq) {
         return Result.success(teacherService.getTeacherList(pageReq));
     }
 
@@ -37,7 +38,7 @@ public class TeacherController {
     @PostMapping("/getTeacherData")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师数据列表")
-    public Result<StdPagedList<TeacherData>> getTeacherData(@RequestBody PageReq pageReq){
+    public Result<StdPagedList<TeacherData>> getTeacherData(@Validated @RequestBody PageReq pageReq){
         return Result.success(teacherService.getTeacherData(pageReq));
     }
 

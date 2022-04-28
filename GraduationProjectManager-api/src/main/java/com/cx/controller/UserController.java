@@ -5,10 +5,12 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.model.Login;
+import com.cx.model.PageReq;
 import com.cx.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -61,6 +63,7 @@ public class UserController {
     }
 
 
+    @CrossOrigin
     @ApiOperation("通过userId获取用户信息")
     @SaCheckLogin
     @GetMapping("/getUserById")
@@ -68,6 +71,30 @@ public class UserController {
         return Result.success(userService.getUserById(userId));
     }
 
+    @CrossOrigin
+    @ApiOperation("分页查询用户列表")
+    @SaCheckLogin
+    @PostMapping("/getUserList")
+    public Result<StdPagedList<UserEntity>> getUserList(@Validated @RequestBody PageReq pageReq){
+        return Result.success(userService.getUserList(pageReq));
+    }
 
+    @CrossOrigin
+    @ApiOperation("更新用户信息")
+    @SaCheckLogin
+    @PostMapping("/update")
+    public Result updateUserById(@RequestBody UserEntity userEntity){
+        if (userService.update(userEntity)>0) return Result.success();
+        else return Result.failure(ResultCode.UPDATE_ERROR);
+    }
+
+    @CrossOrigin
+    @ApiOperation("新增用户")
+    @SaCheckLogin
+    @PostMapping("/add")
+    public Result addUser(@RequestBody UserEntity userEntity){
+        if (userService.insert(userEntity)>0) return Result.success();
+        else return Result.failure(ResultCode.INSERT_ERROR);
+    }
 
 }

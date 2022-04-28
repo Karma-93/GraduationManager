@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Slf4j
 @Api(tags = "StudentController", description = "学生模块")
@@ -53,8 +54,8 @@ public class StudentController {
 
     @SaCheckLogin
     @ApiOperation("通过教师id查询学生")
-    @PostMapping("/getStudentListByTeacherId")
-    public Result<StdPagedList<StudentEntity>> getStudentListByTeacherId(@Validated @RequestBody PageReq pageReq, @RequestBody int teacherId){
-        return Result.success(studentService.getStudentListByTeacherId(pageReq,teacherId));
+    @GetMapping("/getStudentListByTeacherId")
+    public Result<List<StudentEntity>> getStudentListByTeacherId(@RequestParam String teacherId){
+        return Result.success(studentService.getStudentListByTeacherId(teacherId));
     }
 }
