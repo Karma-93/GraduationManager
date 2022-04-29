@@ -21,11 +21,11 @@ export function requestAddUser(parameter) {
     });
 }
 
-export function requestGetUserList(parameter) {
+export function requestGetUserList(data) {
     return request({
         url: userApi.GetUserList,
         method: "post",
-        data: parameter
+        data
     });
 }
 export function requestUpdateUser(parameter) {

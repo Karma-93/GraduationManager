@@ -18,8 +18,8 @@ import Tindex from "../views/teacher/Tindex";
 import THome from "../views/teacher/THome";
 import Aindex from "../views/admin/Aindex";
 import AHome from "../views/admin/AHome";
-import AUser from "../views/admin/AUser";
-import ATeacher from "../views/admin/ATeacher";
+import AUser from "../views/admin/AUser/index.vue";
+import ATeacher from "../views/admin/ATeacher/index.vue";
 import AStudent from "../views/admin/AStudent";
 import AScore from "../views/admin/AScore";
 import AProject from "../views/admin/AProject";
@@ -40,7 +40,8 @@ Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err);
 };
 const router = new Router({
-    routes: [{
+    routes: [
+        {
             path: "/",
             redirect: "/login"
         },
@@ -57,8 +58,7 @@ const router = new Router({
         {
             path: "/message",
             name: "message",
-            component: () =>
-                import ("@/views/message/Message")
+            component: () => import("@/views/message/Message")
         },
         {
             path: "/sindex",
@@ -68,7 +68,8 @@ const router = new Router({
                 requireAuth: true //true为这个页面需要登录
             },
 
-            children: [{
+            children: [
+                {
                     path: "",
                     name: "SHome",
                     component: SHome
@@ -119,7 +120,8 @@ const router = new Router({
             path: "/tindex",
             name: "Tindex",
             component: Tindex,
-            children: [{
+            children: [
+                {
                     path: "",
                     name: "THome",
                     component: THome
@@ -166,7 +168,8 @@ const router = new Router({
             path: "/aindex",
             name: "Aindex",
             component: Aindex,
-            children: [{
+            children: [
+                {
                     path: "",
                     name: "AHome",
                     component: AHome
