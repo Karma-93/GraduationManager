@@ -6,8 +6,10 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
+import com.cx.fluentmybatis.dao.intf.UserDao;
 import com.cx.fluentmybatis.entity.StudentEntity;
 import com.cx.model.PageReq;
+import com.cx.model.StudentData;
 import com.cx.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +29,18 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+
+
+
+
+    @SaCheckLogin
+    @ApiOperation("通过教师id查询学生data")
+    @GetMapping("/getStudentDataListByTeacherId")
+    public Result<List<StudentData>> getStudentDataByTeacehrId(@RequestParam String teacherId){
+        return Result.success(studentService.getStudentDataByTeacherId(teacherId));
+    }
+
+
     @SaCheckLogin
     @ApiOperation(value = "通过UserId获取学生信息")
     @GetMapping("/getStudentByUserId")
