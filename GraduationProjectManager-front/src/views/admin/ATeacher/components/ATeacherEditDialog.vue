@@ -29,7 +29,9 @@ export default {
          * @author Cui Ruichen
          * @date 2022-04-29
          */
-        showEdit() {
+        showEdit(record) {
+            // record: 该行的数据
+            console.log("弹窗展示", record);
             this.visible = true;
         },
 

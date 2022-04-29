@@ -166,7 +166,7 @@ export default {
             }
             // 行内编辑
             else if (type == "edit") {
-                console.log("===调用编辑===", record);
+                console.log("===调用编辑===");
                 // 启用子组件弹窗的showEdit事件，使弹窗显示
                 this.$refs.editRef.showEdit(record);
             }

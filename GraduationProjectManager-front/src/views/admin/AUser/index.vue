@@ -172,7 +172,8 @@ export default {
             }
             // 行内编辑
             else if (type == "edit") {
-                console.log("===调用编辑===", record);
+                console.log("===调用编辑===");
+                this.$refs.editRef.showEdit(record);
             }
             // 行内删除
             else if (type == "delete") {
