@@ -1,6 +1,5 @@
 <template>
     <a-card title="选题列表">
-
         <a-list
             rowKey="id"
             :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
@@ -27,7 +26,7 @@
                         </a-card-meta>
                         <template class="ant-card-actions" slot="actions">
                             <a>编辑</a>
-                            <a>删除</a>
+                            <a @click="deleteProject(item.projectId)">删除</a>
                         </template>
                     </a-card>
                 </template>
@@ -37,12 +36,12 @@
 </template>
 
 <script>
-import {requestProejctListByTeacherId} from "@/api/project.js"
-import {requestTeacherByUserId} from "@/api/teacher.js"
-import { requestUpdateProject } from '../../api/project';
-
-
-
+import {
+    requestProejctListByTeacherId,
+    requestUpdateProject,
+    requestDelete,
+} from "@/api/project.js";
+import { requestTeacherByUserId } from "@/api/teacher.js";
 
 export default {
     name: "TProject",
@@ -60,83 +59,87 @@ export default {
             const result = await requestTeacherByUserId(
                 this.$store.state.userInfo.userId
             );
-            this.teacherData=result.data.data;
-            const projectresult=await requestProejctListByTeacherId(this.teacherData.teacherId);
-            this.projectList=projectresult.data.data;
-            this.projectList.push({})
+            this.teacherData = result.data.data;
+            const projectresult = await requestProejctListByTeacherId(
+                this.teacherData.teacherId
+            );
+            this.projectList = projectresult.data.data;
+            this.projectList.push({});
             console.log(this.projectList);
             console.log(this.teacherData);
+        },
+        deleteProject(projectId) {
+            requestDelete(projectId);
         },
     },
 };
 </script>
 
-<style lang="less" scoped> 
-
-  .card-list {
+<style lang="less" scoped>
+.card-list {
     /deep/ .ant-card-body:hover {
-      .ant-card-meta-title>a { 
-      }
+        .ant-card-meta-title > a {
+        }
     }
 
     /deep/ .ant-card-meta-title {
-      margin-bottom: 12px;
+        margin-bottom: 12px;
 
-      &>a {
-        display: inline-block;
-        max-width: 100%;
-        color: rgba(0,0,0,.85);
-      }
+        & > a {
+            display: inline-block;
+            max-width: 100%;
+            color: rgba(0, 0, 0, 0.85);
+        }
     }
 
     /deep/ .meta-content {
-      position: relative;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      height: 64px;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        height: 64px;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
 
-      margin-bottom: 1em;
+        margin-bottom: 1em;
     }
-  }
+}
 
-  .card-avatar {
+.card-avatar {
     width: 48px;
     height: 48px;
     border-radius: 48px;
-  }
+}
 
-  .ant-card-actions {
+.ant-card-actions {
     background: #f7f9fa;
 
     li {
-      float: left;
-      text-align: center;
-      margin: 12px 0;
-      color: rgba(0, 0, 0, 0.45);
-      width: 50%;
+        float: left;
+        text-align: center;
+        margin: 12px 0;
+        color: rgba(0, 0, 0, 0.45);
+        width: 50%;
 
-      &:not(:last-child) {
-        border-right: 1px solid #e8e8e8;
-      }
-
-      a {
-        color: rgba(0, 0, 0, .45);
-        line-height: 22px;
-        display: inline-block;
-        width: 100%;
-        &:hover { 
+        &:not(:last-child) {
+            border-right: 1px solid #e8e8e8;
         }
-      }
-    }
-  }
 
-  .new-btn {
+        a {
+            color: rgba(0, 0, 0, 0.45);
+            line-height: 22px;
+            display: inline-block;
+            width: 100%;
+            &:hover {
+            }
+        }
+    }
+}
+
+.new-btn {
     background-color: #fff;
     border-radius: 2px;
     width: 100%;
     height: 188px;
-  }
+}
 </style>

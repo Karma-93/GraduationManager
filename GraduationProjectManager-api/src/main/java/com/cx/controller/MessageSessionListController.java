@@ -70,7 +70,9 @@ public class MessageSessionListController {
             sessionListEntity.setListName(user.getUserName());
             sessionListService.insert(sessionListEntity);
         }
-        return Result.success();
+        temp=sessionListService.getIdByUser(toUserId,userId);
+        sessionListService.getSessionListById(temp);
+        return Result.success(sessionListService.getSessionListById(temp));
     }
 
     @ApiOperation(value = "删除一个聊天会话记录")

@@ -67,7 +67,7 @@
         <!-- 右侧用户 -->
         <a-dropdown placement="bottomCenter">
             <div>
-                <a-avatar style="backgroundColor:#87d068;marginRight:10px" icon="user" />用户名
+                <a-avatar style="backgroundColor:#87d068;marginRight:10px" icon="user" />{{userName}}
             </div>
             <a-menu slot="overlay">
                 <a-menu-item>

@@ -103,7 +103,7 @@
                             >
                                 <a-list-item
                                     slot="renderItem"
-                                    slot-scope="item, index"
+                                    slot-scope="item, index" @click="informClick(item)"
                                 >
                                     {{ item.informTitle }}
                                 </a-list-item>
@@ -153,13 +153,17 @@
 </template>
 
 <script>
+import Inform from "@/views/common/Inform";
+
 import {
     login,
     requestDownList,
     requestAnnouncementList
 } from "@/api/login.js";
 
+
 export default {
+    components: { Inform },
     name: "Login",
     data() {
         return {
@@ -221,6 +225,33 @@ export default {
             requestAnnouncementList({ pageNum: 0, pageSize: 5 }).then(
                 response => {
                     this.informData = response.data.data.data;
+                }
+            );
+        },
+        informClick(record){
+            this.$dialog(
+                Inform,
+                // component props
+                {
+                    record,
+                    on: {
+                        ok() {
+                            console.log("ok 回调");
+                        },
+                        cancel() {
+                            console.log("cancel 回调");
+                        },
+                        close() {
+                            console.log("modal close 回调");
+                        }
+                    }
+                },
+                // modal props
+                {
+                    title: "通知公告",
+                    width: 600,
+                    centered: true,
+                    maskClosable: false
                 }
             );
         }

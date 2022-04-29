@@ -33,6 +33,14 @@ public class ProjectController {
     StudentService studentService;
 
 
+    @ApiOperation("删除选题")
+    @SaCheckLogin()
+    @GetMapping("/delete")
+    public Result delete(@RequestParam Integer projectId){
+        projectService.delete(projectId);
+        return Result.success();
+    }
+
     //同意确认学生选题
     @ApiOperation("同意学生选题")
     @GetMapping("/verifychoose")
@@ -77,6 +85,10 @@ public class ProjectController {
     @SaCheckRole("student")
     public Result updateStudentIdByProjectId(@RequestParam Integer projectId){
         String studentId=studentService.getStudentIdByUserId((String) StpUtil.getLoginId());
+        //如果存在选题返回错误
+        if(studentService.getStudentById(studentId).getProjectId()!=null){
+            return Result.failure(ResultCode.INSERT_ERROR);
+        }
         projectService.updateStudentIdByProjectId(studentId,projectId);
         studentService.setProjectId(studentId,projectId);
         return Result.success();

@@ -38,6 +38,14 @@ public class ProjectServiceImpl implements ProjectService {
     private UserService userService;
 
     @Override
+    public int delete(Integer projectId) {
+        ProjectQuery query=new ProjectQuery();
+        query.where.projectId().eq(projectId).end();
+        return projectMapper.delete(query);
+
+    }
+
+    @Override
     public int verifyChoose(Integer projectId) {
         ProjectUpdate update = new ProjectUpdate();
         update.where.projectId().eq(projectId).end().set.projectState().is(2).end();

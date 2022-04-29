@@ -65,6 +65,7 @@ public class TeacherServiceImpl implements TeacherService {
             String dept=deptMapper.findOne(deptQuery).getDeptName();
             TeacherData temp = new TeacherData();
             UserEntity user=userService.getUserById(entity.getUserId());
+            temp.setUserId(user.getUserId());
             temp.setTeacherId(entity.getTeacherId());
             temp.setUserName(user.getUserName());
             temp.setZhicheng(entity.getZhicheng());
@@ -86,6 +87,7 @@ public class TeacherServiceImpl implements TeacherService {
             String dept=deptMapper.findOne(deptQuery).getDeptName();
             TeacherData temp = new TeacherData();
             UserEntity user=userService.getUserById(entity.getUserId());
+            temp.setUserId(user.getUserId());
             temp.setTeacherId(entity.getTeacherId());
             temp.setUserName(user.getUserName());
             temp.setZhicheng(entity.getZhicheng());

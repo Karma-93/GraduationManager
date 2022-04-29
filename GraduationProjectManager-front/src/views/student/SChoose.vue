@@ -28,9 +28,8 @@
                 </div>
                 <!-- 操作 -->
                 <div class="action" slot="action" slot-scope="record">
-                    <a-button type="primary" @click="clickEdit(record)"
-                        >选择</a-button
-                    >
+                    <a-button type="primary" @click="clickEdit(record)">选择</a-button>
+                    <a-button type="primary" @click="createSession(record)">发送消息</a-button>
                 </div>
             </a-table>
 
@@ -46,9 +45,7 @@
                 @showSizeChange="onShowSizeChange"
             >
                 <template #buildOptionText="props">
-                    <span v-if="props.value !== '50'"
-                        >{{ props.value }}条/页</span
-                    >
+                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
                     <span v-else>全部</span>
                 </template>
             </a-pagination>
@@ -58,21 +55,21 @@
 
 <script>
 import ProjectList from "@/views/common/ProjectList";
-import { requestAllTeacherData,requestTeacherData } from "@/api/teacher.js";
-
-
+import { requestAllTeacherData, requestTeacherData } from "@/api/teacher.js";
+import { createSession } from "@/api/message.js";
+import NewMessage from "@/views/message/NewMessage";
 export default {
-    components: { ProjectList },
+    components: { ProjectList,NewMessage },
     data() {
         return {
-            total:0,
+            total: 0,
             projectRef: null, //弹窗对象
             listLoading: true, //列表loading开关
             list: [], //表格列表渲染数据
             // 查询表单
             queryForm: {
                 pageNum: 1, //当前页数
-                pageSize: 5 //每页显示数据量
+                pageSize: 5, //每页显示数据量
             },
             // 表格列配置项
             columns: [
@@ -80,19 +77,19 @@ export default {
                     title: "姓名",
                     dataIndex: "userName",
                     key: "name",
-                    align: "center"
+                    align: "center",
                 },
                 {
                     title: "职称",
                     dataIndex: "zhicheng",
                     key: "zhicheng",
-                    align: "center"
+                    align: "center",
                 },
                 {
                     title: "部门",
                     dataIndex: "userName",
                     key: "userName",
-                    align: "center"
+                    align: "center",
                 },
                 {
                     title: "剩余可选题数",
@@ -100,16 +97,16 @@ export default {
                     key: "project_num",
                     scopedSlots: { customRender: "project_num" },
                     align: "center",
-                    width: "300px"
+                    width: "300px",
                 },
                 {
                     title: "操作",
                     key: "action",
                     scopedSlots: { customRender: "action" },
-                    align: "center"
-                }
+                    align: "center",
+                },
             ],
-            status: "all" //状态,
+            status: "all", //状态,
         };
     },
     methods: {
@@ -167,22 +164,64 @@ export default {
                         },
                         close() {
                             console.log("modal close 回调");
-                        }
-                    }
+                        },
+                    },
                 },
                 // modal props
                 {
                     title: "选题列表",
                     width: 1000,
                     centered: true,
-                    maskClosable: false
+                    maskClosable: false,
                 }
             );
-        }
+        },
+        async createSession(record) {
+            console.log(record);
+            const result = await createSession({
+                toUserId: record.userId,
+                toUserName: record.userName,
+            })
+                .then((res) => {
+                    //请求错误
+                    if (res.data.code != 1) {
+                        return this.$message.error("错误" + res.data.message);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            this.$dialog(
+                NewMessage,
+                // component props
+                {
+                    result,
+                    on: {
+                        ok() {
+                            console.log("ok 回调");
+                        },
+                        cancel() {
+                            console.log("cancel 回调");
+                        },
+                        close() {
+                            console.log("modal close 回调");
+                        },
+                    },
+                },
+                // modal props
+                {
+                    title: "聊天窗口",
+                    width: 650,
+                    centered: true,
+                    maskClosable: false,
+                }
+            );
+        },
     },
     created() {
         this.fetchData();
-    }
+    },
 };
 </script>
 

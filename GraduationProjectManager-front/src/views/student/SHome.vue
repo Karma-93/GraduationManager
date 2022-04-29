@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-card :bordered="false" title="流程进度">
-            <a-steps :direction="isMobile && 'vertical' || 'horizontal'" :current="0" progressDot>
+            <a-steps :current="currentStep" progressDot>
                 <a-step>
                     <template v-slot:title>
                         <span>选择选题</span>
@@ -36,13 +36,13 @@
             <a-descriptions title="选题信息">
                 <a-descriptions-item
                     label="状态"
-                >{{studentData.projectId==null?"未选择选题":projectData.state==1?"待审核":"已完成选择 "}}</a-descriptions-item>
+                >{{projectData==null||projectData.projectState==null?"未选择选题":projectData.projectState==1?"待审核":"已完成选择 "}}</a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
-                <a-descriptions-item label="选题名称">{{projectData.projectName}}</a-descriptions-item>
-                <a-descriptions-item label="选题详情">{{projectData.projectDescribe}}</a-descriptions-item>
+                <a-descriptions-item label="选题名称">{{projectData==null?"":projectData.projectName}}</a-descriptions-item>
+                <a-descriptions-item label="选题详情">{{projectData==null?"":projectData.projectDescribe}}</a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
-                <a-descriptions-item label="指导教师">{{projectData.teacherId}}</a-descriptions-item>
+                <a-descriptions-item label="指导教师">{{projectData==null?"":projectData.teacherId}}</a-descriptions-item>
                 <!--<a-descriptions-item label="选题来源">2018-08-08</a-descriptions-item>-->
                 <a-descriptions-item></a-descriptions-item>
             </a-descriptions>
@@ -97,11 +97,11 @@ export default {
     },
     methods: {
         initData() {
-            requestCurrentStudentData
-                .then((result) => {
-                    this.studentData = result.data.data;
-                    if (result.projectId == null) {
-                        this.step = 0;
+            requestCurrentStudentData()
+                .then((response) => {
+                    this.studentData = response.data.data;
+                    if (this.studentData.projectId == null) {
+                        this.currentStep = 0;
                         this.projectData = null;
                     } else {
                         this.getProjectData();
@@ -111,13 +111,14 @@ export default {
         },
         getProjectData() {
             requestProjectById(this.studentData.projectId)
-                .then((result) => {
-                    this.projectData = result.data.data;
-                    if (this.projectData.state == 1) {
-                        this.step = 1;
-                    } else if (this.projectData.state == 2) {
-                        this.step = 2;
+                .then((response) => {
+                    this.projectData = response.data.data;
+                    if (this.projectData.projectState == 1) {
+                        this.currentStep = 1;
+                    } else if (this.projectData.projectState == 2) {
+                        this.currentStep = 2;
                     }
+
                 })
                 .catch((err) => {});
         },
