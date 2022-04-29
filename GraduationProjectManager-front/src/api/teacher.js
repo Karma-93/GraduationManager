@@ -5,9 +5,19 @@ const teacherApi = {
     GetTeacherList: "/teacher/getTeacherList",
     GetAllTeacherList: "/teacher/getAllTeacherList",
     GetAllTeacherData: "/teacher/getAllTeacherData",
-    GetTeacherData: "/teacher/getTeacherData"
-
+    GetTeacherData: "/teacher/getTeacherData",
+    GetNameByTeacherId: "/teacher/getNamebyteacherid"
 };
+
+
+export function requestNameByTeacherId(parameter) {
+    return request({
+        url: teacherApi.GetNameByTeacherId,
+        method: "get",
+        params: { teacherId: parameter }
+    });
+
+}
 
 export function requestTeacherData(paramter) {
     paramter.pageNum = paramter.pageNum - 1;

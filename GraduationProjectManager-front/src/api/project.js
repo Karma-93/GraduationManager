@@ -11,8 +11,19 @@ const projectApi = {
     UpdateProject: "/project/updatebyprimarykey", //更新选题信息
     GetVerifyChoose: "/project/verifychoose",
     GetVerifyProjectList: "/project/getverifyprojectlist",
-    Delete: "/project/delete"
+    Delete: "/project/delete",
+    GetAll: "/project/getAll"
+
 };
+
+
+export function requestProjectList(patameter) {
+    return request({
+        url: projectApi.GetAll,
+        method: "psot",
+        data: patameter
+    });
+}
 
 export function requestDelete(param) {
     return request({

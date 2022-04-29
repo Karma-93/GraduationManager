@@ -182,21 +182,13 @@ export default {
                 toUserId: record.userId,
                 toUserName: record.userName,
             })
-                .then((res) => {
-                    //请求错误
-                    if (res.data.code != 1) {
-                        return this.$message.error("错误" + res.data.message);
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-
+            console.log("result",result.data.data);
+            const temp=result.data.data;
             this.$dialog(
                 NewMessage,
                 // component props
                 {
-                    result,
+                    temp,
                     on: {
                         ok() {
                             console.log("ok 回调");

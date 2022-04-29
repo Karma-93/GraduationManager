@@ -8,9 +8,10 @@ import com.cx.model.TeacherData;
 import java.util.List;
 
 public interface TeacherService{
+    String getNameByTeacherId(String teacherId);
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq);
     public StdPagedList<TeacherData> getTeacherData(PageReq pageReq);
-    public TeacherEntity getTeacherById(int teacherId);
+    public TeacherEntity getTeacherById(String teacherId);
     public TeacherEntity getTeacherByUserId(String userId);
     public List<TeacherEntity> getAllTeacherList();
     public List<TeacherData> getAllTeacherData();

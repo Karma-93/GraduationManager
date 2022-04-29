@@ -86,10 +86,16 @@
 </template>
 
 <script>
+import {requestProjectList} from "@/api/project.js"
 export default {
     name: "AProject",
     data() {
         return {
+            queryForm: {
+                pageNum: 0,
+                pageSize: 10
+            },
+            total: 0,
             // 表格数据
             data: [
                 {
@@ -111,6 +117,9 @@ export default {
             ]
         };
     },
+    created(){
+        this.fetchData();
+    },
     methods: {
         /**
          * @description 行内点击按钮编辑事件
@@ -125,7 +134,19 @@ export default {
                 console.log("===行外点击===");
                 // 否则为表格外添加按钮点击事件
             }
-        }
+        },
+
+        async fetchData() {
+            this.listLoading = true;
+            const res = await requestProjectList(this.queryForm);
+            this.data = res.data.data;
+
+            
+            console.log(this.data);
+
+            this.total = res.data.total;
+            this.listLoading = false;
+        },
     }
 };
 </script>

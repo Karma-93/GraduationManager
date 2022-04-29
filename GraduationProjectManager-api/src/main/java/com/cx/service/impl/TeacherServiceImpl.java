@@ -28,6 +28,13 @@ public class TeacherServiceImpl implements TeacherService {
     UserService userService;
     @Autowired
     DeptMapper deptMapper;
+
+    @Override
+    public String getNameByTeacherId(String teacherId) {
+        TeacherEntity entity=getTeacherById(teacherId);
+        return userService.getUserById(entity.getUserId()).getUserName();
+    }
+
     @Override
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq) {
         TeacherQuery query=new TeacherQuery().selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
@@ -37,7 +44,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 
     @Override
-    public TeacherEntity getTeacherById(int teacherid) {
+    public TeacherEntity getTeacherById(String teacherid) {
         TeacherQuery query=new TeacherQuery().where().teacherId().eq(teacherid).end();
         return teacherMapper.findOne(query);
     }

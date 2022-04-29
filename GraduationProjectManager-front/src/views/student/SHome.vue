@@ -42,7 +42,7 @@
                 <a-descriptions-item label="选题名称">{{projectData==null?"":projectData.projectName}}</a-descriptions-item>
                 <a-descriptions-item label="选题详情">{{projectData==null?"":projectData.projectDescribe}}</a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
-                <a-descriptions-item label="指导教师">{{projectData==null?"":projectData.teacherId}}</a-descriptions-item>
+                <a-descriptions-item label="指导教师">{{teacherName}}</a-descriptions-item>
                 <!--<a-descriptions-item label="选题来源">2018-08-08</a-descriptions-item>-->
                 <a-descriptions-item></a-descriptions-item>
             </a-descriptions>
@@ -76,7 +76,7 @@ import {
     requestStudentByUserId,
 } from "@/api/student.js";
 import { requestProjectById } from "@/api/project.js";
-
+import {requestNameByTeacherId} from "@/api/teacher.js"
 export default {
     name: "SHome",
     data() {
@@ -87,6 +87,7 @@ export default {
             currentStep: 0,
             studentData: [],
             projectData: [],
+            teacherName:""
         };
     },
     created() {
@@ -113,6 +114,7 @@ export default {
             requestProjectById(this.studentData.projectId)
                 .then((response) => {
                     this.projectData = response.data.data;
+                    this.getNameByTeacherId(this.projectData.teacherId);
                     if (this.projectData.projectState == 1) {
                         this.currentStep = 1;
                     } else if (this.projectData.projectState == 2) {
@@ -122,6 +124,11 @@ export default {
                 })
                 .catch((err) => {});
         },
+        getNameByTeacherId(teacherId){
+            requestNameByTeacherId(teacherId).then((res)=>{
+                this.teacherName=res.data.data;
+            });
+        }
     },
 };
 </script>

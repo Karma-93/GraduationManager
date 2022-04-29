@@ -42,7 +42,9 @@
                     title="姓名"
                     data-index="teacherName"
                     align="center"
-                />
+                >
+
+                </a-table-column>
                 <a-table-column
                     key="deptId"
                     title="所属部门"
@@ -200,7 +202,9 @@ export default {
         onShowSizeChange(current, pageSize) {
             this.queryForm.pageSize = pageSize;
             this.fetchData(this.queryForm);
-        }
+        },
+        
+         
     },
     created() {
         this.fetchData();

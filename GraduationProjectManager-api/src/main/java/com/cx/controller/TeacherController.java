@@ -27,6 +27,14 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+
+    @ApiOperation("根据Id获取姓名")
+    @SaCheckLogin()
+    @GetMapping("/getNamebyteacherid")
+    public Result getNameByTeacherId(@RequestParam String teacherId){
+        return Result.success(teacherService.getNameByTeacherId(teacherId));
+    }
+
     @PostMapping("/getTeacherList")
     @SaCheckLogin()
     @ApiOperation(value = "分页获取教师列表")
@@ -45,7 +53,7 @@ public class TeacherController {
     @GetMapping("/getTeacherByTeacherId")
     @ApiOperation(value = "通过teacherId获取教师信息")
     @SaCheckLogin()
-    public Result<TeacherEntity> getTeahcerById(@RequestParam int teacherId) {
+    public Result<TeacherEntity> getTeahcerById(@RequestParam String teacherId) {
         TeacherEntity teacherEntity = teacherService.getTeacherById(teacherId);
         if (teacherEntity != null) {
             return Result.success(teacherEntity);
