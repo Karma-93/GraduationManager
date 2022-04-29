@@ -4,7 +4,6 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.cx.common.Result;
 import com.cx.fluentmybatis.entity.MessageEntity;
 import com.cx.fluentmybatis.entity.SessionListEntity;
-import com.cx.fluentmybatis.mapper.MessageMapper;
 import com.cx.service.MessageService;
 import com.cx.service.SessionListService;
 import io.swagger.annotations.Api;

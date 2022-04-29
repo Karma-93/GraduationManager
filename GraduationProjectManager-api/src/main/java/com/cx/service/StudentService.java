@@ -19,4 +19,5 @@ public interface StudentService {
     Boolean deleteProjectId(String studentId);
     Boolean setProjectId(String studentId,Integer projectId);
     String getClassName(String studentId);
+    StudentEntity getStudentById(String studentId);
 }

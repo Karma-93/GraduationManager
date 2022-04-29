@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h1>TProject</h1>
+    <a-card title="选题列表">
 
         <a-list
             rowKey="id"
@@ -9,7 +8,7 @@
             class="card-list"
         >
             <a-list-item slot="renderItem" slot-scope="item">
-                <template v-if="!item || item.id === undefined">
+                <template v-if="!item || item.projectId === undefined">
                     <a-button class="new-btn" type="dashed">
                         <a-icon type="plus" />新增选题
                     </a-button>
@@ -34,13 +33,16 @@
                 </template>
             </a-list-item>
         </a-list>
-    </div>
+    </a-card>
 </template>
 
 <script>
 import {requestProejctListByTeacherId} from "@/api/project.js"
 import {requestTeacherByUserId} from "@/api/teacher.js"
 import { requestUpdateProject } from '../../api/project';
+
+
+
 
 export default {
     name: "TProject",
@@ -61,8 +63,9 @@ export default {
             this.teacherData=result.data.data;
             const projectresult=await requestProejctListByTeacherId(this.teacherData.teacherId);
             this.projectList=projectresult.data.data;
+            this.projectList.push({})
             console.log(this.projectList);
-            console.log(this.teacherData)
+            console.log(this.teacherData);
         },
     },
 };

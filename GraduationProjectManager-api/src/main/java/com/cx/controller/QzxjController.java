@@ -3,13 +3,10 @@ package com.cx.controller;
 import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.QzxjEntity;
-import com.cx.fluentmybatis.wrapper.QzxjQuery;
 import com.cx.service.QzxjService; 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.ResultType;
-import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

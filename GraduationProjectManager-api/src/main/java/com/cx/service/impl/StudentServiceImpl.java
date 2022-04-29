@@ -3,10 +3,9 @@ package com.cx.service.impl;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.fluentmybatis.entity.StudentEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
-import com.cx.fluentmybatis.helper.StudentMapping;
+import com.cx.fluentmybatis.mapper.ClassiMapper;
 import com.cx.fluentmybatis.mapper.StudentMapper;
-import com.cx.fluentmybatis.mapper.UserMapper;
-import com.cx.fluentmybatis.wrapper.PaperlibQuery;
+import com.cx.fluentmybatis.wrapper.ClassiQuery;
 import com.cx.fluentmybatis.wrapper.StudentQuery;
 import com.cx.fluentmybatis.wrapper.StudentUpdate;
 import com.cx.model.PageReq;
@@ -27,6 +26,9 @@ public class StudentServiceImpl implements StudentService {
     StudentMapper studentMapper;
     @Autowired
     UserService userService;
+    @Autowired
+    ClassiMapper classiMapper;
+
 
     @Override
     public StudentEntity getStudentByUserId(String userId) {
@@ -94,7 +96,18 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public String getClassName(String studentId) {
+        StudentQuery studentQuery = new StudentQuery();
+        studentQuery.where.studentId().eq(studentId).end();
+        Integer classid=studentMapper.findOne(studentQuery).getClassId();
+        ClassiQuery classQuery=new ClassiQuery();
+        classQuery.where.classId().eq(classid).end();
+        return classiMapper.findOne(classQuery).getClassName();
+    }
 
-        return null;
+    @Override
+    public StudentEntity getStudentById(String studentId) {
+        StudentQuery studentQuery=new StudentQuery();
+        studentQuery.where.studentId().eq(studentId).end();
+        return studentMapper.findOne(studentQuery);
     }
 }

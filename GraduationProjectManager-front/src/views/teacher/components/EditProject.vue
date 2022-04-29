@@ -1,13 +1,14 @@
 <template>
     
+    
 </template>
-
 <script>
+import { defineComponent } from '@vue/composition-api'
+
 export default {
-    name: "SDownload"
+    name: "EditProject",
 }
 </script>
-
 <style scoped>
 
 </style>

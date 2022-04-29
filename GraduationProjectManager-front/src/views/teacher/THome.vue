@@ -38,10 +38,7 @@ export default {
     methods: {
         getTeacherData(){
             requestTeacherByUserId(this.curUserId).then((result) => {
-                this.teacherData=result.data.data;
-                console.log(this.teacherData)
-                console.log("tel",this.curUserTel)
-                console.log("userInfo",this.$store.state.userInfo)
+                this.teacherData=result.data.data; 
             }).catch((err) => {
                 
             });

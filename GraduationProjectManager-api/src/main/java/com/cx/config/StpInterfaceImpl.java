@@ -1,7 +1,6 @@
 package com.cx.config;
 
 import cn.dev33.satoken.stp.StpInterface;
-import com.cx.fluentmybatis.mapper.UserMapper;
 import com.cx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

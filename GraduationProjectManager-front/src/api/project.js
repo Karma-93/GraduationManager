@@ -8,10 +8,36 @@ const projectApi = {
     Insert: "/project/insert",
     ChooseProject: "/project/updatestudentidbyproject", //学生用户选择选题，
     ChangeNoSelect: "/project/updatenostudent", //更改选题为未被选择，
-    UpdateProject: "/project/updatebyprimarykey" //更新选题信息
-
+    UpdateProject: "/project/updatebyprimarykey", //更新选题信息
+    GetVerifyChoose: "/project/verifychoose",
+    GetVerifyProjectList: "/project/getverifyprojectlist",
+    Delete: "/project/delete"
 };
 
+export function requestDelete(param) {
+    return request({
+        url: projectApi.Delete,
+        method: "get",
+        params: { projectId: param }
+    });
+}
+export function requestVerifyPorjectList(param) {
+    return request({
+        url: projectApi.GetVerifyProjectList,
+        method: "get",
+        params: { teacherId: param }
+    });
+}
+
+
+
+export function requestVerifyChoose(param) {
+    return request({
+        url: projectApi.GetVerifyChoose,
+        method: "get",
+        params: { projectId: param }
+    });
+}
 
 export function requestProjectById(param) {
     return request({
