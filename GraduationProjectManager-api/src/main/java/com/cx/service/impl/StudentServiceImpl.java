@@ -91,4 +91,10 @@ public class StudentServiceImpl implements StudentService {
         if (studentMapper.updateBy(update)>0) return true;
         else return false;
     }
+
+    @Override
+    public String getClassName(String studentId) {
+
+        return null;
+    }
 }

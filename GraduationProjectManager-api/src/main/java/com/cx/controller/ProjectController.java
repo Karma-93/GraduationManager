@@ -8,6 +8,7 @@ import com.cx.common.Result;
 import com.cx.common.ResultCode;
 import com.cx.fluentmybatis.entity.ProjectEntity;
 import com.cx.model.PageReq;
+import com.cx.model.VerifyProjectData;
 import com.cx.service.ProjectService;
 import com.cx.service.StudentService;
 import io.swagger.annotations.Api;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @Api(tags = "ProjectController", description = "选题管理" )
 @RequestMapping("/project")
@@ -28,6 +31,24 @@ public class ProjectController {
     ProjectService projectService;
     @Autowired
     StudentService studentService;
+
+
+    //同意确认学生选题
+    @ApiOperation("同意学生选题")
+    @GetMapping("/verifychoose")
+    @SaCheckRole("teacher")
+    public Result verifyChoose(@RequestParam Integer projectId){
+        projectService.verifyChoose(projectId);
+        return Result.success();
+    }
+
+
+    @ApiOperation("查找待确认选题的列表")
+    @GetMapping("/getverifyprojectlist")
+    @SaCheckRole("teacher")
+    public Result<List<VerifyProjectData>> getVerifyProjectList(@RequestParam String teacherId){
+        return Result.success(projectService.getVerifyProjectList(teacherId));
+    }
 
     @ApiOperation("通过projectid获取选题")
     @GetMapping("/getprojectbyid")

@@ -18,4 +18,5 @@ public interface StudentService {
     int update(StudentEntity student);
     Boolean deleteProjectId(String studentId);
     Boolean setProjectId(String studentId,Integer projectId);
+    String getClassName(String studentId);
 }

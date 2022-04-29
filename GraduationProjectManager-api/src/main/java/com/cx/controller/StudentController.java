@@ -31,6 +31,12 @@ public class StudentController {
     StudentService studentService;
 
 
+    @SaCheckLogin
+    @ApiOperation("分页查询所有学生Entity数据")
+    @PostMapping("getStudentList")
+    public Result<StdPagedList<StudentEntity>> getStudentList(@Validated @RequestBody PageReq pageReq){
+        return Result.success(studentService.getStudentList(pageReq));
+    }
 
 
     @SaCheckLogin

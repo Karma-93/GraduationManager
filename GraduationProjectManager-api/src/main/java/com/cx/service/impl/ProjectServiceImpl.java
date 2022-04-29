@@ -8,12 +8,15 @@ import com.cx.fluentmybatis.mapper.ProjectMapper;
 import com.cx.fluentmybatis.mapper.TeacherMapper;
 import com.cx.fluentmybatis.wrapper.*;
 import com.cx.model.PageReq;
+import com.cx.model.VerifyProjectData;
 import com.cx.service.ProjectService;
+import com.cx.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +29,31 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectMapper projectMapper;
     @Autowired
     private TeacherMapper teacherMapper;
+    @Autowired
+    private StudentService studentService;
+
+    @Override
+    public int verifyChoose(Integer projectId) {
+        ProjectUpdate update = new ProjectUpdate();
+        update.where.projectId().eq(projectId).end().set.projectState().is(2).end();
+        return projectMapper.updateBy(update);
+    }
+
+    @Override
+    public List<VerifyProjectData> getgetVerifyProjectList(String teacherId) {
+        List<VerifyProjectData> res=new ArrayList<>();
+        ProjectQuery query = new ProjectQuery();
+        query.where.teacherId().eq(teacherId).and.projectState().eq(1).end();
+        List<ProjectEntity> entities=projectMapper.listEntity(query);
+        for (ProjectEntity entity:entities){
+            VerifyProjectData data=new VerifyProjectData();
+            data.setProjectId(entity.getProjectId());
+            data.setProjectName(entity.getProjectName());
+            data.setStudentId();
+        }
+
+        return null;
+    }
 
     @Override
     public ProjectEntity getProjectById(Integer projectId) {

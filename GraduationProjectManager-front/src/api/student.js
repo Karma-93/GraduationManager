@@ -2,9 +2,29 @@ import request from "@/utils/request";
 const studentApi = {
     GetCurrentStudentData: "/student/getCurrentStudentData",
     GetStudentByUserId: "/student/getStudentByUserId",
-    GetStudentListByTeacherId: "/student/getStudentListByTeacherId"
-
+    GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
+    GetStudentDataListByTeacherId: "/student/getStudentDataListByTeacherId",
+    GetStudentList: "/getStudentList"
 };
+
+// 根据teacherId查询student Data
+export function reqeustStudentDataListByTeacherId(param) {
+    return request({
+        url: studentApi.GetStudentDataListByTeacherId,
+        method: "get",
+        params: { teacherId: param }
+    });
+}
+
+//分页查询所有学生数据
+export function requestStudentList(parameter) {
+    return request({
+        url: studentApi.GetStudentList,
+        method: "post",
+        data: parameter
+    });
+}
+
 export function reqeustStudentListByTeacherId(param) {
     return request({
         url: studentApi.GetStudentListByTeacherId,

@@ -6,6 +6,7 @@ const teacherApi = {
     GetAllTeacherList: "/teacher/getAllTeacherList",
     GetAllTeacherData: "/teacher/getAllTeacherData",
     GetTeacherData: "/teacher/getTeacherData"
+
 };
 
 export function requestTeacherData(paramter) {

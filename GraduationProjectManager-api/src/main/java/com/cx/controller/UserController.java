@@ -47,6 +47,7 @@ public class UserController {
                 .put("userId", user.getUserId())
                 .put("userName", user.getUserName())
                 .put("userRoles", user.getUserRoles())
+                .put("userTel", user.getUserTel())
                 .put(StpUtil.getTokenName(), StpUtil.getTokenValue())
                 .map()
         );
@@ -57,7 +58,7 @@ public class UserController {
     @GetMapping("/logout")
     @ApiOperation("注销登陆，会根据请求头的satoken注销登录")
     @SaCheckLogin()
-    public Result logout(){
+    public Result logout() {
         StpUtil.logout();
         return Result.success();
     }
@@ -67,7 +68,7 @@ public class UserController {
     @ApiOperation("通过userId获取用户信息")
     @SaCheckLogin
     @GetMapping("/getUserById")
-    public Result<UserEntity> getUserById(@RequestParam String userId){
+    public Result<UserEntity> getUserById(@RequestParam String userId) {
         return Result.success(userService.getUserById(userId));
     }
 
@@ -75,7 +76,7 @@ public class UserController {
     @ApiOperation("分页查询用户列表")
     @SaCheckLogin
     @PostMapping("/getUserList")
-    public Result<StdPagedList<UserEntity>> getUserList(@Validated @RequestBody PageReq pageReq){
+    public Result<StdPagedList<UserEntity>> getUserList(@Validated @RequestBody PageReq pageReq) {
         return Result.success(userService.getUserList(pageReq));
     }
 
@@ -83,8 +84,8 @@ public class UserController {
     @ApiOperation("更新用户信息")
     @SaCheckLogin
     @PostMapping("/update")
-    public Result updateUserById(@RequestBody UserEntity userEntity){
-        if (userService.update(userEntity)>0) return Result.success();
+    public Result updateUserById(@RequestBody UserEntity userEntity) {
+        if (userService.update(userEntity) > 0) return Result.success();
         else return Result.failure(ResultCode.UPDATE_ERROR);
     }
 
@@ -92,8 +93,8 @@ public class UserController {
     @ApiOperation("新增用户")
     @SaCheckLogin
     @PostMapping("/add")
-    public Result addUser(@RequestBody UserEntity userEntity){
-        if (userService.insert(userEntity)>0) return Result.success();
+    public Result addUser(@RequestBody UserEntity userEntity) {
+        if (userService.insert(userEntity) > 0) return Result.success();
         else return Result.failure(ResultCode.INSERT_ERROR);
     }
 
