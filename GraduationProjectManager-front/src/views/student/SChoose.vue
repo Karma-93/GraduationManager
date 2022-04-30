@@ -29,7 +29,7 @@
                 <!-- 操作 -->
                 <div class="action" slot="action" slot-scope="record">
                     <a-button type="primary" @click="clickEdit(record)">选择</a-button>
-                    <a-button type="primary" @click="createSession(record)">发送消息</a-button>
+                    <a-button type="primary" @click="createSessionClick(record)">发送消息</a-button>
                 </div>
             </a-table>
 
@@ -176,19 +176,18 @@ export default {
                 }
             );
         },
-        async createSession(record) {
-            console.log(record);
+        async createSessionClick(item) {
             const result = await createSession({
-                toUserId: record.userId,
-                toUserName: record.userName,
+                toUserId: item.userId,
+                toUserName: item.userName,
             })
-            console.log("result",result.data.data);
-            const temp=result.data.data;
-            this.$dialog(
+            const record=result.data.data;
+            console.log("temp",record);
+this.$dialog(
                 NewMessage,
                 // component props
                 {
-                    temp,
+                    record,
                     on: {
                         ok() {
                             console.log("ok 回调");

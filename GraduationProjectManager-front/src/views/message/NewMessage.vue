@@ -49,7 +49,10 @@ export default {
             default: null,
         },
     },
-    created() {
+        created() {
+
+        console.log("record",this.record);
+
         this.curUserId = this.$store.state.userInfo.userId;
         this.curUserName = this.$store.state.userInfo.userName;
         this.curSessionId = this.record.id;
@@ -57,6 +60,7 @@ export default {
         //this.getSessionListAlready();
         //this.getSessionListNot();
         this.startSession(this.record.id);
+
     },
     data() {
         return {

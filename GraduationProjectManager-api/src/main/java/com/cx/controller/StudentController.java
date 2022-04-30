@@ -31,6 +31,15 @@ public class StudentController {
     StudentService studentService;
 
 
+
+    @SaCheckLogin
+    @ApiOperation("获取班级名")
+    @GetMapping("getclassname")
+    public Result<String> getClassName(@RequestParam String userId){
+        return Result.success(studentService.getClassName(userId));
+    }
+
+
     @SaCheckLogin
     @ApiOperation("分页查询所有学生Entity数据")
     @PostMapping("getStudentList")

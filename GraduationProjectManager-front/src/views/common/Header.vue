@@ -146,7 +146,8 @@ export default {
         },
 
         messageInfo(record) {
-            console.log("record",record);
+            console.log(typeof(record))
+
             this.$dialog(
                 NewMessage,
                 // component props

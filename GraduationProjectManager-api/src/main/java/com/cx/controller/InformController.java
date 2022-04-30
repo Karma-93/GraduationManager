@@ -23,6 +23,7 @@ public class InformController {
     @Autowired
     InformService informService;
 
+
     @ApiOperation(value = "分页查询所有")
     @PostMapping("/selectAllPage")
     public Result<StdPagedList<InformEntity>> selectAllPage(@Validated @RequestBody PageReq pageReq){

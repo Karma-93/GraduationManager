@@ -53,13 +53,17 @@ public class MessageSessionListController {
     @SaCheckLogin
     @GetMapping("/createSessionList")
     public Result createSession(@RequestParam String toUserId,@RequestParam String toUserName){
+        //互相建立session
         SessionListEntity sessionListEntity=new SessionListEntity();
         String userId=(String)StpUtil.getLoginId();
-        sessionListEntity.setUserId(userId);
-        sessionListEntity.setToUserId(toUserId);
-        sessionListEntity.setUnReadCount(0);
-        sessionListEntity.setListName(toUserName);
-        sessionListService.insert(sessionListEntity);
+        Integer temp1=sessionListService.getIdByUser(userId,toUserId);
+        if (temp1==null||temp1<=0) {
+            sessionListEntity.setUserId(userId);
+            sessionListEntity.setToUserId(toUserId);
+            sessionListEntity.setUnReadCount(0);
+            sessionListEntity.setListName(toUserName);
+            sessionListService.insert(sessionListEntity);
+        }
         // 判断对方和我建立会话没有？ 没有也要建立
         Integer temp=sessionListService.getIdByUser(toUserId,userId);
         //如果没有建立会话
@@ -70,7 +74,7 @@ public class MessageSessionListController {
             sessionListEntity.setListName(user.getUserName());
             sessionListService.insert(sessionListEntity);
         }
-        temp=sessionListService.getIdByUser(toUserId,userId);
+        temp=sessionListService.getIdByUser(userId,toUserId);
         sessionListService.getSessionListById(temp);
         return Result.success(sessionListService.getSessionListById(temp));
     }

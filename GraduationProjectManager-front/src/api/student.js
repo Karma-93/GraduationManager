@@ -4,8 +4,18 @@ const studentApi = {
     GetStudentByUserId: "/student/getStudentByUserId",
     GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
     GetStudentDataListByTeacherId: "/student/getStudentDataListByTeacherId",
-    GetStudentList: "/getStudentList"
+    GetStudentList: "/student/getStudentList",
+    GetClassName: "/student/getclassname"
 };
+
+
+export function requestClassName(param) {
+    return request({
+        url: studentApi.GetClassName,
+        method: "get",
+        params: { userId: param }
+    });
+}
 
 // 根据teacherId查询student Data
 export function reqeustStudentDataListByTeacherId(param) {
