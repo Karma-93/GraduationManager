@@ -5,9 +5,24 @@ const studentApi = {
     GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
     GetStudentDataListByTeacherId: "/student/getStudentDataListByTeacherId",
     GetStudentList: "/student/getStudentList",
-    GetClassName: "/student/getclassname"
+    GetClassName: "/student/getclassname",
+    GetStudentNum: "/student/getstudentnum",
+    GetNoProjectStudentNum: "/student/getnoprojectstudentnum"
 };
 
+
+export function getStudentNum() {
+    return request({
+        url: studentApi.GetStudentNum,
+        method: "get",
+    });
+}
+export function getNoProjectStudentNum() {
+    return request({
+        url: studentApi.GetNoProjectStudentNum,
+        method: "get",
+    });
+}
 
 export function requestClassName(param) {
     return request({

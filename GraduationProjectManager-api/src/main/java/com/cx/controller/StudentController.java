@@ -32,6 +32,23 @@ public class StudentController {
 
 
 
+
+
+    @SaCheckLogin
+    @ApiOperation("获取学生总数")
+    @GetMapping("getstudentnum")
+    public Result getStudentNum(){
+        return  Result.success(studentService.getStudentNum());
+    }
+
+
+    @SaCheckLogin
+    @ApiOperation("获取未选题学生总数")
+    @GetMapping("getnoprojectstudentnum")
+    public Result getNoProjectStudentNum(){
+        return  Result.success(studentService.getNoProjectStudentNum());
+    }
+
     @SaCheckLogin
     @ApiOperation("获取班级名")
     @GetMapping("getclassname")

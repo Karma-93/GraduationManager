@@ -54,12 +54,14 @@
                 <span slot="title"
                     ><a-icon type="appstore" /><span>查看信息</span></span
                 >
+                <!--
                 <a-menu-item
                     key="sub_reply_info"
                     @click="menuClick('/sindex/sreplyinfo')"
                 >
                     答辩信息
                 </a-menu-item>
+                -->
                 <a-menu-item
                     key="sub_reply_score"
                     @click="menuClick('/sindex/sreplyscore')"

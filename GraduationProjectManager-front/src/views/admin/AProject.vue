@@ -140,10 +140,7 @@ export default {
             this.listLoading = true;
             const res = await requestProjectList(this.queryForm);
             this.data = res.data.data;
-
-            
             console.log(this.data);
-
             this.total = res.data.total;
             this.listLoading = false;
         },

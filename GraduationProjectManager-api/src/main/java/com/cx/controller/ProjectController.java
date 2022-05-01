@@ -35,6 +35,13 @@ public class ProjectController {
 
 
 
+    @ApiOperation("获取选题综述")
+    @SaCheckLogin()
+    @GetMapping("/getcountproject")
+    public Result getCountProject(){
+        return Result.success(projectService.getCountProject());
+    }
+
     @ApiOperation("删除选题")
     @SaCheckLogin()
     @GetMapping("/delete")
@@ -109,9 +116,9 @@ public class ProjectController {
     }
 
     @ApiOperation("查询还可以选择的课题数量")
-    @GetMapping("/getcountproject")
+    @GetMapping("/getcountnochooseproject")
     @SaCheckLogin
-    public Result getCountProject(){
+    public Result getCountNoChooseProject(){
         return Result.success(projectService.getCountProjectNum());
     }
 
@@ -138,10 +145,12 @@ public class ProjectController {
         }
     }
 
+    @CrossOrigin
     @ApiOperation("分页查询所有选题")
     @PostMapping("/getAll")
     @SaCheckLogin
     public Result<StdPagedList<ProjectEntity>> getAll(@Validated @RequestBody PageReq pageReq){
+        System.out.println("getAll");
         return Result.success(projectService.getPeojectList(pageReq));
     }
 }

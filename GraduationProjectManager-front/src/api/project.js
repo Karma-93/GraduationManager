@@ -2,7 +2,8 @@ import request from "@/utils/request";
 
 const projectApi = {
     GetAll: "/project/getAll", //分页查询所有选题
-    GetCountProject: "/user/getcountproject", //查询所有可以选择的课题数量
+    GetCountNoChooseProject: "/project/getcountnochooseproject", //查询所有可以选择的课题数量
+    GetCountProject: "/project/getcountproject",
     GetProjectListByTeacherId: "/project/getprojectlistbyteacherid",
     GetProjectById: "/project/getprojectbyid", //通过projectId获取project
     Insert: "/project/insert",
@@ -70,6 +71,12 @@ export function requestCountProject() {
         url: projectApi.GetCountProject,
         method: "get",
     });
+}
+export function requestCountNoChooseProject() {
+    return request({
+        url: projectApi.GetCountNoChooseProject,
+        method: "get",
+    })
 }
 export function requestInsert(parameter) {
     return request({

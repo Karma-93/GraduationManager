@@ -39,6 +39,13 @@ public class ProjectServiceImpl implements ProjectService
     private UserService userService;
 
     @Override
+    public int getCountProject() {
+        ProjectQuery query=new ProjectQuery();
+        query=query.selectAll();
+        return projectMapper.count(query);
+    }
+
+    @Override
     public int delete(Integer projectId) {
         ProjectQuery query=new ProjectQuery();
         query.where.projectId().eq(projectId).end();

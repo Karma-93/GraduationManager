@@ -31,6 +31,20 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
+    public int getStudentNum() {
+        StudentQuery query=new StudentQuery();
+        query=query.selectAll();
+        return studentMapper.count(query);
+    }
+
+    @Override
+    public int getNoProjectStudentNum() {
+        StudentQuery query=new StudentQuery();
+        query.where.projectId().isNull().end();
+        return studentMapper.count(query) ;
+    }
+
+    @Override
     public StudentEntity getStudentByUserId(String userId) {
         StudentQuery query=new StudentQuery();
         query.where.userId().eq(userId);

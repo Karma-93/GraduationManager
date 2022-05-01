@@ -10,6 +10,8 @@ import java.util.List;
 public interface ProjectService {
 
 
+    int getCountProject();
+
     int delete(Integer projectId);
 
     int verifyChoose(Integer projectId);

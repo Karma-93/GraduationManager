@@ -10,6 +10,8 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.List;
 
 public interface StudentService {
+    int getStudentNum();
+    int getNoProjectStudentNum();
     StudentEntity getStudentByUserId(String userId);
     String getStudentIdByUserId(String userId);
     List<StudentEntity> getStudentListByTeacherId(String teacherId);

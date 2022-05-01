@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-card style="margin-top: 24px" :bordered="false" title="开题报告" >
+        <a-card style="margin-top: 24px" :bordered="false" title="开题报告">
             <a-descriptions bordered>
                 <a-descriptions-item label="姓名">{{studentName}}</a-descriptions-item>
                 <a-descriptions-item label="学号">{{studentData.studentId}}</a-descriptions-item>
@@ -8,6 +8,7 @@
                 <a-descriptions-item label="选题">{{projectName}}</a-descriptions-item>
             </a-descriptions>
         </a-card>
+            
     </div>
 </template>
 
@@ -26,7 +27,7 @@ export default {
             studentName: this.$store.state.userInfo.userName,
             projectName: "",
             className: "",
-            temp: "",
+            temp: "", 
         };
     },
     created() {
@@ -40,14 +41,16 @@ export default {
                 (this.studentData.projectId != null) &
                 (this.studentData.projectId !== "")
             ) {
-                requestProjectById(this.studentData.projectId).then((response) => {
-                this.projectName = response.data.data.projectName;
-            });
+                requestProjectById(this.studentData.projectId).then(
+                    (response) => {
+                        this.projectName = response.data.data.projectName;
+                    }
+                );
             } else {
                 this.projectName = "未选择选题";
             }
             const result2 = await requestClassName(this.studentData.studentId);
-            this.className=result2.data.data;
+            this.className = result2.data.data;
         },
     },
 };
