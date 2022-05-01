@@ -10,6 +10,8 @@ import com.cx.fluentmybatis.dao.intf.UserDao;
 import com.cx.fluentmybatis.entity.StudentEntity;
 import com.cx.model.PageReq;
 import com.cx.model.StudentData;
+import com.cx.model.StudentProcessData;
+import com.cx.model.StudentScore;
 import com.cx.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,8 +33,20 @@ public class StudentController {
     StudentService studentService;
 
 
+    @SaCheckLogin
+    @ApiOperation("设置学生成绩")
+    @PostMapping("setstudentscore")
+    public Result setStudentScore(@RequestBody StudentScore score){
+        if(studentService.setStudentScore(score)>0) return Result.success();
+        else return Result.failure(ResultCode.INSERT_ERROR);
+    }
 
-
+    @SaCheckLogin
+    @ApiOperation("根据教师id获取学生进度信息列表")
+    @GetMapping("getstudentprocesslist")
+    public Result<List<StudentProcessData>> getStudentProcessList(@RequestParam String teacherId){
+        return Result.success(studentService.getStudentProcessListByTeacherId(teacherId));
+    }
 
     @SaCheckLogin
     @ApiOperation("获取学生总数")

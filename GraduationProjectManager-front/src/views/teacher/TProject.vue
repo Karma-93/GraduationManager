@@ -1,5 +1,5 @@
 <template>
-    <a-card title="选题列表">
+    <a-card title="选题列表" >
         <a-list
             rowKey="id"
             :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"

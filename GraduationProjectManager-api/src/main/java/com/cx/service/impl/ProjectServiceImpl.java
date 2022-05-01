@@ -50,7 +50,6 @@ public class ProjectServiceImpl implements ProjectService
         ProjectQuery query=new ProjectQuery();
         query.where.projectId().eq(projectId).end();
         return projectMapper.delete(query);
-
     }
 
     @Override
@@ -60,11 +59,15 @@ public class ProjectServiceImpl implements ProjectService
         return projectMapper.updateBy(update);
     }
 
+
+
+
+
     @Override
     public List<VerifyProjectData> getVerifyProjectList(String teacherId) {
         List<VerifyProjectData> res=new ArrayList<>();
         ProjectQuery query = new ProjectQuery();
-        query.where.teacherId().eq(teacherId).and.projectState().eq(1).end();
+        query.where.teacherId().eq(teacherId).and.projectState().eq(1).or.projectState().eq(2).end();
         List<ProjectEntity> entities=projectMapper.listEntity(query);
         for (ProjectEntity entity:entities){
             VerifyProjectData data=new VerifyProjectData();
@@ -76,6 +79,8 @@ public class ProjectServiceImpl implements ProjectService
             data.setClassName(studentService.getClassName(studentEntity.getStudentId()));
             data.setUserName(userEntity.getUserName());
             data.setTel(userEntity.getUserTel());
+            data.setUserId(userEntity.getUserId());
+            data.setProjectState(entity.getProjectState());
             res.add(data);
         }
         return res;

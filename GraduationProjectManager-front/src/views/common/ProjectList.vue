@@ -21,9 +21,11 @@
 
                     <div class="list-content">
                         <div class="list-content-item">
-                            <a-badge :status="item.projectState==0?'success':'error'" :text="item.projectState==0?'可选':'已被选择'" />
+                            <a-badge
+                                :status="item.projectState==0?'success':'error'"
+                                :text="item.projectState==0?'可选':'已被选择'"
+                            />
                         </div>
-
                     </div>
                 </a-list-item>
             </a-list>
@@ -35,7 +37,7 @@
 import pick from "lodash.pick";
 import { requestProejctListByTeacherId } from "@/api/project.js";
 import { requestChooseProject } from "../../api/project";
-
+import { message } from 'ant-design-vue';
 export default {
     name: "ProjectList",
     props: {
@@ -52,6 +54,22 @@ export default {
             projectList: [],
         };
     },
+    setup() {
+        const success = () => {
+            message.success("选择成功");
+        };
+        const error = () => {
+            message.error("选择失败");
+        };
+        const warning = () => {
+            message.warning("This is a warning message");
+        };
+        return {
+            success,
+            error,
+            warning,
+        };
+    },
     mounted() {},
 
     methods: {
@@ -63,8 +81,15 @@ export default {
             );
         },
         choose(data) {
-            console.log("choose");
-            requestChooseProject(data.projectId);
+            console.log("choose", data.projectId);
+            requestChooseProject(data.projectId).then((response) => {
+                if (response.data.code == 1) {
+                    message.success("选择成功");
+                } else {
+                    message.error("选择失败");
+                }
+                console.log("chooseres", response.data);
+            });
             this.getProjectList();
         },
         onOk() {

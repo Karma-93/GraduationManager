@@ -94,12 +94,14 @@ public class ProjectController {
     @SaCheckRole("student")
     public Result updateStudentIdByProjectId(@RequestParam Integer projectId){
         String studentId=studentService.getStudentIdByUserId((String) StpUtil.getLoginId());
+        ProjectEntity entity= projectService.getProjectById(projectId);;
         //如果存在选题返回错误
         if(studentService.getStudentById(studentId).getProjectId()!=null){
             return Result.failure(ResultCode.INSERT_ERROR);
         }
         projectService.updateStudentIdByProjectId(studentId,projectId);
-        studentService.setProjectId(studentId,projectId);
+
+        studentService.setProjectIdAndTeacherId(studentId,projectId,entity.getTeacherId());
         return Result.success();
     }
 
@@ -111,7 +113,8 @@ public class ProjectController {
         //首先删除project的选择状态
         projectService.updateNoStudent(projectId);
         //删除学生的projectId信息
-        studentService.deleteProjectId(studentId);
+        studentService.deleteProjectIdAndTeacherId(studentId);
+
         return Result.success();
     }
 

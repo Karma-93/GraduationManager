@@ -28,8 +28,8 @@
                 </div>
                 <!-- 操作 -->
                 <div class="action" slot="action" slot-scope="record">
-                    <a-button type="primary" @click="clickEdit(record)">选择</a-button>
-                    <a-button type="primary" @click="createSessionClick(record)">发送消息</a-button>
+                    <a-button type="link" @click="clickEdit(record)">选择</a-button>
+                    <a-button type="link" @click="createSessionClick(record)">发送消息</a-button>
                 </div>
             </a-table>
 

@@ -1,8 +1,7 @@
 package com.cx.service.impl;
 
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
-import com.cx.fluentmybatis.entity.StudentEntity;
-import com.cx.fluentmybatis.entity.UserEntity;
+import com.cx.fluentmybatis.entity.*;
 import com.cx.fluentmybatis.mapper.ClassiMapper;
 import com.cx.fluentmybatis.mapper.StudentMapper;
 import com.cx.fluentmybatis.wrapper.ClassiQuery;
@@ -10,8 +9,9 @@ import com.cx.fluentmybatis.wrapper.StudentQuery;
 import com.cx.fluentmybatis.wrapper.StudentUpdate;
 import com.cx.model.PageReq;
 import com.cx.model.StudentData;
-import com.cx.service.StudentService;
-import com.cx.service.UserService;
+import com.cx.model.StudentProcessData;
+import com.cx.model.StudentScore;
+import com.cx.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,53 @@ public class StudentServiceImpl implements StudentService {
     UserService userService;
     @Autowired
     ClassiMapper classiMapper;
+    @Autowired
+    LunwenService lunwenService;
+    @Autowired
+    KtbgService ktbgService;
+    @Autowired
+    QzxjService qzxjService;
+    @Autowired
+    ProjectService projectService;
 
+
+    @Override
+    public int setStudentScore(StudentScore score) {
+        StudentUpdate update=new StudentUpdate();
+        update.where.studentId().eq(score.getStudentId()).end().set.studentScore().is(score.getScore()).end();
+        return studentMapper.updateBy(update);
+    }
+
+    @Override
+    public List<StudentProcessData> getStudentProcessListByTeacherId(String teacherId) {
+        List<StudentProcessData> res=new ArrayList<>();
+        List<StudentEntity> entities=getStudentListByTeacherId(teacherId);
+        System.out.println(entities);
+        for (StudentEntity entity:entities){
+            StudentProcessData temp=new StudentProcessData();
+            ProjectEntity project=projectService.getProjectById(entity.getProjectId());
+            if(project.getProjectState()!=2){
+                continue;
+            }
+            UserEntity user=userService.getUserById(entity.getUserId());
+            LunwenEntity lunwen=lunwenService.getLunwenByStudentId(entity.getStudentId());
+            KtbgEntity ktbg=ktbgService.getKtbgByStudentId(entity.getStudentId());
+            QzxjEntity qzxj=qzxjService.getQzxjByStudentId(entity.getStudentId());
+            if(lunwen==null) temp.setLunwenId(null);
+            else temp.setLunwenId(lunwen.getLunwenId());
+            if(ktbg==null) temp.setKtbgId(null);
+            else temp.setKtbgId(ktbg.getKtbgId());
+            if (qzxj==null) temp.setQzxjId(null);
+            else temp.setQzxjId(qzxj.getQzxjId());
+            temp.setStudentId(entity.getStudentId());
+            temp.setProjectId(entity.getProjectId());
+            temp.setUserId(entity.getUserId());
+            temp.setProjectName(project.getProjectName());
+            temp.setUserName(user.getUserName());
+            res.add(temp);
+        }
+        return res;
+    }
 
     @Override
     public int getStudentNum() {
@@ -93,17 +139,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Boolean deleteProjectId(String studentId) {
-        StudentUpdate update = StudentUpdate.updater().where.studentId().eq(studentId).end().set.projectId().is(null).end().set.projectNum().is(0).end();
+    public Boolean deleteProjectIdAndTeacherId(String studentId) {
+        StudentUpdate update = StudentUpdate.updater().where.studentId().eq(studentId).end().set.projectId().is(null).end().set.projectNum().is(0).end().set.teacherId().isNull().end();
         int tag=studentMapper.updateBy(update);
         if (tag>0) return true;
         else return false;
     }
 
     @Override
-    public Boolean setProjectId(String studentId, Integer projectId) {
+    public Boolean setProjectIdAndTeacherId(String studentId, Integer projectId,String teacherId) {
         StudentUpdate update=new StudentUpdate();
-        update.where.studentId().eq(studentId).end().set.projectId().is(projectId).end().set.projectNum().is(1).end();
+        update.where.studentId().eq(studentId).end().set.projectId().is(projectId).end().set.projectNum().is(1).end().set.teacherId().is(teacherId).end();
         if (studentMapper.updateBy(update)>0) return true;
         else return false;
     }

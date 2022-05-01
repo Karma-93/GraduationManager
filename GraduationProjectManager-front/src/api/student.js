@@ -7,9 +7,17 @@ const studentApi = {
     GetStudentList: "/student/getStudentList",
     GetClassName: "/student/getclassname",
     GetStudentNum: "/student/getstudentnum",
-    GetNoProjectStudentNum: "/student/getnoprojectstudentnum"
+    GetNoProjectStudentNum: "/student/getnoprojectstudentnum",
+    GetStudentPorcessList: "/student/getstudentprocesslist"
 };
 
+export function requestStudentProcessList(param) {
+    return request({
+        url: studentApi.GetStudentPorcessList,
+        method: "get",
+        params: { teacherId: param }
+    });
+}
 
 export function getStudentNum() {
     return request({

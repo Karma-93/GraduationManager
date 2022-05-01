@@ -13,4 +13,6 @@ public class VerifyProjectData {
     String tel;
     String projectName;
     Integer projectId;
+    String userId;
+    Integer projectState;
 }
