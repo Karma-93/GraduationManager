@@ -11,6 +11,17 @@
                     class="login-div"
                     v-bind:style="{ backgroundImage: 'url(' + bg + ')' }"
                 >
+                    <div style="background:white">
+                        <p>有三种用户角色：</p>
+                        <br/>
+                        <p>管理员 账号：管理员 密码：123456</p>
+                        <br/>
+                        <p>学生 账号：学生1 密码：123456 </p>
+                        <br/>
+                        <p>教师 账号：教师1 密码：123456</p>
+                        <br/>
+                    </div>
+
                     <a-form
                         class="login-form"
                         id="components-form-demo-normal-login"
