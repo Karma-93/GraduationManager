@@ -38,6 +38,6 @@ public interface ProjectService {
 
     public boolean updateByPrimaryKeySelective(ProjectEntity project);
 
-    public StdPagedList<ProjectEntity> getPeojectList(PageReq pageReq);
+    public StdPagedList<ProjectEntity> getProjectList(PageReq pageReq);
 
 }

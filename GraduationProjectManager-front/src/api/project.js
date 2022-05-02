@@ -13,14 +13,14 @@ const projectApi = {
     GetVerifyChoose: "/project/verifychoose",
     GetVerifyProjectList: "/project/getverifyprojectlist",
     Delete: "/project/delete",
-    GetAll: "/project/getAll"
-
+    GetProjectList: "/project/getprojectlist"
 };
 
 
 export function requestProjectList(patameter) {
+    console.log("aaaaaaa", patameter);
     return request({
-        url: projectApi.GetAll,
+        url: projectApi.GetProjectList,
         method: "psot",
         data: patameter
     });

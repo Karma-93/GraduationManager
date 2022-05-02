@@ -139,7 +139,7 @@ export default {
             listLoading: false,
             // 查询列表数据条件
             queryForm: {
-                pageNum: 0,
+                pageNum: 1,
                 pageSize: 10
             },
             total: 0

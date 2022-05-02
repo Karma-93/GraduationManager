@@ -25,7 +25,7 @@
             </a-steps>
         </a-card>
 
-        <br/>
+        <br />
         <a-card style="margin-top: 24px" :bordered="false" title="用户信息">
             <a-descriptions>
                 <a-descriptions-item label="用户姓名">{{curUserName}}</a-descriptions-item>
@@ -40,7 +40,9 @@
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item label="选题名称">{{projectData==null?"":projectData.projectName}}</a-descriptions-item>
-                <a-descriptions-item label="选题详情">{{projectData==null?"":projectData.projectDescribe}}</a-descriptions-item>
+                <a-descriptions-item
+                    label="选题详情"
+                >{{projectData==null?"":projectData.projectDescribe}}</a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item label="指导教师">{{teacherName}}</a-descriptions-item>
                 <!--<a-descriptions-item label="选题来源">2018-08-08</a-descriptions-item>-->
@@ -75,8 +77,8 @@ import {
     requestCurrentStudentData,
     requestStudentByUserId,
 } from "@/api/student.js";
-import { requestProjectById } from "@/api/project.js";
-import {requestNameByTeacherId} from "@/api/teacher.js"
+import { requestProjectById,requestProjectList } from "@/api/project.js";
+import { requestNameByTeacherId } from "@/api/teacher.js";
 export default {
     name: "SHome",
     data() {
@@ -87,7 +89,7 @@ export default {
             currentStep: 0,
             studentData: [],
             projectData: [],
-            teacherName:""
+            teacherName: "",
         };
     },
     created() {
@@ -109,6 +111,8 @@ export default {
                     }
                 })
                 .catch((err) => {});
+
+             
         },
         getProjectData() {
             requestProjectById(this.studentData.projectId)
@@ -120,15 +124,14 @@ export default {
                     } else if (this.projectData.projectState == 2) {
                         this.currentStep = 2;
                     }
-
                 })
                 .catch((err) => {});
         },
-        getNameByTeacherId(teacherId){
-            requestNameByTeacherId(teacherId).then((res)=>{
-                this.teacherName=res.data.data;
+        getNameByTeacherId(teacherId) {
+            requestNameByTeacherId(teacherId).then((res) => {
+                this.teacherName = res.data.data;
             });
-        }
+        },
     },
 };
 </script>

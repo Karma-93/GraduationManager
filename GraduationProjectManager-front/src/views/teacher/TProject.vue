@@ -1,5 +1,5 @@
 <template>
-    <a-card title="选题列表" >
+    <a-card title="选题列表">
         <a-list
             rowKey="id"
             :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
@@ -15,14 +15,22 @@
                 <template v-else>
                     <a-card :hoverable="true">
                         <a-card-meta>
-                            <a slot="title">{{ item.proejctName }}</a>
+                            <a slot="title">{{ item.projectName }}</a>
                             <!--<a-avatar
                                 class="card-avatar"
                                 slot="avatar"
                                 :src="item.avatar"
                                 size="large"
                             />-->
-                            <div class="meta-content" slot="description">{{ item.projectDescribe }}</div>
+                            <div class="meta-content" slot="description">
+                                <p>
+                                <a-tag v-if="item.projectState == 0" color="blue">未选择</a-tag>
+                                <a-tag v-if="item.projectState == 1" color="red">已被选待审核</a-tag>
+                                <a-tag v-if="item.projectState == 2" color="red">已被选</a-tag>
+                                </p>
+                                <p>{{ item.projectDescribe }}</p>
+
+                            </div>
                         </a-card-meta>
                         <template class="ant-card-actions" slot="actions">
                             <a>编辑</a>

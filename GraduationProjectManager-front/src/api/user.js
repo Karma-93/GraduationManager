@@ -22,6 +22,8 @@ export function requestAddUser(parameter) {
 }
 
 export function requestGetUserList(data) {
+    data.pageNum = data.pageNum - 1;
+    console.log("page", data);
     return request({
         url: userApi.GetUserList,
         method: "post",

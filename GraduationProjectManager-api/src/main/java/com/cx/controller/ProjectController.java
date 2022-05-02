@@ -154,6 +154,14 @@ public class ProjectController {
     @SaCheckLogin
     public Result<StdPagedList<ProjectEntity>> getAll(@Validated @RequestBody PageReq pageReq){
         System.out.println("getAll");
-        return Result.success(projectService.getPeojectList(pageReq));
+        return Result.success(projectService.getProjectList(pageReq));
+    }
+
+
+    @ApiOperation("分页查询所有选题")
+    @PostMapping("/getprojectlist")
+    @SaCheckLogin
+    public Result<StdPagedList<ProjectEntity>> getProjectList(@Validated @RequestBody PageReq pageReq){
+        return Result.success(projectService.getProjectList(pageReq));
     }
 }

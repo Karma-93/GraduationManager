@@ -177,7 +177,7 @@ public class ProjectServiceImpl implements ProjectService
     }
 
     @Override
-    public StdPagedList<ProjectEntity> getPeojectList(PageReq pageReq) {
+    public StdPagedList<ProjectEntity> getProjectList(PageReq pageReq) {
         ProjectQuery query=new ProjectQuery().selectAll().limit(pageReq.getPageSize()*pageReq.getPageNum(),pageReq.getPageSize());
         return projectMapper.stdPagedEntity(query);
     }

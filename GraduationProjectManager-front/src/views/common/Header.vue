@@ -58,7 +58,7 @@
                 <span>消息</span>
             </template>
             <div>
-                <a-badge count="5">
+                <a-badge :count="unReadNum">
                     <a-icon type="bell" style="fontSize: 18px" />
                 </a-badge>
             </div>
@@ -97,6 +97,7 @@ export default {
             userName: "",
             userData: [],
             sessionList_already: [],
+            unReadNum:0,
         };
     },
     created() {
@@ -134,6 +135,12 @@ export default {
                     if (res.data.code == 1) {
                         this.sessionList_already = res.data.data;
                         console.log("sessionlist", this.sessionList_already);
+                        var x;
+                        for(x in  this.sessionList_already){
+                            console.log("x",x)
+                            this.unReadNum=this.unReadNum+ this.sessionList_already[x].unReadCount;
+                        }
+                        console.log("tag",this.unReadNum)
                     } else {
                         return this.$message.error(
                             "message Error" + res.data.message
