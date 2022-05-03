@@ -113,10 +113,12 @@ public class StudentServiceImpl implements StudentService {
         StudentQuery query=new StudentQuery();
         query.where.teacherId().eq(teacherId).end();
         List<StudentEntity> entities=studentMapper.listEntity(query);
+        System.out.println(entities);
         List<StudentData> res=new ArrayList<>();
         for (StudentEntity entity:entities){
             StudentData data=new StudentData();
-            BeanUtils.copyProperties(data,entity);
+            BeanUtils.copyProperties(entity,data); 
+            System.out.println(entity);
             UserEntity userEntity=userService.getUserById(entity.getUserId());
             data.setUserName(userEntity.getUserName());
             data.setUserName(userEntity.getUserName());
