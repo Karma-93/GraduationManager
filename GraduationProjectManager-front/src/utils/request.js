@@ -1,8 +1,8 @@
 import axios from "axios";
 import store from "@/store/store";
 const request = axios.create({
-    baseURL: "http://localhost:8082/",
-    //baseURL: "http://124.223.184.251:8082/",
+    //baseURL: "http://localhost:8082/",
+    baseURL: "http://124.223.184.251:8082/",
     headers: { "Content-Type": "application/json" },
     timeout: 6000
         // headers.common["token"] = store.state.token;

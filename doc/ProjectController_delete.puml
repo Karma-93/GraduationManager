@@ -1,0 +1,195 @@
+@startuml
+participant Actor
+Actor -> ProjectController : delete
+activate ProjectController
+ProjectController -> ProjectService : delete
+activate ProjectService
+ProjectService -> ProjectServiceImpl : delete
+activate ProjectServiceImpl
+ProjectServiceImpl -> QueryWhere : projectId
+activate QueryWhere
+QueryWhere --> ProjectServiceImpl
+deactivate QueryWhere
+ProjectServiceImpl -> ProjectMapper : delete
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return
+
+Actor -> ProjectController : verifyChoose
+activate ProjectController
+ProjectController -> ProjectService : verifyChoose
+activate ProjectService
+ProjectService -> ProjectServiceImpl : verifyChoose
+activate ProjectServiceImpl
+ProjectServiceImpl -> UpdateWhere : projectId
+activate UpdateWhere
+UpdateWhere --> ProjectServiceImpl
+deactivate UpdateWhere
+ProjectServiceImpl -> ProjectMapper : updateBy
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return
+
+
+Actor -> ProjectController : getVerifyProjectList
+activate ProjectController
+ProjectController -> ProjectService : getVerifyProjectList
+activate ProjectService
+ProjectService -> ProjectServiceImpl : getVerifyProjectList
+activate ProjectServiceImpl
+ProjectServiceImpl -> QueryWhere : teacherId
+activate QueryWhere
+ProjectServiceImpl -> ProjectMapper : listEntity
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper 
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return
+
+Actor -> ProjectController : getCountNoChooseProject
+activate ProjectController
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return
+
+
+Actor -> ProjectController : getProjectById
+activate ProjectController
+ProjectController -> ProjectService : getProjectById
+activate ProjectService
+ProjectService -> ProjectServiceImpl : getProjectById
+activate ProjectServiceImpl
+ProjectServiceImpl -> QueryWhere : projectId
+activate QueryWhere
+QueryWhere --> ProjectServiceImpl
+deactivate QueryWhere
+ProjectServiceImpl -> ProjectMapper : findOne
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return
+
+
+
+Actor -> ProjectController : insertSelective
+activate ProjectController
+ProjectController -> ProjectService : insertSelective
+activate ProjectService
+ProjectService -> ProjectServiceImpl : insertSelective
+activate ProjectServiceImpl 
+ProjectServiceImpl -> ProjectMapper : insert
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+
+
+
+
+Actor -> ProjectController : updateByPrimaryKey
+activate ProjectController
+ProjectController -> ProjectService : updateByPrimaryKeySelective
+activate ProjectService
+ProjectService -> ProjectServiceImpl : updateByPrimaryKeySelective
+activate ProjectServiceImpl
+ProjectServiceImpl -> ProjectMapper : updateById
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+
+ 
+Actor -> ProjectController : updateStudentIdByProjectId
+activate ProjectController
+ProjectController -> ProjectService : getProjectById
+activate ProjectService
+ProjectService -> ProjectServiceImpl : getProjectById
+activate ProjectServiceImpl
+ProjectServiceImpl -> QueryWhere : projectId
+activate QueryWhere
+QueryWhere --> ProjectServiceImpl
+deactivate QueryWhere
+ProjectServiceImpl -> ProjectMapper : findOne
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+deactivate ProjectService 
+ProjectController -> Result : failure
+activate Result
+Result --> ProjectController
+deactivate Result 
+ProjectServiceImpl -> ProjectUpdate : where
+activate ProjectUpdate
+ProjectUpdate --> ProjectServiceImpl
+deactivate ProjectUpdate
+ProjectServiceImpl -> UpdateWhere : projectId
+activate UpdateWhere
+UpdateWhere --> ProjectServiceImpl
+deactivate UpdateWhere
+ProjectServiceImpl -> ProjectMapper : updateBy
+activate ProjectMapper
+ProjectMapper --> ProjectServiceImpl
+deactivate ProjectMapper
+ProjectServiceImpl --> ProjectService
+deactivate ProjectServiceImpl
+ProjectService --> ProjectController
+ 
+deactivate UpdateWhere
+ProjectController -> Result : success
+activate Result
+Result --> ProjectController
+deactivate Result
+return 
+@enduml
+
+
