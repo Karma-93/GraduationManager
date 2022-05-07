@@ -8,7 +8,24 @@
                 <a-descriptions-item label="选题">{{projectName}}</a-descriptions-item>
             </a-descriptions>
         </a-card>
-            
+
+        <a-form @submit="handleSubmit" :form="form" style="margin-top: 24px">
+            <a-form-item
+            >
+                <a-textarea
+                    placeholder="Autosize height with minimum and maximum number of lines"
+                    :auto-size="{ minRows: 2, maxRows: 5 }"
+                />
+            </a-form-item>
+            <a-form-item 
+                :required="false"
+            >
+                <a-textarea
+                    placeholder="Autosize height with minimum and maximum number of lines"
+                    :auto-size="{ minRows: 2, maxRows: 5 }"
+                />
+            </a-form-item>
+        </a-form>
     </div>
 </template>
 
@@ -19,15 +36,21 @@ import {
     requestClassName,
 } from "@/api/student.js";
 import { requestProjectById } from "@/api/project.js";
+import ref from "vue";
+
 export default {
     name: "SKtbg",
+
     data() {
         return {
             studentData: [],
             studentName: this.$store.state.userInfo.userName,
             projectName: "",
             className: "",
-            temp: "", 
+            temp: "",
+            column1: "",
+            column2: "",
+            form: this.$form.createForm(this),
         };
     },
     created() {
@@ -51,6 +74,14 @@ export default {
             }
             const result2 = await requestClassName(this.studentData.studentId);
             this.className = result2.data.data;
+        },
+        handleSubmit(e) {
+            e.preventDefault();
+            this.form.validateFields((err, values) => {
+                if (!err) {
+                    console.log("Received values of form: ", values);
+                }
+            });
         },
     },
 };

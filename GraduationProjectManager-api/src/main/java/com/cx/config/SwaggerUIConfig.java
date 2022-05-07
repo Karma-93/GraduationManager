@@ -35,7 +35,6 @@ public class SwaggerUIConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes());
-
     }
     //在页定义面上显示的标题信息
     public ApiInfo apiInfo(){
@@ -45,9 +44,6 @@ public class SwaggerUIConfig {
                 .description("CRUD")
                 .build();
     }
-
-
-
     private List<ApiKey> securitySchemes(){
         //设置请求头信息
         List<ApiKey> result=new ArrayList<>();
@@ -55,5 +51,4 @@ public class SwaggerUIConfig {
         result.add(apiKey);
         return result;
     }
-
 }
