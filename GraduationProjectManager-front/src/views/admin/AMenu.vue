@@ -40,6 +40,13 @@
             >
                 <a-icon type="home" /> 教师管理
             </a-menu-item>
+             <a-menu-item
+                key="sub_studentmanager"
+                @titleClick="titleClick"
+                @click="menuClick('/aindex/astudentmanager')"
+            >
+                <a-icon type="home" />学生管理
+            </a-menu-item>
             <a-menu-item
                 key="sub_projectmanager"
                 @titleClick="titleClick"

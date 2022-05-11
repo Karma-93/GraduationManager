@@ -24,7 +24,7 @@
             >
                 <!-- 可选题数 -->
                 <div class="project_num" slot="project_num" slot-scope="record">
-                    <a-progress :steps="10" :percent="record" type="line" />
+                    <a-progress :steps="8" :percent="record" type="line" />
                 </div>
                 <!-- 操作 -->
                 <div class="action" slot="action" slot-scope="record">

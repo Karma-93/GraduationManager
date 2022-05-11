@@ -18,51 +18,31 @@
                     查询
                 </a-button>
             </a-space>
-        </a-row> -->
-            <a-button
-                type="primary"
-                style="margin:10px 0"
-                @click="clickEdit(null)"
-                >添加新用户</a-button
-            >
+            </a-row>-->
+            <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
             <a-table
                 :data-source="data"
                 :row-key="record => record.userId"
                 :loading="listLoading"
                 :pagination="false"
             >
-                <a-table-column
-                    key="teacherId"
-                    title="教师ID"
-                    data-index="teacherId"
-                    align="center"
-                />
+                <a-table-column key="teacherId" title="教师ID" data-index="teacherId" align="center"></a-table-column>
                 <a-table-column
                     key="teacherName"
                     title="姓名"
                     data-index="teacherName"
                     align="center"
-                >
+                />
 
-                </a-table-column>
-                <a-table-column
-                    key="deptId"
-                    title="所属部门"
-                    data-index="deptId"
-                    align="center"
-                >
+                <a-table-column key="deptId" title="所属部门" data-index="deptId" align="center">
                     <template slot-scope="text">
-                        <span v-if="text == 1">部门1</span>
-                        <span v-if="text == 2">部门2</span>
-                        <span v-if="text == 3">部门3</span>
+                        <span v-if="text == 1">计算机科学教研室</span>
+                        <span v-if="text == 2">大数据教研室</span>
+                        <span v-if="text == 3">数字媒体技术教研室</span>
+                        <span v-if="text==4">广播电视工程教研室</span>
                     </template>
                 </a-table-column>
-                <a-table-column
-                    key="zhicheng"
-                    title="职称"
-                    data-index="zhicheng"
-                    align="center"
-                />
+                <a-table-column key="zhicheng" title="职称" data-index="zhicheng" align="center" />
                 <a-table-column
                     key="teacherDescribe"
                     title="研究方向"
@@ -77,14 +57,8 @@
                 />
                 <a-table-column key="action" title="操作" align="center">
                     <template slot-scope="text, record">
-                        <a-button type="link" @click="clickEdit(record, 'edit')"
-                            >编辑</a-button
-                        >
-                        <a-button
-                            type="link"
-                            @click="clickEdit(record, 'delete')"
-                            >删除</a-button
-                        >
+                        <a-button type="link" @click="clickEdit(record, 'edit')">编辑</a-button>
+                        <a-button type="link" @click="clickEdit(record, 'delete')">删除</a-button>
                     </template>
                 </a-table-column>
             </a-table>
@@ -102,9 +76,7 @@
                 @showSizeChange="onShowSizeChange"
             >
                 <template #buildOptionText="props">
-                    <span v-if="props.value !== '50'"
-                        >{{ props.value }}条/页</span
-                    >
+                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
                     <span v-else>全部</span>
                 </template>
             </a-pagination>
@@ -120,7 +92,10 @@
 import Edit from "./components/ATeacherEditDialog.vue";
 // 引入删除弹窗组件
 import { Modal } from "ant-design-vue";
-import { requestAllTeacherList } from "@/api/teacher.js";
+import {
+    requestAllTeacherList,
+    requestNameByTeacherId,
+} from "@/api/teacher.js";
 
 export default {
     name: "ATeacher",
@@ -136,9 +111,9 @@ export default {
             // 查询列表数据条件
             queryForm: {
                 pageNum: 0,
-                pageSize: 10
+                pageSize: 10,
             },
-            total: 0
+            total: 0,
         };
     },
     methods: {
@@ -150,10 +125,11 @@ export default {
         async fetchData() {
             this.listLoading = true;
             const res = await requestAllTeacherList(this.queryForm);
-            console.log("请求列表数据", res);
             this.data = res.data.data;
             this.total = res.data.total;
             this.listLoading = false;
+            await this.getTeacherName();
+            console.log("data",this.data);
         },
 
         /**
@@ -179,7 +155,7 @@ export default {
                     onOk() {
                         console.log("===调用删除接口===", record);
                     },
-                    class: "test"
+                    class: "test",
                 });
             }
         },
@@ -203,12 +179,19 @@ export default {
             this.queryForm.pageSize = pageSize;
             this.fetchData(this.queryForm);
         },
-        
-         
+
+        async getTeacherName() {
+            var index;
+            for(index in this.data){
+                const temp=this.data[index]
+                const res = await requestNameByTeacherId(temp.teacherId);
+                temp["teacherName"]=res.data.data
+            }
+        },
     },
     created() {
         this.fetchData();
-    }
+    },
 };
 </script>
 
