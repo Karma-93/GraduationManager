@@ -98,4 +98,12 @@ public class UserController {
         else return Result.failure(ResultCode.INSERT_ERROR);
     }
 
+
+    @ApiOperation("删除用户")
+    @SaCheckRole("admin")
+    @GetMapping("/remove")
+    public Result deleteUser(@RequestParam String userId){
+        if (userService.delete(userId)>0) return Result.success();
+        else return Result.failure(ResultCode.DELETE_ERROR);
+    }
 }

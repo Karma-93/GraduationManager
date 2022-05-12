@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
+    int delete(String userId);
 
     int insert(UserEntity userEntity);
     StdPagedList<UserEntity> getUserList(PageReq pageReq);

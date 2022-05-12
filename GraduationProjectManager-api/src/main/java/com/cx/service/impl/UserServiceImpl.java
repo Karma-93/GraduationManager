@@ -29,6 +29,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public int delete(String userId) {
+        return userMapper.deleteById(userId);
+    }
+
+    @Override
     public int insert(UserEntity userEntity) {
         return userMapper.insert(userEntity);
     }
