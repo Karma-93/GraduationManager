@@ -138,9 +138,9 @@ export default {
 
         async fetchData() {
             this.listLoading = true;
-            const res = await requestProjectList(this.queryForm);
+            const res = await requestProjectList(this.queryForm.pageSize,this.queryForm.pageNum);
             this.data = res.data.data;
-            console.log(this.data);
+            console.log("data",this.data);
             this.total = res.data.total;
             this.listLoading = false;
         },

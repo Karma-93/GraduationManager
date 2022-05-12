@@ -17,12 +17,11 @@ const projectApi = {
 };
 
 
-export function requestProjectList(patameter) {
-    console.log("aaaaaaa", patameter);
+export function requestProjectList(param1, param2) {
     return request({
-        url: projectApi.GetAll,
-        method: "psot",
-        data: patameter
+        url: projectApi.GetProjectList,
+        method: "get",
+        params: { pageSize: param1, pageNum: param2 }
     });
 }
 
