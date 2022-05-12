@@ -53,7 +53,7 @@
 
 // 引入弹框组件
 import Edit from "./components/AStudentEditDialog.vue";
-import { requestStudentList,requestNameByStudentId} from "@/api/student.js"
+import { requestStudentList, requestNameByStudentId } from "@/api/student.js"
 export default {
     name: "AStudent",
     created() {
@@ -89,7 +89,7 @@ export default {
             this.listLoading = false;
         },
 
-        async getStudentName(){
+        async getStudentName() {
             var index;
             for (index in this.data) {
                 const temp = this.data[index]

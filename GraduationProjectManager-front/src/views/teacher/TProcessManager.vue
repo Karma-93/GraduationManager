@@ -6,7 +6,7 @@
             <a-table-column key="projectName" title="课题名" data-index="projectName" align="center" />
             <a-table-column key="action1" title="开题报告" align="center">
                 <template slot-scope="text, record">
-                    <div v-if="record.ktbgId!=null">
+                    <div v-if="record.ktbgId != null">
                         <a-button type="link">开题报告</a-button>
                     </div>
                     <div v-else>未提交</div>
@@ -14,7 +14,7 @@
             </a-table-column>
             <a-table-column key="action2" title="期中小结" align="center">
                 <template slot-scope="text, record">
-                    <div v-if="record.qzxjId!=null">
+                    <div v-if="record.qzxjId != null">
                         <a-button type="link">期中小结</a-button>
                     </div>
                     <div v-else>未提交</div>
@@ -22,7 +22,7 @@
             </a-table-column>
             <a-table-column key="action3" title="论文" align="center">
                 <template slot-scope="text, record">
-                    <div v-if="record.lunwenId!=null">
+                    <div v-if="record.lunwenId != null">
                         <a-button type="link">论文</a-button>
                     </div>
                     <div v-else>未提交</div>
@@ -61,8 +61,6 @@ export default {
                 this.teacherData.teacherId
             );
             this.data = dataresult.data.data;
-            console.log("dataresult", dataresult.data);
-            console.log("data", this.data);
         },
     },
 };

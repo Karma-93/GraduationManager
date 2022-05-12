@@ -18,6 +18,7 @@ const projectApi = {
 
 
 export function requestProjectList(param1, param2) {
+    param2 = param2 - 1;
     return request({
         url: projectApi.GetProjectList,
         method: "get",

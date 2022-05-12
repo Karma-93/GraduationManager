@@ -22,7 +22,7 @@ import AUser from "../views/admin/AUser/index.vue";
 import ATeacher from "../views/admin/ATeacher/index.vue";
 import AStudent from "../views/admin/AStudent/index.vue";
 import AScore from "../views/admin/AScore";
-import AProject from "../views/admin/AProject";
+import AProject from "../views/admin/AProject/index.vue";
 import store from "../store/store";
 import TProject from "../views/teacher/TProject";
 import TScore from "../views/teacher/TScore";

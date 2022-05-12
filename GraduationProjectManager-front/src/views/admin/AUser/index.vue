@@ -19,98 +19,37 @@
                 </a-button>
             </a-space>
         </a-row> -->
-            <a-button
-                type="primary"
-                style="margin:10px 0"
-                @click="clickEdit(null)"
-                >添加新用户</a-button
-            >
-            <a-table
-                :data-source="data"
-                :row-key="record => record.userId"
-                :loading="listLoading"
-                :pagination="false"
-            >
-                <a-table-column
-                    key="userId"
-                    title="用户ID"
-                    data-index="userId"
-                    align="center"
-                />
-                <a-table-column
-                    key="userAccount"
-                    title="用户账号"
-                    data-index="userAccount"
-                    align="center"
-                />
-                <a-table-column
-                    key="userName"
-                    title="用户名"
-                    data-index="userName"
-                    align="center"
-                />
-                <a-table-column
-                    key="userPassword"
-                    title="用户密码"
-                    data-index="userPassword"
-                    align="center"
-                />
-                <a-table-column
-                    key="userRoles"
-                    title="角色"
-                    data-index="userRoles"
-                    align="center"
-                >
+            <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
+            <a-table :data-source="data" :row-key="record => record.userId" :loading="listLoading" :pagination="false">
+                <a-table-column key="userId" title="用户ID" data-index="userId" align="center" />
+                <a-table-column key="userAccount" title="用户账号" data-index="userAccount" align="center" />
+                <a-table-column key="userName" title="用户名" data-index="userName" align="center" />
+                <a-table-column key="userPassword" title="用户密码" data-index="userPassword" align="center" />
+                <a-table-column key="userRoles" title="角色" data-index="userRoles" align="center">
                     <template slot-scope="text">
                         {{ text == 1 ? "教师" : "学生" }}
                     </template>
                 </a-table-column>
-                <a-table-column
-                    key="userSex"
-                    title="性别"
-                    data-index="userSex"
-                    align="center"
-                >
+                <a-table-column key="userSex" title="性别" data-index="userSex" align="center">
                     <template slot-scope="text">
                         {{ text == 0 ? "男" : text == 1 ? "女" : "未知" }}
                     </template>
                 </a-table-column>
-                <a-table-column
-                    key="userTel"
-                    title="电话"
-                    data-index="userTel"
-                    align="center"
-                />
+                <a-table-column key="userTel" title="电话" data-index="userTel" align="center" />
                 <a-table-column key="action" title="操作" align="center">
                     <template slot-scope="text, record">
-                        <a-button type="link" @click="clickEdit(record, 'edit')"
-                            >编辑</a-button
-                        >
-                        <a-button
-                            type="link"
-                            @click="clickEdit(record, 'delete')"
-                            >删除</a-button
-                        >
+                        <a-button type="link" @click="clickEdit(record, 'edit')">编辑</a-button>
+                        <a-button type="link" @click="clickEdit(record, 'delete')">删除</a-button>
                     </template>
                 </a-table-column>
             </a-table>
 
             <!-- 分页 -->
-            <a-pagination
-                style="margin-top:20px"
-                align="center"
-                :current="queryForm.pageNum"
-                :pageSize="queryForm.pageSize"
-                show-size-changer
-                :show-total="total => `共 ${total} 条`"
-                :total="total"
-                @change="handleCurrentChange"
-                @showSizeChange="onShowSizeChange"
-            >
+            <a-pagination style="margin-top:20px" align="center" :current="queryForm.pageNum"
+                :pageSize="queryForm.pageSize" show-size-changer :show-total="total => `共 ${total} 条`" :total="total"
+                @change="handleCurrentChange" @showSizeChange="onShowSizeChange">
                 <template #buildOptionText="props">
-                    <span v-if="props.value !== '50'"
-                        >{{ props.value }}条/页</span
-                    >
+                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
                     <span v-else>全部</span>
                 </template>
             </a-pagination>
@@ -154,7 +93,6 @@ export default {
         async fetchData() {
             this.listLoading = true;
             const res = await requestGetUserList(this.queryForm);
-            console.log(res.data.data);
             this.data = res.data.data.data;
             this.total = res.data.data.total;
             this.listLoading = false;
@@ -203,7 +141,6 @@ export default {
          * @date 2022-04-27
          */
         onShowSizeChange(current, pageSize) {
-            console.log(current, pageSize);
             this.queryForm.pageSize = pageSize;
             this.fetchData(this.queryForm);
         }
@@ -214,4 +151,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
