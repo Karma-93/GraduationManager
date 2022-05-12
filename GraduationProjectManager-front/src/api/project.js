@@ -20,7 +20,7 @@ const projectApi = {
 export function requestProjectList(patameter) {
     console.log("aaaaaaa", patameter);
     return request({
-        url: projectApi.GetProjectList,
+        url: projectApi.GetAll,
         method: "psot",
         data: patameter
     });

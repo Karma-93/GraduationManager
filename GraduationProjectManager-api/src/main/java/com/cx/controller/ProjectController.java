@@ -137,9 +137,9 @@ public class ProjectController {
         }
     }
 
-    @ApiOperation("更新选题信息,只有教师用户、管理员用户可以访问")
+    @ApiOperation("更新选题信息")
     @PostMapping("/updatebyprimarykey")
-    @SaCheckRole("teacher")
+    @SaCheckLogin()
     public Result updateByPrimaryKey(@RequestBody ProjectEntity project){
         if (projectService.updateByPrimaryKeySelective(project)){
             return Result.success();
@@ -159,9 +159,12 @@ public class ProjectController {
 
 
     @ApiOperation("分页查询所有选题")
-    @PostMapping("/getprojectlist")
+    @GetMapping("/getprojectlist")
     @SaCheckLogin
-    public Result<StdPagedList<ProjectEntity>> getProjectList(@Validated @RequestBody PageReq pageReq){
+    public Result<StdPagedList<ProjectEntity>> getProjectList(@RequestParam Integer pageSize,@RequestParam Integer pageNum){
+        PageReq pageReq = new PageReq();
+        pageReq.setPageSize(pageSize);
+        pageReq.setPageNum(pageNum);
         return Result.success(projectService.getProjectList(pageReq));
     }
 }

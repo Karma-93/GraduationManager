@@ -53,7 +53,7 @@
 
 // 引入弹框组件
 import Edit from "./components/AStudentEditDialog.vue";
-import { requestStudentList } from "@/api/student.js"
+import { requestStudentList,requestNameByStudentId} from "@/api/student.js"
 export default {
     name: "AStudent",
     created() {
@@ -85,9 +85,19 @@ export default {
                 this.data = result.data.data.data;
                 this.total = result.data.data.total;
             }
+            await this.getStudentName();
             this.listLoading = false;
         },
 
+        async getStudentName(){
+            var index;
+            for (index in this.data) {
+                const temp = this.data[index]
+                const res = await requestNameByStudentId(temp.studentId);
+                temp.studentName = res.data.data;
+                //temp["teacherName"]=res.data.data;
+            }
+        },
         /**
          * @description 行内点击按钮编辑事件
          * @author Cui Ruichen
