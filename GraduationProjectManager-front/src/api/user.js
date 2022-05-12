@@ -4,8 +4,16 @@ const userApi = {
     AddUser: "/user/add",
     GetUserById: "/user/getUserById",
     GetUserList: "/user/getUserList",
-    UpdateUser: "/user/update"
+    UpdateUser: "/user/update",
+    RemoveUser:"/user/remove"
 };
+export  function requestRemoveUser(param){
+    return request({
+        url:userApi.RemoveUser,
+        method:"get",
+        params:{userId:param}
+    })
+}
 export function requestUserById(param) {
     return request({
         url: userApi.GetUserById,

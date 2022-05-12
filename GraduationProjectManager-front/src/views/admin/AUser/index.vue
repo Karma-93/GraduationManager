@@ -48,7 +48,8 @@
 import Edit from "./components/AUserEditDialog.vue";
 // 引入删除弹窗组件
 import {Modal} from "ant-design-vue";
-import {requestGetUserList} from "@/api/user.js";
+import {requestGetUserList,requestRemoveUser} from "@/api/user.js";
+import { message } from 'ant-design-vue';
 
 export default {
     name: "AUser",
@@ -101,7 +102,14 @@ export default {
                 Modal.confirm({
                     title: "你确定要删除吗?",
                     onOk() {
-
+                        requestRemoveUser(record.userId).then((response)=>{
+                            if (response.data.code==1){
+                                message.success("删除成功");
+                                this.fetchData()
+                            }else{
+                                message.error("删除失败");
+                            }
+                        });
                         console.log("===调用删除接口===", record);
                     },
                     class: "test"
@@ -131,10 +139,18 @@ export default {
 
         /**
          * 删除一条用户
-         * @param {*} record
+         * @param {*}
          */
-        deleteUser(record) {
-
+        deleteUser(userId) {
+            console.log("deleteaaaaaaaaaaaaaaaaa",userId)
+            requestRemoveUser(userId).then((response)=>{
+                if (response.data.code==1){
+                    message.success("删除成功");
+                    this.fetchData()
+                }else{
+                    message.error("删除失败");
+                }
+            });
         }
     },
     created() {

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
 @Slf4j
 @Api(tags = "UserController", description = "用户管理")
 @RequestMapping("/user")
@@ -53,7 +52,6 @@ public class UserController {
         );
     }
 
-
     @CrossOrigin
     @GetMapping("/logout")
     @ApiOperation("注销登陆，会根据请求头的satoken注销登录")
@@ -62,7 +60,6 @@ public class UserController {
         StpUtil.logout();
         return Result.success();
     }
-
 
     @CrossOrigin
     @ApiOperation("通过userId获取用户信息")
@@ -97,7 +94,6 @@ public class UserController {
         if (userService.insert(userEntity) > 0) return Result.success();
         else return Result.failure(ResultCode.INSERT_ERROR);
     }
-
 
     @ApiOperation("删除用户")
     @SaCheckRole("admin")
