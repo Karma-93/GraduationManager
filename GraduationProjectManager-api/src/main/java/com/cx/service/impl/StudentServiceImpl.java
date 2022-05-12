@@ -39,6 +39,14 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
+    public String getNameByStudentId(String studentId) {
+        StudentQuery query=new StudentQuery();
+        query.where.studentId().eq(studentId).end();
+        String userId =studentMapper.findOne(query).getUserId();
+        return userService.getUserById(userId).getUserName();
+    }
+
+    @Override
     public int setStudentScore(StudentScore score) {
         StudentUpdate update=new StudentUpdate();
         update.where.studentId().eq(score.getStudentId()).end().set.studentScore().is(score.getScore()).end();

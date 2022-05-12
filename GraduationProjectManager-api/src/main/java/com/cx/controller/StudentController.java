@@ -31,7 +31,12 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
-
+    @SaCheckLogin
+    @ApiOperation("获取学生姓名")
+    @GetMapping("getNamebystudentid")
+    public Result getNameByStudentId(@RequestParam String studentId){
+        return Result.success(studentService.getNameByStudentId(studentId));
+    }
 
     @SaCheckLogin
     @ApiOperation("设置学生成绩")

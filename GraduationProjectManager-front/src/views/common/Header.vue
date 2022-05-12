@@ -30,7 +30,7 @@
         </a-breadcrumb>
 
         <!-- 消息 -->
-        <a-popover placement="bottomRight" class="bell" @click="test1">
+        <a-popover placement="bottomRight" class="bell" >
             <template slot="content">
                 <a-list size="small">
                     <a-list-item
@@ -70,12 +70,14 @@
                 <a-avatar style="backgroundColor:#87d068;marginRight:10px" icon="user" />{{userName}}
             </div>
             <a-menu slot="overlay">
+                <!--
                 <a-menu-item>
                     <a-icon type="user" />个人中心
                 </a-menu-item>
                 <a-menu-item>
                     <a-icon type="setting" />设置
                 </a-menu-item>
+                -->
                 <a-menu-item @click="quit()">
                     <a-icon type="logout" />退出登录
                 </a-menu-item>

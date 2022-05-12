@@ -54,6 +54,7 @@
             >
                 <a-icon type="home" />选题管理
             </a-menu-item>
+            <!--
             <a-menu-item
                 key="sub_scoremanager"
                 @titleClick="titleClick"
@@ -61,6 +62,7 @@
             >
                 <a-icon type="home" />成绩管理
             </a-menu-item>
+            -->
         </a-menu>
     </a-layout-sider>
 </template>

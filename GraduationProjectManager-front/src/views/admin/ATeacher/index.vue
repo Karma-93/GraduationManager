@@ -20,41 +20,23 @@
             </a-space>
             </a-row>-->
             <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
-            <a-table
-                :data-source="data"
-                :row-key="record => record.userId"
-                :loading="listLoading"
-                :pagination="false"
-            >
-                <a-table-column key="teacherId" title="教师ID" data-index="teacherId" align="center"></a-table-column>
-                <a-table-column
-                    key="teacherName"
-                    title="姓名"
-                    data-index="teacherName"
-                    align="center"
-                />
+            <a-table :data-source="data" :row-key="record => record.userId" :loading="listLoading" :pagination="false">
+                <a-table-column key="teacherId" title="教师ID" data-index="teacherId" align="center">
+
+                </a-table-column>
+                <a-table-column key="teacherName" title="姓名" data-index="teacherName" align="center" />
 
                 <a-table-column key="deptId" title="所属部门" data-index="deptId" align="center">
                     <template slot-scope="text">
                         <span v-if="text == 1">计算机科学教研室</span>
                         <span v-if="text == 2">大数据教研室</span>
                         <span v-if="text == 3">数字媒体技术教研室</span>
-                        <span v-if="text==4">广播电视工程教研室</span>
+                        <span v-if="text == 4">广播电视工程教研室</span>
                     </template>
                 </a-table-column>
                 <a-table-column key="zhicheng" title="职称" data-index="zhicheng" align="center" />
-                <a-table-column
-                    key="teacherDescribe"
-                    title="研究方向"
-                    data-index="teacherDescribe"
-                    align="center"
-                />
-                <a-table-column
-                    key="teacherProjectNum"
-                    title="研究课题数"
-                    data-index="teacherProjectNum"
-                    align="center"
-                />
+                <a-table-column key="teacherDescribe" title="研究方向" data-index="teacherDescribe" align="center" />
+                <a-table-column key="teacherProjectNum" title="研究课题数" data-index="teacherProjectNum" align="center" />
                 <a-table-column key="action" title="操作" align="center">
                     <template slot-scope="text, record">
                         <a-button type="link" @click="clickEdit(record, 'edit')">编辑</a-button>
@@ -64,17 +46,9 @@
             </a-table>
 
             <!-- 分页 -->
-            <a-pagination
-                style="margin-top:20px"
-                align="center"
-                :current="queryForm.pageNum"
-                :pageSize="queryForm.pageSize"
-                show-size-changer
-                :show-total="total => `共 ${total} 条`"
-                :total="total"
-                @change="handleCurrentChange"
-                @showSizeChange="onShowSizeChange"
-            >
+            <a-pagination style="margin-top:20px" align="center" :current="queryForm.pageNum"
+                :pageSize="queryForm.pageSize" show-size-changer :show-total="total => `共 ${total} 条`" :total="total"
+                @change="handleCurrentChange" @showSizeChange="onShowSizeChange">
                 <template #buildOptionText="props">
                     <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
                     <span v-else>全部</span>
@@ -127,9 +101,8 @@ export default {
             const res = await requestAllTeacherList(this.queryForm);
             this.data = res.data.data;
             this.total = res.data.total;
-            this.listLoading = false;
             await this.getTeacherName();
-            console.log("data",this.data);
+            this.listLoading = false;
         },
 
         /**
@@ -180,12 +153,14 @@ export default {
             this.fetchData(this.queryForm);
         },
 
+
         async getTeacherName() {
             var index;
-            for(index in this.data){
-                const temp=this.data[index]
+            for (index in this.data) {
+                const temp = this.data[index]
                 const res = await requestNameByTeacherId(temp.teacherId);
-                temp["teacherName"]=res.data.data
+                temp.teacherName = res.data.data;
+                //temp["teacherName"]=res.data.data;
             }
         },
     },
@@ -195,4 +170,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

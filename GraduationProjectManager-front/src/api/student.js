@@ -8,8 +8,19 @@ const studentApi = {
     GetClassName: "/student/getclassname",
     GetStudentNum: "/student/getstudentnum",
     GetNoProjectStudentNum: "/student/getnoprojectstudentnum",
-    GetStudentPorcessList: "/student/getstudentprocesslist"
+    GetStudentPorcessList: "/student/getstudentprocesslist",
+    GetNameByStudentId: "/student/getNamebystudentid"
 };
+
+
+export function requestNameByStudentId(parameter) {
+    return request({
+        url: studentApi.GetNameByStudentId,
+        method: "get",
+        params: { studentId: parameter }
+    });
+
+}
 
 export function requestStudentProcessList(param) {
     return request({
@@ -51,6 +62,7 @@ export function reqeustStudentDataListByTeacherId(param) {
 
 //分页查询所有学生数据
 export function requestStudentList(parameter) {
+    parameter.pageNum = parameter.pageNum - 1;
     return request({
         url: studentApi.GetStudentList,
         method: "post",

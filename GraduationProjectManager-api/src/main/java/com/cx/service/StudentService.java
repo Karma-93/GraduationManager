@@ -12,6 +12,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.List;
 
 public interface StudentService {
+    String getNameByStudentId(String studentId);
     int setStudentScore(StudentScore score);
     List<StudentProcessData> getStudentProcessListByTeacherId(String teacherId);
     int getStudentNum();

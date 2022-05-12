@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: "ATeacherEditDialog",
+    name: "AStudentEditDialog",
     emit: ["fetch-data"],
     data() {
         return {
