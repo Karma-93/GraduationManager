@@ -105,7 +105,6 @@ export default {
                         requestRemoveUser(record.userId).then((response)=>{
                             if (response.data.code==1){
                                 message.success("删除成功");
-                                this.fetchData()
                             }else{
                                 message.error("删除失败");
                             }
@@ -114,6 +113,7 @@ export default {
                     },
                     class: "test"
                 });
+                this.fetchData();
             }
         },
 
@@ -136,22 +136,6 @@ export default {
             this.queryForm.pageSize = pageSize;
             this.fetchData(this.queryForm);
         },
-
-        /**
-         * 删除一条用户
-         * @param {*}
-         */
-        deleteUser(userId) {
-            console.log("deleteaaaaaaaaaaaaaaaaa",userId)
-            requestRemoveUser(userId).then((response)=>{
-                if (response.data.code==1){
-                    message.success("删除成功");
-                    this.fetchData()
-                }else{
-                    message.error("删除失败");
-                }
-            });
-        }
     },
     created() {
         this.fetchData();

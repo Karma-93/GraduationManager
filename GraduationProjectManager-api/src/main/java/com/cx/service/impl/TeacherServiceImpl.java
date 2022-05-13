@@ -31,6 +31,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public int delete(String teacherId) {
+        String userId=getTeacherById(teacherId).getUserId();
+        userService.delete(userId);
         return teacherMapper.deleteById(teacherId);
     }
 

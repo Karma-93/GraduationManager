@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 const studentApi = {
+    RemoveStudent:"/student/delete",
     GetCurrentStudentData: "/student/getCurrentStudentData",
     GetStudentByUserId: "/student/getStudentByUserId",
     GetStudentListByTeacherId: "/student/getStudentListByTeacherId",
@@ -12,6 +13,13 @@ const studentApi = {
     GetNameByStudentId: "/student/getNamebystudentid"
 };
 
+export  function requestRemoveStudent(param){
+    return request({
+        url:studentApi.RemoveStudent,
+        method:"get",
+        params:{studentId:param}
+    });
+}
 
 export function requestNameByStudentId(parameter) {
     return request({
