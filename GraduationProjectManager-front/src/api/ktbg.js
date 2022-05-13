@@ -5,7 +5,7 @@ const ktbgApi = {
     Insert: "/ktbg/addktbg",
     Update: "/ktbg/update",
     Remove: "/ktbg/remove",
-    GetById: "/ktbg/getbyid"
+    GetById: "/ktbg/getById"
 };
 
 
@@ -13,7 +13,7 @@ export function requestKtbg(param) {
     return request({
         url: ktbgApi.GetById,
         method: "get",
-        params: { ktbgId: param }
+        params: { id: param }
     })
 }
 

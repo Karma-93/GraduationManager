@@ -8,7 +8,6 @@
                     data-index="userName"
                     align="center"
                 />
-
                 <a-table-column
                     key="projectName"
                     title="课题名"
@@ -77,7 +76,7 @@ import ProcessDataInfoDialog from './components/ProcessDataInfoDialog.vue';
 import { message } from "ant-design-vue";
 import { requestKtbg } from "@/api/ktbg.js"
 import { requestLunwenById } from "@/api/lunwen.js"
-import { reqeustGetQzxjById } from "@/api/getbyid"
+import { reqeustGetQzxjById } from "@/api/qzxj.js"
 
 export default {
     name: "TProcessManager",
@@ -110,15 +109,15 @@ export default {
             if (type == "ktbg") {
                 const res = await requestKtbg(record.ktbgId);
                 if (res.data.code == 1) {
-                    this.$refs.editRef.showEdit(res.data.data);
+                    this.$refs.editRef.showEdit(res.data.data,"开题报告");
                 }
             } else if (type = "qzxj") {
                 const res = await reqeustGetQzxjById(record.qzxjId);
                 if (res.data.code == 1) {
-                    this.$refs.editRef.showEdit(res.data.data);
+                    this.$refs.editRef.showEdit(res.data.data,"期中小结");
                 }
             } else if (type = "lunwen") {
-                const res = await requestLunwenById(record.lunwenId);
+                const res = await requestLunwenById(record.lunwenId,"论文");
                 if (res.data.code == 1) {
                     this.$refs.editRef.showEdit(res.data.data);
                 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-modal @ok="save" @cancel="close" v-model:visible="visible" title="Basic Modal">
+    <a-modal @ok="save" @cancel="close" v-model:visible="visible" :title="title">
       <p>Some contents...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
@@ -15,7 +15,9 @@ export default {
   data() {
     return {
       // 弹窗显示开关
-      visible: false
+        visible: false,
+        title:"",
+
     };
   },
   methods: {
@@ -24,9 +26,10 @@ export default {
      * @author Cui Ruichen
      * @date 2022-04-29
      */
-    showEdit(record) {
+    showEdit(record,title) {
       // record: 该行的数据
       console.log("弹窗展示", record);
+      this.title=title;
       this.visible = true;
     },
 
