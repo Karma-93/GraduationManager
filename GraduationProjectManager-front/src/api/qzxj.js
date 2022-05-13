@@ -8,6 +8,14 @@ const qzxjApi = {
     Remove: "/qzxj/remove"
 }
 
+export function reqeustGetQzxjById(param) {
+    return ({
+        url: qzxjApi.GetById,
+        method: "get",
+        params: { id: param }
+    })
+}
+
 export function requestAddQzxj(parameter) {
     return ({
         url: qzxjApi.Add,

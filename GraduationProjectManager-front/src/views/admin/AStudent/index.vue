@@ -53,7 +53,8 @@
 
 // 引入弹框组件
 import Edit from "./components/AStudentEditDialog.vue";
-import { requestStudentList, requestNameByStudentId } from "@/api/student.js"
+import { requestStudentList, requestNameByStudentId,requestRemoveStudent } from "@/api/student.js"
+import {message} from "ant-design-vue";
 export default {
     name: "AStudent",
     created() {
@@ -119,6 +120,13 @@ export default {
                 Modal.confirm({
                     title: "你确定要删除吗?",
                     onOk() {
+                        requestRemoveStudent(record.studentId).then((response)=>{
+                            if (response.data.code==1){
+                                message.success("删除成功");
+                            }else{
+                                message.error("删除失败");
+                            }
+                        });
                         console.log("===调用删除接口===", record);
                     },
                     class: "test",

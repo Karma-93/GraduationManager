@@ -22,6 +22,13 @@ public class KtbgController {
 
 
     @SaCheckLogin
+    @ApiOperation("获取开题报告")
+    @GetMapping("/getbyid")
+    public Result<KtbgEntity> getKtbgById(Integer ktgbId){
+        return ktbgService.getKtbg(ktgbId);
+    }
+
+    @SaCheckLogin
     @ApiOperation(value = "添加开题报告")
     @PostMapping("/addktbg")
     public Result addKtbg(@RequestBody KtbgEntity ktbg){

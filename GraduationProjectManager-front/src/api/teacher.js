@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 const teacherApi = {
+    UpdateTeacher:"/teacher/update",
     RemoveTeacher:"/teacher/delete",
     GetTeacherByTeacherId: "/teacher/getTeacherByTeacherId",
     GetTeacherByUserId: "/teacher/getTeacherByUserId",
@@ -9,6 +10,14 @@ const teacherApi = {
     GetTeacherData: "/teacher/getTeacherData",
     GetNameByTeacherId: "/teacher/getNamebyteacherid"
 };
+
+export  function requestUpdateTeacher(param){
+    return request({
+        url:teacherApi.UpdateTeacher,
+        method:"post",
+        data:param
+    })
+}
 
 export function requestRemoveTeacher(param){
     return request({

@@ -56,6 +56,7 @@ export default {
     components: {Edit},
     data() {
         return {
+            editRef: null,
             // 表格数据
             data: [],
             // 表格lading

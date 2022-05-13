@@ -28,6 +28,15 @@ public class TeacherController {
     TeacherService teacherService;
 
 
+    @SaCheckLogin
+    @ApiOperation("更新")
+    @PostMapping("/update")
+    public Result update(TeacherEntity teacherEntity){
+        if (teacherService.update(teacherEntity)>0) return Result.success();
+        else return Result.failure(ResultCode.UPDATE_ERROR);
+    }
+
+
     @ApiOperation("根据Id获取姓名")
     @SaCheckLogin()
     @GetMapping("/getNamebyteacherid")

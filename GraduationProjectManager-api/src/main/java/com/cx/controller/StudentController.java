@@ -34,6 +34,14 @@ public class StudentController {
 
 
     @SaCheckLogin
+    @ApiOperation("更新学生信息")
+    @PostMapping("/update")
+    public Result update(StudentEntity student){
+        if (studentService.update(student)>0) return Result.success();
+        else return Result.failure(ResultCode.UPDATE_ERROR);
+    }
+
+    @SaCheckLogin
     @ApiOperation("删除学生信息")
     @GetMapping("/delete")
     public Result delete(String studentId){

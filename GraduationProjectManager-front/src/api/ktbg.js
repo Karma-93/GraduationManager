@@ -4,9 +4,18 @@ const ktbgApi = {
     GetByStudentId: "/ktbg/getByStudentId",
     Insert: "/ktbg/addktbg",
     Update: "/ktbg/update",
-    Remove: "/ktbg/remove"
-
+    Remove: "/ktbg/remove",
+    GetById: "/ktbg/getbyid"
 };
+
+
+export function requestKtbg(param) {
+    return request({
+        url: ktbgApi.GetById,
+        method: "get",
+        params: { ktbgId: param }
+    })
+}
 
 export function requestRemoveKtbg(param) {
     return request({

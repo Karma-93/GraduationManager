@@ -38,15 +38,16 @@
     </a-card>
 
     <!-- 编辑弹框组件 -->
-    <edit ref="editRef" @fetch-data="fetchData" />
+    <edit ref="editRef" @fetch-data="fetchData()" />
   </div>
 </template>
 
 <script>
 import Edit from "./components/AProjectEditDialog.vue";
-import { requestProjectList } from "@/api/project.js"
+import { requestProjectList,requestDelete } from "@/api/project.js"
 import { requestNameByStudentId } from "@/api/student.js"
 import { requestNameByTeacherId } from "@/api/teacher.js";
+import {message} from "ant-design-vue";
 export default {
   name: "AProject",
   components: { Edit },
@@ -88,6 +89,13 @@ export default {
         Modal.confirm({
           title: "你确定要删除吗?",
           onOk() {
+              requestDelete(record.projectId).then((response)=>{
+                  if (response.data.code==1){
+                      message.success("删除成功");
+                  }else{
+                      message.error("删除失败");
+                  }
+              });
             console.log("===调用删除接口===", record);
           },
           class: "test",

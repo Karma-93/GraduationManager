@@ -46,10 +46,11 @@
 // 引入弹框组件
 import Edit from "./components/ATeacherEditDialog.vue";
 // 引入删除弹窗组件
-import { Modal } from "ant-design-vue";
+import {message, Modal} from "ant-design-vue";
 import {
     requestAllTeacherList,
     requestNameByTeacherId,
+    requestRemoveTeacher,
 } from "@/api/teacher.js";
 
 export default {
@@ -107,6 +108,13 @@ export default {
                 Modal.confirm({
                     title: "你确定要删除吗?",
                     onOk() {
+                        requestRemoveTeacher(record.teacherId).then((response)=>{
+                            if (response.data.code==1){
+                                message.success("删除成功");
+                            }else{
+                                message.error("删除失败");
+                            }
+                        });
                         console.log("===调用删除接口===", record);
                     },
                     class: "test",

@@ -30,6 +30,11 @@ public class TeacherServiceImpl implements TeacherService {
     DeptMapper deptMapper;
 
     @Override
+    public int update(TeacherEntity entity) {
+        return teacherMapper.updateById(entity);
+    }
+
+    @Override
     public int delete(String teacherId) {
         String userId=getTeacherById(teacherId).getUserId();
         userService.delete(userId);
