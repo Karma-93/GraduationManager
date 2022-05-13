@@ -1,17 +1,17 @@
 <template>
     <a-layout>
-        <a-layout-header style="padding: 0 80px"
-            ><h2 style="color: white">
-                毕业论文(设计)管理系统
-            </h2></a-layout-header
-        >
+        <a-layout-header style="padding: 0 80px">
+            <h2 style="color: white">
+                毕业论文管理系统
+            </h2>
+        </a-layout-header>
         <a-layout-content style="padding: 0 80px">
             <div :style="{ padding: '32px 0px', minHeight: '280px' }">
                 <div
                     class="login-div"
                     v-bind:style="{ backgroundImage: 'url(' + bg + ')' }"
                 >
-                   
+
                     <a-form
                         class="login-form"
                         id="components-form-demo-normal-login"
@@ -64,18 +64,19 @@
                             </a-input>
                         </a-form-item>
                         <a-form-item>
-                            <a-checkbox
-                                v-decorator="[
+                            <a-checkbox v-decorator="[
                                     'remember',
                                     {
                                         valuePropName: 'checked',
                                         initialValue: true
                                     }
-                                ]"
-                            >
+                                ]">
                                 记住我
                             </a-checkbox>
-                            <a class="login-form-forgot" href="">
+                            <a
+                                class="login-form-forgot"
+                                href=""
+                            >
                                 忘记密码
                             </a>
                             <a-button
@@ -104,7 +105,8 @@
                             >
                                 <a-list-item
                                     slot="renderItem"
-                                    slot-scope="item, index" @click="informClick(item)"
+                                    slot-scope="item, index"
+                                    @click="informClick(item)"
                                 >
                                     {{ item.informTitle }}
                                 </a-list-item>
@@ -116,8 +118,11 @@
                                 </div>
                             </a-list>
                         </a-col>
-                        <a-col :flex="2" :style="{ borderRadius: '5px' }"
-                            ><!--横向比例布局-->
+                        <a-col
+                            :flex="2"
+                            :style="{ borderRadius: '5px' }"
+                        >
+                            <!--横向比例布局-->
                             <a-list
                                 bordered
                                 :data-source="downData"
@@ -144,9 +149,11 @@
         <a-layout-footer :style="{ textAlign: 'center' }">
             <p>
                 由
-                <a href="https://github.com/Alone-93" title="CX" target="_blank"
-                    >CX</a
-                >提供技术支持
+                <a
+                    href="https://github.com/Alone-93"
+                    title="CX"
+                    target="_blank"
+                >CX</a>提供技术支持
             </p>
             <p>版权所有 &copy; 2022/3/1.陈旭</p>
         </a-layout-footer>
@@ -229,7 +236,7 @@ export default {
                 }
             );
         },
-        informClick(record){
+        informClick(record) {
             this.$dialog(
                 Inform,
                 // component props

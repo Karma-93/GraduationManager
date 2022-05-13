@@ -1,14 +1,11 @@
 <template>
     <div>
-        <a-card style="margin-top: 24px" :bordered="false" title="教师列表">
-            <div slot="extra">
-                <a-radio-group v-model="status">
-                    <a-radio-button value="all">全部</a-radio-button>
-                    <a-radio-button value="processing">进行中</a-radio-button>
-                    <a-radio-button value="waiting">等待中</a-radio-button>
-                </a-radio-group>
-                <a-input-search style="margin-left: 16px; width: 272px;" />
-            </div>
+        <a-card
+            style="margin-top: 24px"
+            :bordered="false"
+            title="教师列表"
+        >
+
             <!--
             <div class="operate">
                 <a-button type="dashed" style="width: 100%" icon="plus" @click="add">添加</a-button>
@@ -23,13 +20,31 @@
                 bordered
             >
                 <!-- 可选题数 -->
-                <div class="project_num" slot="project_num" slot-scope="record">
-                    <a-progress :steps="8" :percent="record" type="line" />
+                <div
+                    class="project_num"
+                    slot="project_num"
+                    slot-scope="record"
+                >
+                    <a-progress
+                        :steps="8"
+                        :percent="record"
+                        type="line"
+                    />
                 </div>
                 <!-- 操作 -->
-                <div class="action" slot="action" slot-scope="record">
-                    <a-button type="link" @click="clickEdit(record)">选择</a-button>
-                    <a-button type="link" @click="createSessionClick(record)">发送消息</a-button>
+                <div
+                    class="action"
+                    slot="action"
+                    slot-scope="record"
+                >
+                    <a-button
+                        type="link"
+                        @click="clickEdit(record)"
+                    >选择</a-button>
+                    <a-button
+                        type="link"
+                        @click="createSessionClick(record)"
+                    >发送消息</a-button>
                 </div>
             </a-table>
 
@@ -59,7 +74,7 @@ import { requestAllTeacherData, requestTeacherData } from "@/api/teacher.js";
 import { createSession } from "@/api/message.js";
 import NewMessage from "@/views/message/NewMessage";
 export default {
-    components: { ProjectList,NewMessage },
+    components: { ProjectList, NewMessage },
     data() {
         return {
             total: 0,
@@ -181,9 +196,9 @@ export default {
                 toUserId: item.userId,
                 toUserName: item.userName,
             })
-            const record=result.data.data;
-            console.log("temp",record);
-this.$dialog(
+            const record = result.data.data;
+            console.log("temp", record);
+            this.$dialog(
                 NewMessage,
                 // component props
                 {
