@@ -8,6 +8,7 @@ import com.cx.model.TeacherData;
 import java.util.List;
 
 public interface TeacherService{
+    int delete(String teacherId);
     String getNameByTeacherId(String teacherId);
     public StdPagedList<TeacherEntity> getTeacherList(PageReq pageReq);
     public StdPagedList<TeacherData> getTeacherData(PageReq pageReq);

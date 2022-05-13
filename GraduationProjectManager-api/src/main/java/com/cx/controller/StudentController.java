@@ -31,6 +31,16 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+
+
+    @SaCheckLogin
+    @ApiOperation("删除学生信息")
+    @GetMapping("/delete")
+    public Result delete(String studentId){
+        if (studentService.delete(studentId)>0) return Result.success();
+        else  return Result.failure(ResultCode.DELETE_ERROR);
+    }
+
     @SaCheckLogin
     @ApiOperation("获取学生姓名")
     @GetMapping("getNamebystudentid")

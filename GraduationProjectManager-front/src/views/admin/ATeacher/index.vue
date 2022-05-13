@@ -1,24 +1,6 @@
 <template>
     <div>
         <a-card>
-            <!-- <a-row>
-            <a-space>
-                <a-radio-group v-model="status">
-                    <a-radio-button value="all">全部</a-radio-button>
-                    <a-radio-button value="processing">进行中</a-radio-button>
-                    <a-radio-button value="waiting">等待中</a-radio-button>
-                </a-radio-group>
-                <a-input v-model:value="value" placeholder="请输入" />
-                <a-button
-                    type="primary"
-                    :loading="iconLoading"
-                    @click="enterIconLoading"
-                >
-                    <template #icon><search-outlined /></template>
-                    查询
-                </a-button>
-            </a-space>
-            </a-row>-->
             <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
             <a-table :data-source="data" :row-key="record => record.userId" :loading="listLoading" :pagination="false">
                 <a-table-column key="teacherId" title="教师ID" data-index="teacherId" align="center">
@@ -55,7 +37,6 @@
                 </template>
             </a-pagination>
         </a-card>
-
         <!-- 编辑弹框组件 -->
         <edit ref="editRef" @fetch-data="fetchData" />
     </div>

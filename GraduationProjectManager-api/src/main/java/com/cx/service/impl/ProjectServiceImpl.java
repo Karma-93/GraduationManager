@@ -58,11 +58,6 @@ public class ProjectServiceImpl implements ProjectService
         update.where.projectId().eq(projectId).end().set.projectState().is(2).end();
         return projectMapper.updateBy(update);
     }
-
-
-
-
-
     @Override
     public List<VerifyProjectData> getVerifyProjectList(String teacherId) {
         List<VerifyProjectData> res=new ArrayList<>();

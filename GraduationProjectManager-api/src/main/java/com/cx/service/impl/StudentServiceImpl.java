@@ -39,6 +39,11 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
+    public int delete(String studentId) {
+        return studentMapper.deleteById(studentId);
+    }
+
+    @Override
     public String getNameByStudentId(String studentId) {
         StudentQuery query=new StudentQuery();
         query.where.studentId().eq(studentId).end();

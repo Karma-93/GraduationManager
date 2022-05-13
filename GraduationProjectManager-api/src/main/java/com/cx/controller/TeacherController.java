@@ -84,4 +84,12 @@ public class TeacherController {
     public Result<List<TeacherData>> getAllTeacherData(){
         return Result.success(teacherService.getAllTeacherData());
     }
+
+    @ApiOperation("删除教师")
+    @SaCheckLogin()
+    @GetMapping("delete")
+    public Result delete(String teacherId){
+        if (teacherService.delete(teacherId)>0) return Result.success();
+        else return Result.failure(ResultCode.DELETE_ERROR);
+    }
 }
