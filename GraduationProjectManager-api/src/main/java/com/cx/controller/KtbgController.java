@@ -21,12 +21,6 @@ public class KtbgController {
     KtbgService ktbgService;
 
 
-    @SaCheckLogin
-    @ApiOperation("获取开题报告")
-    @GetMapping("/getbyid")
-    public Result<KtbgEntity> getKtbgById(Integer ktgbId){
-        return ktbgService.getKtbg(ktgbId);
-    }
 
     @SaCheckLogin
     @ApiOperation(value = "添加开题报告")
@@ -69,7 +63,7 @@ public class KtbgController {
     @SaCheckLogin
     @ApiOperation("通过studentId获取开题报告")
     @GetMapping("/getByStudentId")
-    public Result<KtbgEntity> getKtbgById(@RequestParam String studentId){
+    public Result<KtbgEntity> getKtbgByStudentId(@RequestParam String studentId){
         return Result.success(ktbgService.getKtbgByStudentId(studentId));
     }
 }
