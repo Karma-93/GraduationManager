@@ -1,0 +1,46 @@
+@startuml
+participant Actor
+Actor -> StudentController : getStudentProcessList
+activate StudentController
+StudentController -> StudentService : getStudentProcessListByTeacherId
+activate StudentService
+StudentService -> StudentServiceImpl : getStudentProcessListByTeacherId
+activate StudentServiceImpl
+StudentServiceImpl -> StudentServiceImpl : getStudentListByTeacherId
+activate StudentServiceImpl
+StudentServiceImpl -> StudentMapper : listEntity
+activate StudentMapper
+StudentMapper --> StudentServiceImpl
+deactivate StudentMapper
+StudentServiceImpl --> StudentServiceImpl
+deactivate StudentServiceImpl
+StudentServiceImpl -> ProjectService : getProjectById
+activate ProjectService
+ProjectService --> StudentServiceImpl
+deactivate ProjectService
+StudentServiceImpl -> UserService : getUserById
+activate UserService
+UserService --> StudentServiceImpl
+deactivate UserService
+StudentServiceImpl -> LunwenService : getLunwenByStudentId
+activate LunwenService
+LunwenService --> StudentServiceImpl
+deactivate LunwenService
+StudentServiceImpl -> KtbgService : getKtbgByStudentId
+activate KtbgService
+KtbgService --> StudentServiceImpl
+deactivate KtbgService
+StudentServiceImpl -> QzxjService : getQzxjByStudentId
+activate QzxjService
+QzxjService --> StudentServiceImpl
+deactivate QzxjService
+StudentServiceImpl --> StudentService
+deactivate StudentServiceImpl
+StudentService --> StudentController
+deactivate StudentService
+StudentController -> Result : success
+activate Result
+Result --> StudentController
+deactivate Result
+return
+@enduml

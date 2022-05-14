@@ -8,8 +8,12 @@
         }"
         width="{300px}"
     >
-        <div class="logo" :style="{ textAlign: 'center' }" style="width: 300px">
-            <h1 style="color: white;">毕业论文管理系统</h1>
+        <div
+            class="logo"
+            :style="{ textAlign: 'center' }"
+            style="width: 300px"
+        >
+            <h1 style="color: white;">毕业设计管理系统</h1>
         </div>
         <a-menu
             theme="dark"
@@ -40,7 +44,7 @@
             >
                 <a-icon type="home" /> 教师管理
             </a-menu-item>
-             <a-menu-item
+            <a-menu-item
                 key="sub_studentmanager"
                 @titleClick="titleClick"
                 @click="menuClick('/aindex/astudentmanager')"
@@ -71,7 +75,7 @@
 export default {
     name: "AdminMenu",
     data() {
-        return { 
+        return {
         };
     },
     watch: {

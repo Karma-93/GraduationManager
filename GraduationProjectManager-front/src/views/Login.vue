@@ -2,7 +2,7 @@
     <a-layout>
         <a-layout-header style="padding: 0 80px">
             <h2 style="color: white">
-                毕业论文管理系统
+                毕业设计管理系统
             </h2>
         </a-layout-header>
         <a-layout-content style="padding: 0 80px">

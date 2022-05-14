@@ -8,8 +8,12 @@
         }"
         width="{300px}"
     >
-        <div class="logo" :style="{ textAlign: 'center' }" style="width: 300px">
-            <h1 style="color: white;">毕业论文管理系统</h1>
+        <div
+            class="logo"
+            :style="{ textAlign: 'center' }"
+            style="width: 300px"
+        >
+            <h1 style="color: white;">毕业设计管理系统</h1>
         </div>
         <a-menu
             theme="dark"
@@ -33,14 +37,23 @@
             >
                 <a-icon type="edit" />选择课题
             </a-menu-item>
-            <a-sub-menu key="sub_process" @titleClick="titleClick">
-                <span slot="title"
-                    ><a-icon type="appstore" /><span>流程管理</span></span
+            <a-sub-menu
+                key="sub_process"
+                @titleClick="titleClick"
+            >
+                <span slot="title">
+                    <a-icon type="appstore" /><span>流程管理</span>
+                </span>
+                <a-menu-item
+                    key="sub_ktbg"
+                    @click="menuClick('/sindex/sktbg')"
                 >
-                <a-menu-item key="sub_ktbg" @click="menuClick('/sindex/sktbg')">
                     开题报告
                 </a-menu-item>
-                <a-menu-item key="sub_qzxj" @click="menuClick('/sindex/sqzxj')">
+                <a-menu-item
+                    key="sub_qzxj"
+                    @click="menuClick('/sindex/sqzxj')"
+                >
                     期中小结
                 </a-menu-item>
                 <a-menu-item
@@ -50,10 +63,13 @@
                     论文初稿
                 </a-menu-item>
             </a-sub-menu>
-            <a-sub-menu key="sub_info" @titleClick="titleClick">
-                <span slot="title"
-                    ><a-icon type="appstore" /><span>查看信息</span></span
-                >
+            <a-sub-menu
+                key="sub_info"
+                @titleClick="titleClick"
+            >
+                <span slot="title">
+                    <a-icon type="appstore" /><span>查看信息</span>
+                </span>
                 <!--
                 <a-menu-item
                     key="sub_reply_info"
