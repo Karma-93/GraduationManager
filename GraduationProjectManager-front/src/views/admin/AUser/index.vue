@@ -97,7 +97,6 @@
                 </template>
             </a-pagination>
         </a-card>
-
         <!-- 编辑弹框组件 -->
         <edit ref="editRef" @fetch-data="fetchData" />
     </div>
@@ -136,6 +135,7 @@ export default {
          * @date 2022-04-29
          */
         async fetchData() {
+            console.log("pagenum",this.queryForm.pageNum);
             this.listLoading = true;
             const res = await requestGetUserList(this.queryForm);
             this.data = res.data.data.data;

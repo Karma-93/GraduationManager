@@ -1,5 +1,6 @@
 import request from "@/utils/request";
 const studentApi = {
+    AddStudent:"/student/addstudent",
     UpdateStudent:"/student/update",
     RemoveStudent:"/student/delete",
     GetCurrentStudentData: "/student/getCurrentStudentData",
@@ -14,7 +15,15 @@ const studentApi = {
     GetNameByStudentId: "/student/getNamebystudentid"
 };
 
-export function updateStudent(param){
+export function requestAddStudent(param){
+    return request({
+        url:studentApi.AddStudent,
+        method:"post",
+        data:param
+    })
+}
+
+export function requestUpdateStudent(param){
     return request({
         url:studentApi.UpdateStudent,
         method:"post",

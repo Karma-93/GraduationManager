@@ -67,9 +67,8 @@
                     v-model="form.userSex"
                     placeholder="请选择"
                 >
-                    <a-select-option value="0">未知</a-select-option>
-                    <a-select-option value="1">男</a-select-option>
-                    <a-select-option value="2">女</a-select-option>
+                    <a-select-option value="0">男</a-select-option>
+                    <a-select-option value="1">女</a-select-option>
                 </a-select>
             </a-form-model-item>
             <a-form-model-item
@@ -180,35 +179,34 @@ export default {
          * @date 2022-04-29
          */
         save() {
-            console.log("aaaaaaaaaaa")
             this.$refs.formRef.validate(valid => {
                 // 如果所有项都通过了校验
                 if (valid) {
                     //console.log("err", err, values);
-                    console.log("true");
-
                     // 如果为编辑
                     if (this.isEdit) {
-                        console.log("===调用保存接口===", this.form);
+                        requestUpdateUser(this.form).then((response) => {
+                            if (response.data.code == 1) {
+                                message.success("编辑成功");
+                            } else {
+                                message.error("编辑失败");
+                            }
+                        })
                     }
                     // 如果为添加
                     else {
-
                         requestAddUser(this.form).then((response) => {
                             if (response.data.code == 1) {
-                                message.success("删除成功");
+                                message.success("添加成功");
                             } else {
-                                message.error("删除失败");
+                                message.error("添加失败");
                             }
                         })
-
-                        console.log("===调用添加接口===", this.form);
                     }
                     this.close();
                 }
                 // 如果校验不通过
                 else {
-                    console.log("else");
                     return false;
                 }
             });

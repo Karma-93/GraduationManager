@@ -31,7 +31,7 @@ public class TeacherController {
 
     @SaCheckRole("admin")
     @ApiOperation("增加教师信息，管理员角色才可以调用")
-    @PostMapping("/addTeacher")
+    @PostMapping("/addteacher")
     public Result insert(@RequestBody TeacherEntity entity){
         if (teacherService.insert(entity)>0) return Result.success();
         else return Result.failure(ResultCode.INSERT_ERROR);
