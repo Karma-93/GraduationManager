@@ -1,6 +1,7 @@
 package com.cx.service.impl;
 
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
+import com.cx.common.utils.KeyUtil;
 import com.cx.fluentmybatis.entity.*;
 import com.cx.fluentmybatis.mapper.ClassiMapper;
 import com.cx.fluentmybatis.mapper.StudentMapper;
@@ -37,6 +38,12 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     ProjectService projectService;
 
+
+    @Override
+    public int insert(StudentEntity entity) {
+        entity.setStudentId(KeyUtil.getUUIDKey(""));
+        return studentMapper.insertWithPk(entity);
+    }
 
     @Override
     public int delete(String studentId) {

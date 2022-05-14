@@ -1,6 +1,7 @@
 package com.cx.service.impl;
 
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
+import com.cx.common.utils.KeyUtil;
 import com.cx.fluentmybatis.entity.TeacherEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.fluentmybatis.mapper.DeptMapper;
@@ -28,6 +29,12 @@ public class TeacherServiceImpl implements TeacherService {
     UserService userService;
     @Autowired
     DeptMapper deptMapper;
+
+    @Override
+    public int insert(TeacherEntity entity) {
+        entity.setTeacherId(KeyUtil.getUUIDKey(""));
+        return teacherMapper.insertWithPk(entity);
+    }
 
     @Override
     public int update(TeacherEntity entity) {

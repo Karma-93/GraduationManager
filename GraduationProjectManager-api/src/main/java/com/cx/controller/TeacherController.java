@@ -2,6 +2,7 @@ package com.cx.controller;
 
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
 import com.cx.common.Result;
@@ -27,6 +28,14 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+
+    @SaCheckRole("admin")
+    @ApiOperation("增加教师信息，管理员角色才可以调用")
+    @PostMapping("/addTeacher")
+    public Result insert(@RequestBody TeacherEntity entity){
+        if (teacherService.insert(entity)>0) return Result.success();
+        else return Result.failure(ResultCode.INSERT_ERROR);
+    }
 
     @SaCheckLogin
     @ApiOperation("更新")

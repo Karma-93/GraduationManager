@@ -12,6 +12,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import java.util.List;
 
 public interface StudentService {
+    int insert(StudentEntity entity);
     int delete(String studentId);
     String getNameByStudentId(String studentId);
     int setStudentScore(StudentScore score);

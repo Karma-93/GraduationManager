@@ -3,6 +3,7 @@ package com.cx.service.impl;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.org.atool.fluent.mybatis.model.StdPagedList;
+import com.cx.common.utils.KeyUtil;
 import com.cx.fluentmybatis.entity.RolesEntity;
 import com.cx.fluentmybatis.entity.UserEntity;
 import com.cx.fluentmybatis.mapper.RolesMapper;
@@ -35,7 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(UserEntity userEntity) {
-        return userMapper.insert(userEntity);
+        userEntity.setUserId(KeyUtil.getUUIDKey(userEntity.getUserAccount()));
+        userEntity.setUserPassword(SaSecureUtil.md5(userEntity.getUserPassword()));
+        return userMapper.insertWithPk(userEntity);
     }
 
     @Override

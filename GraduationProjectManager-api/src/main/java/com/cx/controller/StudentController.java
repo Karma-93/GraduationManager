@@ -141,4 +141,12 @@ public class StudentController {
     public Result<List<StudentEntity>> getStudentListByTeacherId(@RequestParam String teacherId){
         return Result.success(studentService.getStudentListByTeacherId(teacherId));
     }
+
+    @SaCheckRole("admin")
+    @ApiOperation("新增学生")
+    @PostMapping("/addstudent")
+    public Result addStudent(@RequestBody StudentEntity entity){
+        if(studentService.insert(entity)>0)return  Result.success();
+        return Result.failure(ResultCode.INSERT_ERROR);
+    }
 }

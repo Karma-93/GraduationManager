@@ -18,43 +18,77 @@
             :rules="rules"
         >
             <!-- a-form-model-item是表单里每一个表单项，如用户账号，用户名等 -->
-            <a-form-model-item label="用户账号" prop="userAccount">
+            <a-form-model-item
+                label="用户账号"
+                prop="userAccount"
+            >
                 <!-- 每一项里边的内容，prop绑定的规则名，下见data里的rules对象 -->
                 <a-input
                     v-model="form.userAccount"
                     placeholder="请输入用户账号"
                 />
             </a-form-model-item>
-            <a-form-model-item label="用户密码" prop="userPassword">
+            <a-form-model-item
+                label="用户密码"
+                prop="userPassword"
+            >
                 <a-input
                     v-model="form.userPassword"
                     placeholder="请输入用户密码"
                 />
             </a-form-model-item>
-            <a-form-model-item label="用户名" prop="userName">
-                <a-input v-model="form.userName" placeholder="请输入用户名" />
+            <a-form-model-item
+                label="用户名"
+                prop="userName"
+            >
+                <a-input
+                    v-model="form.userName"
+                    placeholder="请输入用户名"
+                />
             </a-form-model-item>
-            <a-form-model-item label="角色" prop="userRoles">
-                <a-select v-model="form.userRoles" placeholder="请输入角色">
+            <a-form-model-item
+                label="角色"
+                prop="userRoles"
+            >
+                <a-select
+                    v-model="form.userRoles"
+                    placeholder="请输入角色"
+                >
                     <a-select-option value="1">教师</a-select-option>
                     <a-select-option value="2">学生</a-select-option>
+                    <a-select-option value="3">管理员</a-select-option>
                 </a-select>
             </a-form-model-item>
-            <a-form-model-item label="性别" prop="userSex">
-                <a-select v-model="form.userSex" placeholder="请选择">
+            <a-form-model-item
+                label="性别"
+                prop="userSex"
+            >
+                <a-select
+                    v-model="form.userSex"
+                    placeholder="请选择"
+                >
                     <a-select-option value="0">未知</a-select-option>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>
             </a-form-model-item>
-            <a-form-model-item label="电话" prop="userTel">
-                <a-input v-model="form.userTel" placeholder="请输入电话" />
+            <a-form-model-item
+                label="电话"
+                prop="userTel"
+            >
+                <a-input
+                    v-model="form.userTel"
+                    placeholder="请输入电话"
+                />
             </a-form-model-item>
         </a-form-model>
     </a-modal>
 </template>
 
 <script>
+import { requestAddUser, requestUpdateUser } from "@/api/user.js";
+import { message } from "ant-design-vue";
+
 export default {
     name: "AUserEditDialogg",
     emit: ["fetch-data"],
@@ -146,22 +180,35 @@ export default {
          * @date 2022-04-29
          */
         save() {
+            console.log("aaaaaaaaaaa")
             this.$refs.formRef.validate(valid => {
                 // 如果所有项都通过了校验
                 if (valid) {
-                    console.log("err", err, values);
+                    //console.log("err", err, values);
+                    console.log("true");
+
                     // 如果为编辑
                     if (this.isEdit) {
                         console.log("===调用保存接口===", this.form);
                     }
                     // 如果为添加
                     else {
+
+                        requestAddUser(this.form).then((response) => {
+                            if (response.data.code == 1) {
+                                message.success("删除成功");
+                            } else {
+                                message.error("删除失败");
+                            }
+                        })
+
                         console.log("===调用添加接口===", this.form);
                     }
                     this.close();
                 }
                 // 如果校验不通过
                 else {
+                    console.log("else");
                     return false;
                 }
             });
