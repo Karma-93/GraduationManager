@@ -1,45 +1,105 @@
 <template>
     <div>
         <a-card>
-            <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
-            <a-table :data-source="data" :row-key="record => record.userId" :loading="listLoading" :pagination="false">
-                <a-table-column key="userId" title="用户ID" data-index="userId" align="center"/>
-                <a-table-column key="userAccount" title="用户账号" data-index="userAccount" align="center"/>
-                <a-table-column key="userName" title="用户名" data-index="userName" align="center"/>
-                <a-table-column key="userPassword" title="用户密码" data-index="userPassword" align="center"/>
-                <a-table-column key="userRoles" title="角色" data-index="userRoles" align="center">
+            <a-button
+                type="primary"
+                style="margin:10px 0"
+                @click="clickEdit(null)"
+                >添加新用户</a-button
+            >
+            <a-table
+                :data-source="data"
+                :row-key="record => record.userId"
+                :loading="listLoading"
+                :pagination="false"
+            >
+                <a-table-column
+                    key="userId"
+                    title="用户ID"
+                    data-index="userId"
+                    align="center"
+                />
+                <a-table-column
+                    key="userAccount"
+                    title="用户账号"
+                    data-index="userAccount"
+                    align="center"
+                />
+                <a-table-column
+                    key="userName"
+                    title="用户名"
+                    data-index="userName"
+                    align="center"
+                />
+                <a-table-column
+                    key="userPassword"
+                    title="用户密码"
+                    data-index="userPassword"
+                    align="center"
+                />
+                <a-table-column
+                    key="userRoles"
+                    title="角色"
+                    data-index="userRoles"
+                    align="center"
+                >
                     <template slot-scope="text">
                         {{ text == 1 ? "教师" : "学生" }}
                     </template>
                 </a-table-column>
-                <a-table-column key="userSex" title="性别" data-index="userSex" align="center">
+                <a-table-column
+                    key="userSex"
+                    title="性别"
+                    data-index="userSex"
+                    align="center"
+                >
                     <template slot-scope="text">
                         {{ text == 0 ? "男" : text == 1 ? "女" : "未知" }}
                     </template>
                 </a-table-column>
-                <a-table-column key="userTel" title="电话" data-index="userTel" align="center"/>
+                <a-table-column
+                    key="userTel"
+                    title="电话"
+                    data-index="userTel"
+                    align="center"
+                />
                 <a-table-column key="action" title="操作" align="center">
                     <template slot-scope="text, record">
-                        <a-button type="link" @click="clickEdit(record, 'edit')">编辑</a-button>
-                        <a-button type="link" @click="clickEdit(record, 'delete')">删除</a-button>
+                        <a-button type="link" @click="clickEdit(record, 'edit')"
+                            >编辑</a-button
+                        >
+                        <a-button
+                            type="link"
+                            @click="clickEdit(record, 'delete')"
+                            >删除</a-button
+                        >
                     </template>
                 </a-table-column>
             </a-table>
 
             <!-- 分页 -->
-            <a-pagination style="margin-top:20px" align="center" :current="queryForm.pageNum"
-                          :pageSize="queryForm.pageSize" show-size-changer :show-total="total => `共 ${total} 条`"
-                          :total="total"
-                          @change="handleCurrentChange" @showSizeChange="onShowSizeChange">
+            <a-pagination
+                style="margin-top:20px"
+                align="center"
+                :current="queryForm.pageNum"
+                :pageSize="queryForm.pageSize"
+                show-size-changer
+                :show-total="total => `共 ${total} 条`"
+                :total="total"
+                @change="handleCurrentChange"
+                @showSizeChange="onShowSizeChange"
+            >
                 <template #buildOptionText="props">
-                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
+                    <span v-if="props.value !== '50'"
+                        >{{ props.value }}条/页</span
+                    >
                     <span v-else>全部</span>
                 </template>
             </a-pagination>
         </a-card>
 
         <!-- 编辑弹框组件 -->
-        <edit ref="editRef" @fetch-data="fetchData"/>
+        <edit ref="editRef" @fetch-data="fetchData" />
     </div>
 </template>
 
@@ -47,13 +107,13 @@
 // 引入弹框组件
 import Edit from "./components/AUserEditDialog.vue";
 // 引入删除弹窗组件
-import {Modal} from "ant-design-vue";
-import {requestGetUserList,requestRemoveUser} from "@/api/user.js";
-import { message } from 'ant-design-vue';
+import { Modal } from "ant-design-vue";
+import { requestGetUserList, requestRemoveUser } from "@/api/user.js";
+import { message } from "ant-design-vue";
 
 export default {
     name: "AUser",
-    components: {Edit},
+    components: { Edit },
     data() {
         return {
             editRef: null,
@@ -91,22 +151,22 @@ export default {
         clickEdit(record, type) {
             // 行外添加
             if (!record) {
-                console.log("===调用添加弹窗===");
+                // 调用弹窗，行外添加无数据传输
+                this.$refs.editRef.showEdit();
             }
             // 行内编辑
             else if (type == "edit") {
-                console.log("===调用编辑===");
-                this.$refs.editRef.showEdit(record);
+                this.$refs.editRef.showEdit(record, type);
             }
             // 行内删除
             else if (type == "delete") {
                 Modal.confirm({
                     title: "你确定要删除吗?",
                     onOk() {
-                        requestRemoveUser(record.userId).then((response)=>{
-                            if (response.data.code==1){
+                        requestRemoveUser(record.userId).then(response => {
+                            if (response.data.code == 1) {
                                 message.success("删除成功");
-                            }else{
+                            } else {
                                 message.error("删除失败");
                             }
                         });
@@ -136,7 +196,7 @@ export default {
         onShowSizeChange(current, pageSize) {
             this.queryForm.pageSize = pageSize;
             this.fetchData(this.queryForm);
-        },
+        }
     },
     created() {
         this.fetchData();
@@ -144,5 +204,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
