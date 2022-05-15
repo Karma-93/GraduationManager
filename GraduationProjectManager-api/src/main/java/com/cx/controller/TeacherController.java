@@ -40,7 +40,7 @@ public class TeacherController {
     @SaCheckLogin
     @ApiOperation("更新")
     @PostMapping("/update")
-    public Result update(TeacherEntity teacherEntity){
+    public Result update(@RequestBody TeacherEntity teacherEntity){
         if (teacherService.update(teacherEntity)>0) return Result.success();
         else return Result.failure(ResultCode.UPDATE_ERROR);
     }

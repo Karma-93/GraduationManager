@@ -4,7 +4,7 @@
             @ok="save"
             @cancel="close"
             v-model:visible="visible"
-            title="Basic Modal"
+            :title="title"
         >
             <!-- 表单组件，表单内容都需要a-form包裹起来 -->
             <!-- model属性是双向绑定的表单对象，label-col属性是每个a-form-model-item内label的横向长度，wrapper-col是每个a-form-model-item的横向长度 -->
@@ -108,7 +108,6 @@ export default {
                 this.isEdit = true;
                 // 对record数据进行深拷贝，否则this.form只会拷贝record的地址，修改this.form会影响表格内的源数据
                 this.form = JSON.parse(JSON.stringify(record));
-                console.log(this.form.userRoles);
                 // 这里 +"" 将值从Number转为String，否则select单选框组件不会回显
                 this.form.deptId = this.form.deptId + "";
             }else{
@@ -143,6 +142,7 @@ export default {
                 if (valid) {
                     //console.log("err", err, values);
                     // 如果为编辑
+
                     if (this.isEdit) {
                         requestUpdateTeacher(this.form).then((response) => {
                             if (response.data.code == 1) {

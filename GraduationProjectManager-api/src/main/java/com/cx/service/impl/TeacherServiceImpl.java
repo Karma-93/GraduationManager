@@ -51,7 +51,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public String getNameByTeacherId(String teacherId) {
         TeacherEntity entity=getTeacherById(teacherId);
-        return userService.getUserById(entity.getUserId()).getUserName();
+        if (entity.getUserId()==null) return null;
+        UserEntity userEntity=userService.getUserById(entity.getUserId());
+        if (userEntity==null) return null;
+        return userEntity.getUserName();
     }
 
     @Override

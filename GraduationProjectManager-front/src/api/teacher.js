@@ -30,7 +30,7 @@ export  function requestUpdateTeacher(param){
 
 export function requestRemoveTeacher(param){
     return request({
-        url:teacherApi.RemoveStudent,
+        url:teacherApi.RemoveTeacher,
         method:"get",
         params:{teacherId:param}
     })

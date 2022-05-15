@@ -56,6 +56,10 @@ public class StudentServiceImpl implements StudentService {
     public String getNameByStudentId(String studentId) {
         StudentQuery query=new StudentQuery();
         query.where.studentId().eq(studentId).end();
+        StudentEntity studentEntity=studentMapper.findOne(query);
+        if (studentEntity.getUserId()==null){
+            return null;
+        }
         String userId =studentMapper.findOne(query).getUserId();
         return userService.getUserById(userId).getUserName();
     }

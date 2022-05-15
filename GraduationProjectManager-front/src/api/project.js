@@ -78,7 +78,7 @@ export function requestCountNoChooseProject() {
         method: "get",
     })
 }
-export function requestInsert(parameter) {
+export function requestAddProject(parameter) {
     return request({
         url: projectApi.Insert,
         method: "post",

@@ -127,7 +127,7 @@ public class ProjectController {
 
     @ApiOperation("插入新的选题")
     @PostMapping("/insert")
-    @SaCheckRole("teacher")
+    @SaCheckLogin
     public Result insertSelective(@RequestBody ProjectEntity project){
         String teacherId=project.getTeacherId();
         if (projectService.insertSelective(project,teacherId)){

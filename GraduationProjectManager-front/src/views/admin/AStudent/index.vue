@@ -54,7 +54,8 @@
 // 引入弹框组件
 import Edit from "./components/AStudentEditDialog.vue";
 import { requestStudentList, requestNameByStudentId,requestRemoveStudent } from "@/api/student.js"
-import {message} from "ant-design-vue";
+import {message, Modal} from "ant-design-vue";
+
 export default {
     name: "AStudent",
     created() {
@@ -107,13 +108,12 @@ export default {
         clickEdit(record, type) {
             // 行外添加
             if (!record) {
-                console.log("===调用添加弹窗===");
+                this.$refs.editRef.showEdit(record);
             }
             // 行内编辑
             else if (type == "edit") {
-                console.log("===调用编辑===");
                 // 启用子组件弹窗的showEdit事件，使弹窗显示
-                this.$refs.editRef.showEdit(record);
+                this.$refs.editRef.showEdit(record,type);
             }
             // 行内删除
             else if (type == "delete") {

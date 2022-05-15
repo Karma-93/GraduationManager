@@ -143,10 +143,16 @@ public class ProjectServiceImpl implements ProjectService
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
     public boolean insertSelective(ProjectEntity project,String teacherId) {
-        TeacherUpdate update=new TeacherUpdate();
-        update.set.teacherProjectNum().applyFunc("teacher_project_num+1").end().where().teacherId().eq(teacherId).end();
-        if(teacherMapper.updateBy(update)>0){
-            if (projectMapper.insert(project)>0){
+        if(teacherId!=null){
+            TeacherUpdate update=new TeacherUpdate();
+            update.set.teacherProjectNum().applyFunc("teacher_project_num+1").end().where().teacherId().eq(teacherId).end();
+            if(teacherMapper.updateBy(update)>0){
+                if (projectMapper.insert(project)>0){
+                    return true;
+                }
+            }
+        }else {
+            if (projectMapper.insert(project) > 0) {
                 return true;
             }
         }

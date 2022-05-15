@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-card>
-            <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加新用户</a-button>
+            <a-button type="primary" style="margin:10px 0" @click="clickEdit(null)">添加教师信息</a-button>
             <a-table :data-source="data" :row-key="record => record.userId" :loading="listLoading" :pagination="false">
                 <a-table-column key="teacherId" title="教师ID" data-index="teacherId" align="center">
 
