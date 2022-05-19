@@ -23,14 +23,18 @@
         </a-page-header>-->
 
         <!-- 面包屑 -->
+        <!--
         <a-breadcrumb>
             <a-breadcrumb-item>a</a-breadcrumb-item>
             <a-breadcrumb-item>b</a-breadcrumb-item>
             <a-breadcrumb-item>c</a-breadcrumb-item>
         </a-breadcrumb>
-
+        -->
         <!-- 消息 -->
-        <a-popover placement="bottomRight" class="bell" >
+        <a-popover
+            placement="bottomRight"
+            class="bell"
+        >
             <template slot="content">
                 <a-list size="small">
                     <a-list-item
@@ -59,7 +63,10 @@
             </template>
             <div>
                 <a-badge :count="unReadNum">
-                    <a-icon type="bell" style="fontSize: 18px" />
+                    <a-icon
+                        type="bell"
+                        style="fontSize: 18px"
+                    />
                 </a-badge>
             </div>
         </a-popover>
@@ -67,7 +74,10 @@
         <!-- 右侧用户 -->
         <a-dropdown placement="bottomCenter">
             <div>
-                <a-avatar style="backgroundColor:#87d068;marginRight:10px" icon="user" />{{userName}}
+                <a-avatar
+                    style="backgroundColor:#87d068;marginRight:10px"
+                    icon="user"
+                />{{userName}}
             </div>
             <a-menu slot="overlay">
                 <!--
@@ -99,7 +109,7 @@ export default {
             userName: "",
             userData: [],
             sessionList_already: [],
-            unReadNum:0,
+            unReadNum: 0,
         };
     },
     created() {
@@ -127,9 +137,9 @@ export default {
             this.$message.success("注销成功！");
         },
         //如果是学生
-        getStudentData() {},
+        getStudentData() { },
         //如果是教师
-        getTeacherData() {},
+        getTeacherData() { },
         //获取已经存在的会话列表
         getSessionListAlready() {
             sessionListsAlready(this.curUserId)
@@ -138,11 +148,11 @@ export default {
                         this.sessionList_already = res.data.data;
                         console.log("sessionlist", this.sessionList_already);
                         var x;
-                        for(x in  this.sessionList_already){
-                            console.log("x",x)
-                            this.unReadNum=this.unReadNum+ this.sessionList_already[x].unReadCount;
+                        for (x in this.sessionList_already) {
+                            console.log("x", x)
+                            this.unReadNum = this.unReadNum + this.sessionList_already[x].unReadCount;
                         }
-                        console.log("tag",this.unReadNum)
+                        console.log("tag", this.unReadNum)
                     } else {
                         return this.$message.error(
                             "message Error" + res.data.message
@@ -155,7 +165,7 @@ export default {
         },
 
         messageInfo(record) {
-            console.log(typeof(record))
+            console.log(typeof (record))
 
             this.$dialog(
                 NewMessage,
