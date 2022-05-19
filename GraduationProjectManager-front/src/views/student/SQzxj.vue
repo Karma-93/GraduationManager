@@ -8,7 +8,25 @@
                 <a-descriptions-item label="选题">{{projectName}}</a-descriptions-item>
             </a-descriptions>
         </a-card>
-        
+        <a-card  :bordered="false">
+            <a-upload-dragger
+
+                v-model:fileList="fileList"
+                name="file"
+                :multiple="true"
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                @change="handleChange"
+                @drop="handleDrop"
+            >
+                <p class="ant-upload-drag-icon">
+                </p>
+                <p class="ant-upload-text">上传文件</p>
+                <p class="ant-upload-hint">
+
+                </p>
+            </a-upload-dragger>
+        </a-card>
+
     </div>
 </template>
 
@@ -27,7 +45,7 @@ export default {
             studentName: this.$store.state.userInfo.userName,
             projectName: "",
             className: "",
-            temp: "", 
+            temp: "",
         };
     },
     created() {

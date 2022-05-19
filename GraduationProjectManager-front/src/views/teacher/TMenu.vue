@@ -65,6 +65,7 @@
                     成绩评定
                 </a-menu-item>
             </a-sub-menu>
+            <!--
             <a-sub-menu
                 key="sub_info"
                 @titleClick="titleClick"
@@ -80,6 +81,7 @@
                 </a-menu-item>
 
             </a-sub-menu>
+            -->
             <a-menu-item
                 key="sub_library"
                 @titleClick="titleClick"
