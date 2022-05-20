@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 15/05/2022 13:30:36
+ Date: 20/05/2022 20:19:22
 */
 
 SET NAMES utf8mb4;
@@ -209,7 +209,7 @@ CREATE TABLE `message`  (
   INDEX `wj_2`(`to_user_id`) USING BTREE,
   CONSTRAINT `wj_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `wj_2` FOREIGN KEY (`to_user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 69 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -278,9 +278,10 @@ INSERT INTO `message` VALUES (61, '\n1', 00, '20001', '10001', '2022-05-01 23:34
 INSERT INTO `message` VALUES (62, '111', 00, '20001', '10001', '2022-05-04 15:57:28', 01);
 INSERT INTO `message` VALUES (63, '\n', 00, '20001', '10001', '2022-05-04 15:57:29', 01);
 INSERT INTO `message` VALUES (64, '\n1', 00, '20001', '10001', '2022-05-04 15:57:29', 01);
-INSERT INTO `message` VALUES (65, 'hello', 00, '20001', '10001', '2022-05-13 21:37:01', 00);
-INSERT INTO `message` VALUES (66, '\nhelllo', 00, '20001', '10001', '2022-05-13 21:37:03', 00);
-INSERT INTO `message` VALUES (67, '\nhello', 00, '20001', '10001', '2022-05-13 21:37:04', 00);
+INSERT INTO `message` VALUES (65, 'hello', 00, '20001', '10001', '2022-05-13 21:37:01', 01);
+INSERT INTO `message` VALUES (66, '\nhelllo', 00, '20001', '10001', '2022-05-13 21:37:03', 01);
+INSERT INTO `message` VALUES (67, '\nhello', 00, '20001', '10001', '2022-05-13 21:37:04', 01);
+INSERT INTO `message` VALUES (68, 'edfsdasfsdf', 00, '20001', '10001', '2022-05-20 09:12:54', 00);
 
 -- ----------------------------
 -- Table structure for paperlib
@@ -328,7 +329,7 @@ CREATE TABLE `project`  (
   CONSTRAINT `project_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `project_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `project_ibfk_3` FOREIGN KEY (`project_from_id`) REFERENCES `project_from` (`project_from_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project
@@ -340,6 +341,7 @@ INSERT INTO `project` VALUES (5, '选题3', 'string详情详情详情详情详�
 INSERT INTO `project` VALUES (6, '选题3', 'string详情详情详情详情详情详情详情', NULL, '11001', NULL, 0);
 INSERT INTO `project` VALUES (7, '选题3', 'string详情详情详情详情详情详情详情', NULL, '11001', NULL, 0);
 INSERT INTO `project` VALUES (8, '选题3', 'string详情详情详情详情详情详情详情', NULL, '11001', NULL, 0);
+INSERT INTO `project` VALUES (9, '3rewrwe', '12r3f', 1, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for project_from
@@ -477,7 +479,7 @@ DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher`  (
   `teacher_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键,导师id',
   `teacher_describe` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '导师描述',
-  `teacher_project_num` int(10) UNSIGNED ZEROFILL NULL DEFAULT NULL COMMENT '导师出题数,限制在8个',
+  `teacher_project_num` int(10) UNSIGNED ZEROFILL NULL DEFAULT 0000000000 COMMENT '导师出题数,限制在8个',
   `user_id` char(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外键,用户id',
   `dept_id` int NULL DEFAULT NULL COMMENT '外键,部门id',
   `zhicheng` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职称',

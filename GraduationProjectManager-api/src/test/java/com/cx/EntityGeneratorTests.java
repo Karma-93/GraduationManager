@@ -10,11 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class EntityGeneratorTests {
 
     // 数据源 url
-    static final String url = "jdbc:mysql://124.223.184.251:3306/graduationManager?useUnicode=true&characterEncoding=utf8";
+    static final String url = "jdbc:mysql://localhost:3306/graduationManager?useUnicode=true&characterEncoding=utf8";
     // 数据库用户名
     static final String username = "root";
     // 数据库密码
-    static final String password = "243698";
+    static final String password = "123456";
 
     @Test
     public void generate() throws Exception{
